@@ -37,10 +37,10 @@ show_help() {
 Usage: $0 [options]
 
 Required:
-  -i, --input        Path to the accession file (comma-separetad file with the name of species/strain as its first column)
+  -i, --input        Path to the accession file (comma-separetad file with the structure: taxon(s)/species/strain(s),code(optional),accession(s)). Note: If provided, the code should have exactly 5 alphanumeric characters.
 
 Optional:
-  -o, --outgroup     Path to the outgroup species/strain file
+  -o, --outgroup     Path to the outgroup taxon/species/strain file
   -t, --read-type    Type of reads: long-ont, long-hifi, or short [default: long-hifi]
   -n, --threads      Number of threads [default: 12]
   -r, --reads-dir    Directory with read files [default: current directory]
@@ -90,6 +90,7 @@ fetch_data() {
   if [[ "$accessions_list" == *GCF_* || "$accessions_list" == *GCA_* ]]; then
     local assembly_accessions=()
     local regular_accessions=()
+    #From list to array
     IFS=',' read -ra accessions <<< "$accessions_list"
 
     for acc in "${accessions[@]}"; do
@@ -108,14 +109,12 @@ fetch_data() {
         | elink -target nuccore \
         | efetch -format acc \
         | grep "^NC_")) #allow NP_ or NM?
-      if [[ ${#nc_accessions[@]} -gt 0 ]]; then
-        nc_accessions+=($nc_accessions)
-      else
+      if [[ ${#nc_accessions[@]} -eq 0 ]]; then
         log_error "No NC_ accessions found for assembly: $assembly"
-        exit 1
+        exit 1 
       fi
     done
-    #Here problem with commas if the regular array is void?
+    #To avoid problem with commas if the regular array is void?
     if [[ -z "${regular_accessions[*]}" ]]; then
       accessions_list=$(IFS=','; echo "${nc_accessions[*]}")
     else
@@ -155,17 +154,49 @@ generate_og_gene_tsv() {
     while IFS=: read -r file line; do
         #Example of the complete input line: db/rsv_11_cds_from_genomic.fna:>lcl|MG813984.1_cds_AZQ19553.1_6 [gene=SH] [protein=small hydrophobic protein] [protein_id=AZQ19553.1] [location=4251..4445] [gbkey=CDS]
         local species=$(basename "$file" | awk -F '_cds_' '{print $1}')
-        local protein_id2=$(awk -F '_cds_' '{print $2}' <<< "${line#*|}")
         local code="${SPECIES_TO_CODE[$species]}"
         local accession="$(awk -F '_cds_' '{print $1}' <<< "${line#*|}")"
-        local gene="$(echo "$line" | grep -oP '\[gene=\K[^\]]+')"
-        local protein="$(echo "$line" | grep -oP '\[protein=\K[^\]]+')"
-        local protein_id="$(echo "$line" | grep -oP '\[protein_id=\K[^\]]+')"
-        local location="$(echo "$line" | grep -oP '\[location=\K[^\]]+')"
+        #local protein_id2=$(awk -F '_cds_' '{print $2}' <<< "${line#*|}")
+
+        local gene="NA"
+        local protein="NA"
+        local protein_id="NA"
+        local location="NA"
+        #local accession="NA"; local code="NA"
+        #local gene="$(echo "$line" | grep -oP '\[gene=\K[^\]]+')"
+        #local protein="$(echo "$line" | grep -oP '\[protein=\K[^\]]+')"
+        #local protein_id="$(echo "$line" | grep -oP '\[protein_id=\K[^\]]+')"
+        #local location="$(echo "$line" | grep -oP '\[location=\K[^\]]+')"
+
+        # gene
+        if [[ "$line" =~ \[gene=([^]]+)\] ]]; then
+          gene="${BASH_REMATCH[1]}"
+        fi
+
+        # protein
+        if [[ "$line" =~ \[protein=([^]]+)\] ]]; then
+          protein="${BASH_REMATCH[1]}"
+        fi
+
+        # protein_id
+        if [[ "$line" =~ \[protein_id=([^]]+)\] ]]; then
+          protein_id="${BASH_REMATCH[1]}"
+        fi
+
+        # location
+        if [[ "$line" =~ \[location=([^]]+)\] ]]; then
+          location="${BASH_REMATCH[1]}"
+        fi
+
         #Compressed_id uses the protein_id without alphanumeric characters to match the header in OrthologousGroupsFasta:
         #Output/OrthologousGroupsFasta/OG11.fa:>3355X||rsv_11||lcl|MG8139841cdsAZQ1955316 cleaned for r2t [rsv_11_3355X]
         local compressed_id="$(echo "$protein_id" | sed 's/[^a-zA-Z0-9]//g')"
-        echo "Got correct features from *fna for ${protein_id}"
+        #echo "Got correct features from *fna for ${protein_id}"
+
+        [[ "$gene" == "NA" ]]       && log_warn "Missing gene for line in $file"
+        [[ "$protein" == "NA" ]]    && log_warn "Missing protein for line in $file"
+        [[ "$protein_id" == "NA" ]] && log_warn "Missing protein_id for line in $file"
+        [[ "$location" == "NA" ]]  && log_warn "Missing location for line in $file"
         # Buscar OG directamente con grep
         local og_matches
         if og_matches=$(grep -l "$compressed_id" "$fa_dir"/*.fa 2>/dev/null | xargs -I {} basename {} .fa); then
@@ -175,14 +206,41 @@ generate_og_gene_tsv() {
                   echo -e "${og}\t${gene}\t${protein}\t${protein_id}\t${location}\t${accession}\t${species}\t${code}" >> "$tmp_file"
               done
         else
-            log_warn "Error: grep command failed while searching for compressed ID: $protein_id2 in directory: $fa_dir" >&2
+            log_warn "Error: grep command failed while searching for compressed ID: $protein_id in directory: $fa_dir"
         fi
     done < <(grep '^>' "$fna_dir"/*.fna)
     #-V option in sort from GNU coreutils
     sort -k1,1 -V -k2,2 "$tmp_file" > "$output_file"
-    awk -F'\t' '{print $1, $2, $3}' OFS='\t' "$output_file" | uniq > "$unique_output_file"
-    sed -i '1i OG\tGene\tProtein\tProtein_ID\tLocation\tAccession\tSpecies/Strain\tCode' "$output_file"
-    sed -i '1i OG\tGene\tProtein' "$unique_output_file"
+    sed -i '1i OG\tGene\tProtein\tProtein_ID\tLocation\tAccession\tTaxon\tCode' "$output_file"
+        {
+      echo -e "OG\tGene\tProtein\ttaxon"
+      # Skip the header of the main TSV
+      tail -n +2 "$output_file" \
+      | awk -F'\t' '{
+          # Key is combination of columns OG,Gene,Protein
+          key=$1"\t"$2"\t"$3
+          # We append species/strain from col 7
+          if(!seen[key]) {
+             order[++cnt]=key
+             taxa[key]=$7
+             seen[key]=$7
+          } else {
+             # Only add if not already present
+             split(taxa[key], check, ";")
+             found=0
+             for(i in check) {
+               if(check[i] == $7) {found=1; break}
+             }
+             if(!found) { taxa[key]=taxa[key]";"$7 }
+          }
+      }
+      END {
+          for(i=1;i<=cnt;i++){
+             k=order[i]
+             print k"\t"taxa[k]
+          }
+      }'
+    } > "$unique_output_file"
 
     rm -f "$tmp_file"
 
@@ -190,7 +248,7 @@ generate_og_gene_tsv() {
 }
 READ_TYPE="long-hifi"  # Default read type
 THREADS=12
-FIVE_LETTER_FILE="five_letter_species.tsv"
+FIVE_LETTER_FILE="five_letter_taxon.tsv"
 OUTGROUP_FILE=""
 READS_DIR=$(pwd)  # Default to current working directory
 
@@ -209,31 +267,31 @@ while [[ "$#" -gt 0 ]]; do
         -n|--THREADS) THREADS="$2"; shift ;;
         -r|--reads-dir) READS_DIR="$2"; shift ;;
         -h|--help) show_help; exit 0 ;;
-        *) echo "Unknown parameter passed: $1"; show_help; exit 1 ;;
+        *) log_error "Unknown parameter passed: $1"; show_help; exit 1 ;;
     esac
     shift
 done
 # Check required parameters
 if [[ -z "${INPUT_FILE:-}" ]]; then
-    echo "Error: --input (-i) is required."
+    log_error "Error: --input (-i) is required."
     show_help
     exit 1
 fi
 
 # Validate input file existence
 if [[ ! -f "$INPUT_FILE" ]] || [[ ! -s "$INPUT_FILE" ]]; then
-    echo "Error: The input file '$INPUT_FILE' does not exist or is empty."
+    log_error "Error: The input file '$INPUT_FILE' does not exist or is empty."
     exit 1
 fi
 
 # Validate outgroup file if provided
 if [[ -n "$OUTGROUP_FILE" ]] && ([[ ! -f "$OUTGROUP_FILE" ]] || [[ ! -s "$OUTGROUP_FILE" ]]); then
-    echo "Error: The outgroup file '$OUTGROUP_FILE' is missing or empty."
+    log_error "Error: The outgroup file '$OUTGROUP_FILE' is missing or empty."
     exit 1
 fi
 
 if [[ ! -d "$READS_DIR" || -z "$(ls -A "$READS_DIR" 2>/dev/null)" ]]; then
-    echo "Error: The reads directory '$READS_DIR' does not exist or is empty."
+    log_error "Error: The reads directory '$READS_DIR' does not exist or is empty."
     exit 1
 fi
 
@@ -244,7 +302,7 @@ LOWER_HEADER=("${HEADER_COLS[@],,}")
 HAS_CODE_COLUMN=false
 # Validate the number of columns first
 if [[ "${#HEADER_COLS[@]}" -lt 2 ]]; then
-  log_error "Error: The header must have at least 2 columns: STRAIN/SPECIES and ACCESSIONS (or equivalent)."
+  log_error "Error: The header must have at least 2 columns: TAXON/SPECIES/STRAIN and ACCESSIONS (or equivalent)."
   exit 1
 elif [[ "${#HEADER_COLS[@]}" -gt 3 ]]; then
   log_error "Error: The header has more than 3 columns. This is not supported."
@@ -255,29 +313,48 @@ if [[ "${#HEADER_COLS[@]}" -eq 3 ]]; then
   # If has exactly 3 columns, check if the second column is CODE
   if [[ "${LOWER_HEADER[1]}" =~ ^code(s)?$ ]]; then
     HAS_CODE_COLUMN=true
+    line_number=1
+    while IFS= read -r line || [[ -n $line ]]; do
+      ((line_number+=1)) #How do I sum from
+      if ! [[ "$line" =~ ^[[:alnum:]]{5}$ ]]; then
+        log_error "Invalid CODE on line $line_number:'$line'. CODE must have exactly 5 alphanumeric characters."
+        exit 1
+      fi
+    done <<< "$(cat "orthomyxoviridae_accessions.txt" | tail -n +2 |grep -v '^$'|cut -d',' -f2|tr -d '[:blank:]')"
+    #first I deleted complete void lines, so if -z works, it is detecting a row that has its second field void
     #echo -e "species\tcode" >> $FIVE_LETTER_FILE
-    log_info "Detected a CODE column in header. (3 columns)."
+    log_info "CODE column has been detected and validated. (3 columns)."
   else
     log_error "The header has 3 columns, but the second is not a CODE column (Found: '${HEADER_COLS[1]}')."
     exit 1
   fi
 elif [[ "${#HEADER_COLS[@]}" -eq 2 ]]; then
   # If has exactly 2 columns, check if they are valid (STRAIN/SPECIES and ACCESSIONS)
-  if [[ "${LOWER_HEADER[0]}" =~ ^(strain(s)?|species)$ ]] && [[ "${LOWER_HEADER[1]}" =~ ^accession(s)?$ ]]; then
-    log_info "Only 2 columns found in header: STRAIN/SPECIES, ACCESSIONS (or equivalent). No CODE column."
+  if [[ "${LOWER_HEADER[0]}" =~ ^(taxon(s)?|strain(s)?|species)$ ]] && [[ "${LOWER_HEADER[1]}" =~ ^accession(s)?$ ]]; then
+    log_info "Only 2 columns found in header: TAXON/SPECIES/STRAIN, ACCESSIONS (or equivalent). No CODE column."
   else
-    log_error "The header columns are not correct. Expected STRAIN/SPECIES and ACCESSIONS (or equivalent). Found: '${HEADER_COLS[0]}' and '${HEADER_COLS[1]}'."
+    log_error "The header columns are not correct. Expected TAXON(S)/STRAIN/SPECIE(S) and ACCESSION(S) (or equivalent). Found: '${HEADER_COLS[0]}' and '${HEADER_COLS[1]}'."
     exit 1
   fi
 fi
 mkdir -p db
 
-log_info "Starting parallel retrieval of sequences from $INPUT_FILE..."
+log_info "Starting retrieval of sequences from $INPUT_FILE..."
 # Export the function so GNU Parallel can see it
+count=0
 export -f fetch_data log_info log_warn log_error
-export RED YELLOW BLUE GREEN NC FIVE_LETTER_FILE HAS_CODE_COLUMN
+export RED YELLOW BLUE GREEN NC FIVE_LETTER_FILE HAS_CODE_COLUMN count
+ # <-- Aquí inicializas la variable
+tail -n +2 "$INPUT_FILE" | grep -v '^$' | parallel -j 1 fetch_data {}
+#while IFS= read -r line || [[ -n "$line" ]]; do
+#  if ! fetch_data "$line"; then
+#    echo "Error processing line: $line"
+#  fi
+#done < <(tail -n +2 "$INPUT_FILE" | grep -v '^$')
+#tail -n +2 "$INPUT_FILE" | grep -v '^$' | xargs -n 1 -I {} bash -c 'fetch_data "{}"'
 
-tail -n +2 "$INPUT_FILE" | grep -v '^$' | parallel -j 2 fetch_data {}
+#echo "Total lines processed: $count"
+
 log_info "Finished retrieval of nucleotide sequences."
 
 #Adding 5 letter code and cleaning for r2t
@@ -295,16 +372,19 @@ log_info "Editing parameters file..."
 "${OMA}/oma" -p 
 
 #Editing parameters file
+log_info "Uncommenting last four steps of the parameters file..."
+sed -i '/#WriteOutput_\(Phy\|Par\|H\)/ s/^#//' parameters.drw
+
 outgroup_codes=()
 if [ -n "$OUTGROUP_FILE" ]; then
-    log_info "Reading outgroup species/strain from $OUTGROUP_FILE..."
+    log_info "Reading outgroup taxon from $OUTGROUP_FILE..."
     while IFS= read -r species || [[ -n "$species" ]]; do
         species=$(echo "$species" | tr -d '[:space:]')
         if grep -q "^${species}[[:space:]]" "$FIVE_LETTER_FILE"; then
             code=$(awk -v sp="$species" -vOFS="_" '$1 == sp {print $1}' "$FIVE_LETTER_FILE")
             outgroup_codes+=("$code")
         else
-            log_warn "Outgroup species '$species' not found in $FIVE_LETTER_FILE."
+            log_warn "Outgroup taxon '$species' not found in $FIVE_LETTER_FILE."
         fi
     done < "$OUTGROUP_FILE"
 fi
@@ -313,12 +393,12 @@ fi
 if [ ${#outgroup_codes[@]} -gt 0 ]; then
     outgroup_list=$(IFS=,; echo "${outgroup_codes[*]}")
     OUTGROUPS="OutgroupSpecies := [${outgroup_list}];"
-    log_info "Using the following 5 letter code outgroup(s): ${outgroup_list}."
+    log_info "Using the following 5 letter code outgroup(s) to edit the parameters file: ${outgroup_list}."
 else
-    log_warn "No valid outgroup species provided. Using default 'none'."
+    log_warn "No valid outgroup taxon provided. Using default 'none'."
     OUTGROUPS="OutgroupSpecies := 'none';"
 fi
-#map initial filen with the new 5 letter code given by the clean...py
+#map initial file with the new 5 letter code given by the clean...py
 grep -q "^OutgroupSpecies" "$PARAMETERS_FILE" && \
     sed -i "s/^OutgroupSpecies.*/$OUTGROUPS/" "$PARAMETERS_FILE"
 
@@ -326,12 +406,12 @@ log_info "Running OMA..."
 "${OMA}/oma" -n ${THREADS}
 echo "Status"
 #oma-status
-echo "End status"
+#echo "End status"
 if ls Output/OrthologousGroupsFasta/*.fa >/dev/null 2>&1; then
-    #Create tsv
+    ###Create tsv
     generate_og_gene_tsv db Output/OrthologousGroupsFasta OG_genes.tsv
     mkdir -p marker_genes
-    #cat Output/OrthologousGroupsFasta/*.fa > dna_ref.fa
+    #####cat Output/OrthologousGroupsFasta/*.fa > dna_ref.fa
     mv Output/OrthologousGroupsFasta/*.fa marker_genes
 else
     log_error "No files found in Output/OrthologousGroupsFasta."
@@ -342,6 +422,8 @@ fi
 log_info "Running Read2Tree (step 1marker) with ${THREADS} threads..."
 
 #read2tree --standalone_path ./marker_genes --output_path read2tree_output --dna_reference dna_ref.fa
+
+
 read2tree --step 1marker --standalone_path marker_genes --dna_reference dna_ref.fa --output_path read2tree_output --debug 
 
 
