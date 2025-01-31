@@ -20,42 +20,63 @@ log_info() {
 }
 
 log_warn() {
-  echo -e "${YELLOW}[$(date '+%Y-%m-%d %H:%M:%S')] [WARN]${NC} $*" >&2
+  echo -e "${YELLOW}[$(date '+%Y-%m-%d %H:%M:%S')] [WARN]${NC} $*"
 }
 
 log_error() {
-  echo -e "${RED}[$(date '+%Y-%m-%d %H:%M:%S')] [ERROR]${NC} $*" >&2
+  echo -e "${RED}[$(date '+%Y-%m-%d %H:%M:%S')] [ERROR]${NC} $*"
 }
 
 MAIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SCRIPTS_DIR="${MAIN_DIR}/../scripts"
 OMA="${MAIN_DIR}/../oma/bin"
 PARAMETERS_FILE="parameters.drw"
+FIVE_LETTER_FILE="five_letter_taxon.tsv"
+#TEMP_DIR=$(mktemp -d -p /tmp mytempdir.XXXXXX)
+OUTGROUP_FILE=""
+READ_TYPE="short"  # Default read type
+THREADS=12
+TEMP_DIR=""
+READS_DIR="" # Default to current working directory
+DEBUG=false
+
 
 show_help() {
   cat << EOF
-Usage: $0 [options]
+Usage: $0 -i <input> [-o <outgroup>] [-t <read-type>] [-n <threads>] [-r <reads-dir>] [-h]
 
 Required:
-  -i, --input        Path to the accession file (comma-separetad file with the structure: taxon(s)/species/strain(s),code(optional),accession(s)). Note: If provided, the code should have exactly 5 alphanumeric characters.
+  -i, --input <file>       Path to the accession file (comma-separated file with the structure: taxon(s)/species/strain(s),code(optional),accession(s)). Note: If provided, the code should have exactly 5 alphanumeric characters.
 
 Optional:
-  -o, --outgroup     Path to the outgroup taxon/species/strain file
-  -t, --read-type    Type of reads: long-ont, long-hifi, or short [default: long-hifi]
-  -n, --threads      Number of threads [default: 12]
-  -r, --reads-dir    Directory with read files [default: current directory]
-  -h, --help         Show this help message
+  -o, --outgroup <file>                        Path to the outgroup taxon/species/strain file
+  -t, --read-type <short|long-hifi|long-ont>   Type of reads: long-ont, long-hifi, or short [default: short]
+  -T, --threads <int>                          Number of threads [default: 12]
+  --temp_dir <dir>                             Specify existing temp directory (otherwise mktemp -d is used)
+  -r, --reads-dir <dir>                        Directory with read files [default: current directory]
+  --debug                                      Keeps temporary directory
+  -h, --help                                   Show this help message
 
 Example:
   $0 -i accessions.txt -o outgroups.txt -t short -r /path/to/reads
 EOF
+exit 0
+}
+
+clean_line() {
+  local input="$1"
+  echo "$input" | tr -cd '[:alnum:]'
 }
 
 fetch_data() {
   local line="$1"
-  local clean_line=$(echo "$line" | tr -d '[:space:]')
-  IFS=',' read -ra columns <<< "$clean_line"
-  local strain="${columns[0]}"
+  # if [[ "$line" =~ ^# ]]; then
+  #   log_warn "Skipping commented line: $line"
+  #   return 0
+  # fi
+  #delete all spaces
+  IFS=',' read -ra columns <<< "$(echo "$line" | tr -d [:space:])"
+  local strain=$(clean_line "${columns[0]}")
   if [[ -z "$strain" ]]; then
     log_warn "Skipping line with empty strain: $line"
     return 0
@@ -66,28 +87,32 @@ fetch_data() {
   if $HAS_CODE_COLUMN; then
     # The second column must be CODE
     if [[ "${#columns[@]}" -lt 3 ]]; then
-      log_error "Line has fewer than 3 columns but we expected CODE. Line: $line"
+      log_error "Line has fewer than 3 columns but we expected code and accessions. Line: $line"
       exit 1
+    elif [[ -z "${columns[1]}" ]]; then 
+      log_warn "Skipping line with empty code: $line"
+      return 0
+    else
+      code="${columns[1]}"
+      # The rest (from columns[2] onward) are accession(s)
+      accessions_list=$(IFS=','; echo "${columns[@]:2}")
     fi
-    code="${columns[1]}"
-    # The rest (from columns[2] onward) are accession(s)
-    accessions_list=$(IFS=','; echo "${columns[@]:2}")
   else
     # No code column: second column onward => accessions
     if [[ "${#columns[@]}" -lt 2 ]]; then
-      log_error "Line has fewer than 2 columns but we expected STRAIN,ACCESSIONS. Line: $line"
+      log_error "Line has fewer than 2 columns but we expected taxons and accessions. Line: $line"
       exit 1
     fi
     accessions_list=$(IFS=','; echo "${columns[@]:1}")
   fi
 
-  # Write the code map
-  if $HAS_CODE_COLUMN; then
-    echo "WRITING TO ${FIVE_LETTER_FILE}"
-    echo -e "${strain}\t${code}" >> "${FIVE_LETTER_FILE}"
+  if [[ -z "$accessions_list" ]]; then
+    log_warn "Skipping line with empty ACCESSIONS: $line"
+    return 0
   fi
 
   if [[ "$accessions_list" == *GCF_* || "$accessions_list" == *GCA_* ]]; then
+    echo "I'm in GCF/GCA assemblies"
     local assembly_accessions=()
     local regular_accessions=()
     #From list to array
@@ -95,8 +120,10 @@ fetch_data() {
 
     for acc in "${accessions[@]}"; do
       if [[ $acc == GCF_* || $acc == GCA_* ]]; then
+        echo "adding assembly accession ${acc}"
         assembly_accessions+=("$acc")
       else
+        echo "adding regular accession ${acc}"
         regular_accessions+=("$acc")
       fi
     done
@@ -105,22 +132,38 @@ fetch_data() {
 
     for assembly in "${assembly_accessions[@]}"; do
       echo "Processing assembly: ${assembly} from ${strain}"
-      nc_accessions+=($(esearch -db assembly -query "$assembly" \
+      # Input all the accessions to the array all_accs
+      mapfile -t all_accs < <(esearch -db assembly -query "$assembly" \
         | elink -target nuccore \
-        | efetch -format acc \
-        | grep "^NC_")) #allow NP_ or NM?
-      if [[ ${#nc_accessions[@]} -eq 0 ]]; then
-        log_error "No NC_ accessions found for assembly: $assembly"
-        exit 1 
+        | efetch -format acc)
+
+      # Output error if no accessions were found
+      if [[ ${#all_accs[@]} -eq 0 ]]; then
+        log_error "WARNING: No accessions found for assembly: $assembly"
+        exit 1
+      else
+        echo "testing for accessions of the assemblies"
+        # Let' see if at least one accession begins with NC_ (RefSeq)
+        mapfile -t nc_only < <(printf '%s\n' "${all_accs[@]}" | grep '^NC_')
+        if [[ ${#nc_only[@]} -gt 0 ]]; then
+          log_info "Found NC_ accessions for assembly $assembly and using them."
+          nc_accessions+=("${nc_only[@]}")
+        else
+          log_info "No NC_ accessions found for assembly: $assembly, using alternative GenBank accessions."
+          # Add all accessions (GenBank)
+          nc_accessions+=("${all_accs[@]}")
+        fi
       fi
     done
     #To avoid problem with commas if the regular array is void?
     if [[ -z "${regular_accessions[*]}" ]]; then
+      echo "There are no regular accessions: ${regular_accessions[@]}"
       accessions_list=$(IFS=','; echo "${nc_accessions[*]}")
     else
+      echo "There are regular accessions: ${regular_accessions[@]}"
       accessions_list=$(IFS=','; echo "${nc_accessions[*]},${regular_accessions[*]}")
     fi
-    echo "Final accesion list has ${#regular_accessions[@]} given accessions and ${#nc_accessions[@]} assembly accessions. The assembly accessions are:${nc_accessions[@]}"
+    echo "Final accesion list has ${#regular_accessions[@]} given accessions and ${#nc_accessions[@]} assembly accessions. The assembly accessions are: ${nc_accessions[@]}"
   fi
   # Fetch data
   log_info "Fetching data for strain: $strain (Accessions: $accessions_list)"
@@ -130,6 +173,11 @@ fetch_data() {
       log_error "Failed to fetch accession(s) for ${strain}: ${accessions_list}"
       exit 1
     }
+  #writhe to the file only if fetching was successful
+  if $HAS_CODE_COLUMN; then
+    echo "WRITING TO ${FIVE_LETTER_FILE}"
+    echo -e "${strain}\t${code}" >> "${FIVE_LETTER_FILE}"
+  fi
   sleep 1
   log_info "Done fetching data for: $strain"
 }
@@ -149,69 +197,86 @@ generate_og_gene_tsv() {
     # Example usage
     # process_genes ~/oma/test3_illumina/db ~/oma/test3_illumina/marker_genes output_table.tsv
     #temp file
-
-    tmp_file="$(mktemp)"
+    #flag -p specifies the dir to store the temp file 
+    tmp_file=$(mktemp -p "$TEMP_DIR" file.XXXXXX)
     while IFS=: read -r file line; do
         #Example of the complete input line: db/rsv_11_cds_from_genomic.fna:>lcl|MG813984.1_cds_AZQ19553.1_6 [gene=SH] [protein=small hydrophobic protein] [protein_id=AZQ19553.1] [location=4251..4445] [gbkey=CDS]
-        local species=$(basename "$file" | awk -F '_cds_' '{print $1}')
-        local code="${SPECIES_TO_CODE[$species]}"
-        local accession="$(awk -F '_cds_' '{print $1}' <<< "${line#*|}")"
-        #local protein_id2=$(awk -F '_cds_' '{print $2}' <<< "${line#*|}")
-
-        local gene="NA"
-        local protein="NA"
         local protein_id="NA"
-        local location="NA"
-        #local accession="NA"; local code="NA"
-        #local gene="$(echo "$line" | grep -oP '\[gene=\K[^\]]+')"
-        #local protein="$(echo "$line" | grep -oP '\[protein=\K[^\]]+')"
-        #local protein_id="$(echo "$line" | grep -oP '\[protein_id=\K[^\]]+')"
-        #local location="$(echo "$line" | grep -oP '\[location=\K[^\]]+')"
-
-        # gene
-        if [[ "$line" =~ \[gene=([^]]+)\] ]]; then
-          gene="${BASH_REMATCH[1]}"
-        fi
-
-        # protein
-        if [[ "$line" =~ \[protein=([^]]+)\] ]]; then
-          protein="${BASH_REMATCH[1]}"
-        fi
-
         # protein_id
         if [[ "$line" =~ \[protein_id=([^]]+)\] ]]; then
           protein_id="${BASH_REMATCH[1]}"
         fi
+        [[ "$protein_id" == "NA" ]] && { 
+          log_error "Missing protein_id for line in $file"
+          exit 1
+        }
 
-        # location
-        if [[ "$line" =~ \[location=([^]]+)\] ]]; then
-          location="${BASH_REMATCH[1]}"
-        fi
-
-        #Compressed_id uses the protein_id without alphanumeric characters to match the header in OrthologousGroupsFasta:
-        #Output/OrthologousGroupsFasta/OG11.fa:>3355X||rsv_11||lcl|MG8139841cdsAZQ1955316 cleaned for r2t [rsv_11_3355X]
-        local compressed_id="$(echo "$protein_id" | sed 's/[^a-zA-Z0-9]//g')"
-        #echo "Got correct features from *fna for ${protein_id}"
-
-        [[ "$gene" == "NA" ]]       && log_warn "Missing gene for line in $file"
-        [[ "$protein" == "NA" ]]    && log_warn "Missing protein for line in $file"
-        [[ "$protein_id" == "NA" ]] && log_warn "Missing protein_id for line in $file"
-        [[ "$location" == "NA" ]]  && log_warn "Missing location for line in $file"
-        # Buscar OG directamente con grep
+        local compressed_id="$(clean_line "$protein_id")"
+        # Search OG using grep
         local og_matches
+        #Here it can match partial substrings
         if og_matches=$(grep -l "$compressed_id" "$fa_dir"/*.fa 2>/dev/null | xargs -I {} basename {} .fa); then
-              echo "Matches found for $compressed_id: $og_matches"
-              # Iterar sobre los OGs encontrados y escribir al archivo temporal
+              echo "Matches found for protein id $protein_id: $og_matches"
+              # Iterate over the OGs found and write to temporary file
+              #This loop assumes a gene could be present in more than one OG, is that actually the case? don't think so
+              local species=$(basename "$file" | awk -F '_cds_' '{print $1}')
+              local code="${SPECIES_TO_CODE[$species]}"
+              local accession="$(awk -F '_cds_' '{print $1}' <<< "${line#*|}")"
+              local gene="NA"
+              local protein="NA"
+              local location="NA"
+              local locus_tag="NA"
+              local db_xref="NA"
+              #local accession="NA"; local code="NA"
+              #local gene="$(echo "$line" | grep -oP '\[gene=\K[^\]]+')"
+              #local protein="$(echo "$line" | grep -oP '\[protein=\K[^\]]+')"
+              #local protein_id="$(echo "$line" | grep -oP '\[protein_id=\K[^\]]+')"
+              #local location="$(echo "$line" | grep -oP '\[location=\K[^\]]+')"
+
+              # gene
+              if [[ "$line" =~ \[gene=([^]]+)\] ]]; then
+                gene="${BASH_REMATCH[1]}"
+              fi
+
+              # protein
+              if [[ "$line" =~ \[protein=([^]]+)\] ]]; then
+                protein="${BASH_REMATCH[1]}"
+              fi
+
+              # location
+              if [[ "$line" =~ \[location=([^]]+)\] ]]; then
+                location="${BASH_REMATCH[1]}"
+              fi
+              #Locus tag
+              if [[ "$line" =~ \[locus_tag=([^]]+)\] ]]; then
+                locus_tag="${BASH_REMATCH[1]}"
+              fi
+              #Db_xref
+              if [[ "$line" =~ \[db_xref=([^]]+)\] ]]; then
+                db_xref="${BASH_REMATCH[1]}"
+              fi
+
+              #Compressed_id uses the protein_id without alphanumeric characters to match the header in OrthologousGroupsFasta:
+              #Output/OrthologousGroupsFasta/OG11.fa:>3355X||rsv_11||lcl|MG8139841cdsAZQ1955316 cleaned for r2t [rsv_11_3355X]
+              #local compressed_id="$(echo "$protein_id" | sed 's/[^a-zA-Z0-9]//g')"
+              #echo "Got correct features from *fna for ${protein_id}"
+              [[ "$gene" == "NA" ]]       && log_info "Missing gene for line in $file"
+              [[ "$protein" == "NA" ]]    && log_info "Missing protein for line in $file"
+              [[ "$protein_id" == "NA" ]] && log_info "Missing protein_id for line in $file"
+              [[ "$location" == "NA" ]]  && log_info "Missing location for line in $file"
+              [[ "$locus_tag" == "NA" ]]  && log_info "Missing locus_tag for line in $file"
+              [[ "$db_xref" == "NA" ]]  && log_info "Missing db_xref for line in $file"
+
               for og in $og_matches; do
-                  echo -e "${og}\t${gene}\t${protein}\t${protein_id}\t${location}\t${accession}\t${species}\t${code}" >> "$tmp_file"
+                  echo -e "${og}\t${gene}\t${protein}\t${protein_id}\t${location}\t${accession}\t${species}\t${code}\t${locus_tag}\t${db_xref}" >> "$tmp_file"
               done
-        else
-            log_warn "Error: grep command failed while searching for compressed ID: $protein_id in directory: $fa_dir"
+        else #Should this be really a warn?, it just means that that gene is not in the OG from OMA
+            log_warn "grep command failed while searching for protein id $protein_id in directory: $fa_dir"
         fi
     done < <(grep '^>' "$fna_dir"/*.fna)
     #-V option in sort from GNU coreutils
     sort -k1,1 -V -k2,2 "$tmp_file" > "$output_file"
-    sed -i '1i OG\tGene\tProtein\tProtein_ID\tLocation\tAccession\tTaxon\tCode' "$output_file"
+    sed -i '1i OG\tGene\tProtein\tProtein_ID\tLocation\tAccession\tTaxon\tCode\tLocus_tag\tDb_xref' "$output_file"
         {
       echo -e "OG\tGene\tProtein\ttaxon"
       # Skip the header of the main TSV
@@ -246,11 +311,6 @@ generate_og_gene_tsv() {
 
     log_info "OG-Gene TSV generation complete: $output_file"
 }
-READ_TYPE="long-hifi"  # Default read type
-THREADS=12
-FIVE_LETTER_FILE="five_letter_taxon.tsv"
-OUTGROUP_FILE=""
-READS_DIR=$(pwd)  # Default to current working directory
 
 ####################################################
 
@@ -259,12 +319,19 @@ READS_DIR=$(pwd)  # Default to current working directory
 ###################################################
 
 # Parse flags
+
+if [[ $# -eq 0 ]]; then
+  show_help
+  exit 1
+fi
+
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         -i|--input) INPUT_FILE="$2"; shift ;;
         -o|--outgroup) OUTGROUP_FILE="$2"; shift ;;
         -t|--read-type) READ_TYPE="$2"; shift ;;
-        -n|--THREADS) THREADS="$2"; shift ;;
+        -T|--threads) THREADS="$2"; shift ;;
+        --temp_dir) TEMP_DIR="$2";shift 2;;
         -r|--reads-dir) READS_DIR="$2"; shift ;;
         -h|--help) show_help; exit 0 ;;
         *) log_error "Unknown parameter passed: $1"; show_help; exit 1 ;;
@@ -290,13 +357,37 @@ if [[ -n "$OUTGROUP_FILE" ]] && ([[ ! -f "$OUTGROUP_FILE" ]] || [[ ! -s "$OUTGRO
     exit 1
 fi
 
+if [[ -z "$READS_DIR" ]]; then
+  READS_DIR="$(pwd)"
+fi
+
 if [[ ! -d "$READS_DIR" || -z "$(ls -A "$READS_DIR" 2>/dev/null)" ]]; then
     log_error "Error: The reads directory '$READS_DIR' does not exist or is empty."
     exit 1
 fi
 
+if [[ -z "$TEMP_DIR" ]]; then
+  TEMP_DIR="$(mktemp -d)"
+  log_info "Created temp directory at $TEMP_DIR"
+else
+  # Validate if it is a directory
+  if [[ ! -d "$TEMP_DIR" ]]; then
+    mkdir -p "$TEMP_DIR"
+  fi
+  log_info "Using existing temp directory: $TEMP_DIR"
+fi
+
+if [[ "$DEBUG" == false ]]; then
+  trap 'rm -rf "$TEMP_DIR"' EXIT
+else
+  log_info "Debug mode enabled, keeping temporary directory: $TEMP_DIR"
+fi
+
+READS_DIR=${READS_DIR%/}
+CLEAN_FILE="$(mktemp -p "$TEMP_DIR" file.XXXXXX)"  #Temporary file for cleaned input
 # Extract the header line from the input file
-HEADER_LINE="$(head -n1 "$INPUT_FILE" | tr -d '[:space:]')"
+grep -v '^#' "$INPUT_FILE" | grep -v '^$' > "$CLEAN_FILE"
+HEADER_LINE="$(head -n1 "$CLEAN_FILE" | tr -d '[:space:]')"
 IFS=',' read -ra HEADER_COLS <<< "$HEADER_LINE"
 LOWER_HEADER=("${HEADER_COLS[@],,}")
 HAS_CODE_COLUMN=false
@@ -320,7 +411,7 @@ if [[ "${#HEADER_COLS[@]}" -eq 3 ]]; then
         log_error "Invalid CODE on line $line_number:'$line'. CODE must have exactly 5 alphanumeric characters."
         exit 1
       fi
-    done <<< "$(cat "orthomyxoviridae_accessions.txt" | tail -n +2 |grep -v '^$'|cut -d',' -f2|tr -d '[:blank:]')"
+    done <<< "$(cat "$CLEAN_FILE" | tail -n +2 |cut -d',' -f2|tr -d '[:blank:]')"
     #first I deleted complete void lines, so if -z works, it is detecting a row that has its second field void
     #echo -e "species\tcode" >> $FIVE_LETTER_FILE
     log_info "CODE column has been detected and validated. (3 columns)."
@@ -331,7 +422,7 @@ if [[ "${#HEADER_COLS[@]}" -eq 3 ]]; then
 elif [[ "${#HEADER_COLS[@]}" -eq 2 ]]; then
   # If has exactly 2 columns, check if they are valid (STRAIN/SPECIES and ACCESSIONS)
   if [[ "${LOWER_HEADER[0]}" =~ ^(taxon(s)?|strain(s)?|species)$ ]] && [[ "${LOWER_HEADER[1]}" =~ ^accession(s)?$ ]]; then
-    log_info "Only 2 columns found in header: TAXON/SPECIES/STRAIN, ACCESSIONS (or equivalent). No CODE column."
+    log_info "Only 2 columns found in header: TAXON/SPECIES/STRAIN, ACCESSIONS (or equivalent). No code column, codes of the format sXXXX will be generated."
   else
     log_error "The header columns are not correct. Expected TAXON(S)/STRAIN/SPECIE(S) and ACCESSION(S) (or equivalent). Found: '${HEADER_COLS[0]}' and '${HEADER_COLS[1]}'."
     exit 1
@@ -342,16 +433,15 @@ mkdir -p db
 log_info "Starting retrieval of sequences from $INPUT_FILE..."
 # Export the function so GNU Parallel can see it
 count=0
-export -f fetch_data log_info log_warn log_error
-export RED YELLOW BLUE GREEN NC FIVE_LETTER_FILE HAS_CODE_COLUMN count
- # <-- Aquí inicializas la variable
-tail -n +2 "$INPUT_FILE" | grep -v '^$' | parallel -j 1 fetch_data {}
+export -f fetch_data log_info log_warn log_error clean_line 
+export RED YELLOW GREEN NC FIVE_LETTER_FILE HAS_CODE_COLUMN count
+tail -n +2 "$CLEAN_FILE" | parallel -j 1 fetch_data {}
 #while IFS= read -r line || [[ -n "$line" ]]; do
 #  if ! fetch_data "$line"; then
 #    echo "Error processing line: $line"
 #  fi
-#done < <(tail -n +2 "$INPUT_FILE" | grep -v '^$')
-#tail -n +2 "$INPUT_FILE" | grep -v '^$' | xargs -n 1 -I {} bash -c 'fetch_data "{}"'
+#done < <(tail -n +2 "$CLEAN_FILE" | grep -v '^$')
+#tail -n +2 "$CLEAN_FILE" | grep -v '^$' | xargs -n 1 -I {} bash -c 'fetch_data "{}"'
 
 #echo "Total lines processed: $count"
 
@@ -379,9 +469,9 @@ outgroup_codes=()
 if [ -n "$OUTGROUP_FILE" ]; then
     log_info "Reading outgroup taxon from $OUTGROUP_FILE..."
     while IFS= read -r species || [[ -n "$species" ]]; do
-        species=$(echo "$species" | tr -d '[:space:]')
+        species=$(clean_line "${species}")
         if grep -q "^${species}[[:space:]]" "$FIVE_LETTER_FILE"; then
-            code=$(awk -v sp="$species" -vOFS="_" '$1 == sp {print $1}' "$FIVE_LETTER_FILE")
+            code=$(awk -v sp="$species" '$1 == sp {print $1}' "$FIVE_LETTER_FILE")
             outgroup_codes+=("$code")
         else
             log_warn "Outgroup taxon '$species' not found in $FIVE_LETTER_FILE."
@@ -420,41 +510,170 @@ fi
 
 
 log_info "Running Read2Tree (step 1marker) with ${THREADS} threads..."
-
 #read2tree --standalone_path ./marker_genes --output_path read2tree_output --dna_reference dna_ref.fa
-
-
 read2tree --step 1marker --standalone_path marker_genes --dna_reference dna_ref.fa --output_path read2tree_output --debug 
+echo "Starting read processing..."
+echo "Searching for FASTQ files in: $READS_DIR"
+all_fastq=( $(find "$READS_DIR" -maxdepth 1 -type f \( -name "*.fastq" -o -name "*.fastq.gz" \) ) )
+echo "Found ${#all_fastq[@]} FASTQ files."
+
+# Declare associative arrays for both reads
+declare -A sampleR1
+declare -A sampleR2
+
+# First we define sampleR1 / sampleR2
+for f in "${all_fastq[@]}"; do
+    base="$(basename "$f")"
+    noext="${base%.fastq.gz}"
+    if [[ "$noext" == "$base" ]]; then
+        noext="${base%.fastq}"
+    fi
+
+    # If _1 is detected => Paired R1
+    if [[ "$noext" =~ (.*)_1$ ]]; then
+        sample="${BASH_REMATCH[1]}"
+        sampleR1["$sample"]="$f"
+        echo "Detected paired-end R1: $f (Sample: $sample)"
+
+    # If _2 is detected => Paired R2
+    elif [[ "$noext" =~ (.*)_2$ ]]; then
+        sample="${BASH_REMATCH[1]}"
+        sampleR2["$sample"]="$f"
+        echo "Detected paired-end R2: $f (Sample: $sample)"
+
+    else
+        # Otherwise => single-end
+        sampleR1["$noext"]="$f"
+        echo "Detected single-end read: $f (Sample: $noext)"
+    fi
+done
+
+# Get the union of all detected samples
+all_samples=()
+all_samples+=( "${!sampleR1[@]}" )
+all_samples+=( "${!sampleR2[@]}" )
+# We create a unique list by removing duplicates
+readarray -t unique_samples < <(printf '%s\n' "${all_samples[@]}" | sort -u)
+
+#main loop for processing each sample
+for sample in "${unique_samples[@]}"; do
+    R1="${sampleR1[$sample]:-}"
+    R2="${sampleR2[$sample]:-}"
+
+    if [[ -n "$R1" && -n "$R2" ]]; then
+        # => Paired-end => force short read type
+        echo "Processing short paired-end reads for sample '$sample':"
+        echo "  R1: $R1"
+        echo "  R2: $R2"
+        read2tree --step 2map \
+                  --standalone_path marker_genes \
+                  --dna_reference dna_ref.fa \
+                  --reads "$R1" "$R2" \
+                  --read_type "short" \
+                  --threads "$THREADS" \
+                  --output_path read2tree_output \
+                  --debug
+    else
+        # => Single-end => use READ_TYPE ('short', 'long-ont', 'long-hifi')
+        #    (if only R2 or only R1 exists, treat it as single-end)
+        SE_FILE="$R1"
+        if [[ -z "$SE_FILE" ]]; then
+            SE_FILE="$R2"
+        fi
+        echo "Processing single-end reads for sample '$sample' (READ_TYPE=$READ_TYPE):"
+        echo "  Read file: $SE_FILE"
+        read2tree --step 2map \
+                  --standalone_path marker_genes \
+                  --dna_reference dna_ref.fa \
+                  --reads "$SE_FILE" \
+                  --read_type "$READ_TYPE" \
+                  --threads "$THREADS" \
+                  --output_path read2tree_output \
+                  --debug
+    fi
+done
+
+echo "Read processing completed successfully."
 
 
-# Procesar archivos según el tipo de lectura
-#if [[ "$READ_TYPE" == "long-ont" || "$READ_TYPE" == "long-hifi" ]]; then
-#   reads=($(find "$READS_DIR" -name "*.fastq.gz" -exec basename {} .fastq.gz \;))  # Archivos de lecturas largas
-#   for read in "${reads[@]}"; do
-        #read2tree --step 2map --standalone_path marker_genes --dna_reference dna_ref.fa --reads "${read}.fastq.gz" --READ_TYPE "$READ_TYPE" --THREADS "$THREADS" --output_path read2tree_output --debug
-        #echo "Processing long read file: ${read}.fastq.gz"
-    #done
-#elif [[ "$READ_TYPE" == "short" ]]; then
-    # Archivos de lecturas cortas emparejadas (R1 y R2)
-    #reads=($(find "$READS_DIR" -name "*_1.fastq.gz" -exec basename {} _1.fastq.gz \;))  # Detectar muestras basadas en R1
-    #for read in "${reads[@]}"; do
-        #R1="${read}_1.fastq.gz"
-        #R2="${read}_2.fastq.gz"
-        #if [[ -f "$R1" && -f "$R2" ]]; then
-            #read2tree --step 2map --standalone_path marker_genes --dna_reference dna_ref.fa --reads "$R1" "$R2" --READ_TYPE "$READ_TYPE" --THREADS "$THREADS" --output_path read2tree_output --debug
-            #echo "Processing paired-end reads: $R1 and $R2"
-        #else
-            #echo "Warning: Missing pair for $read. Skipping..."
-        #fi
-    #done
-#else
-    #echo "Error: Unsupported read type '$READ_TYPE'. Use 'long-ont', 'long-hifi', or 'short'."
-    #exit 1
-#fi
+
+# # Process files based on read type
+# if [[ "$READ_TYPE" == "long-ont" || "$READ_TYPE" == "long-hifi" ]]; then
+#     # --- Long reads processing ---
+#     reads=($(find "$READS_DIR" -name "*.fastq.gz" -exec basename {} .fastq.gz \;))  # Find all long-read FASTQ files
+#     for read in "${reads[@]}"; do
+#         echo "Processing long read file: ${read}.fastq.gz"
+#         read2tree --step 2map \
+#                   --standalone_path marker_genes \
+#                   --dna_reference dna_ref.fa \
+#                   --reads "${read}.fastq.gz" \
+#                   --read_type "$READ_TYPE" \
+#                   --threads "$THREADS" \
+#                   --output_path read2tree_output \
+#                   --debug
+#     done
+
+# elif [[ "$READ_TYPE" == "short" ]]; then
+#     # --- Short reads processing ---
+#     # Detect paired-end reads based on the existence of *_1.fastq.gz
+#     paired_samples=($(find "$READS_DIR" -name "*_1.fastq.gz" -exec basename {} _1.fastq.gz \;))
+
+#     if [[ ${#paired_samples[@]} -gt 0 ]]; then
+#         echo "Detected potential paired-end samples..."
+
+#         for sample in "${paired_samples[@]}"; do
+#             R1="${READS_DIR}/${sample}_1.fastq.gz"
+#             R2="${READS_DIR}/${sample}_2.fastq.gz"
+
+#             if [[ -f "$R1" && -f "$R2" ]]; then
+#                 echo "Processing paired-end reads: $R1 and $R2"
+#                 read2tree --step 2map \
+#                           --standalone_path marker_genes \
+#                           --dna_reference dna_ref.fa \
+#                           --reads "$R1" "$R2" \
+#                           --read_type "$READ_TYPE" \
+#                           --threads "$THREADS" \
+#                           --output_path read2tree_output \
+#                           --debug
+#             else
+#                 # If R2 is missing, treat R1 as a single-end read
+#                 echo "Warning: Pair file for $sample not found. Processing as single-end."
+#                 read2tree --step 2map \
+#                           --standalone_path marker_genes \
+#                           --dna_reference dna_ref.fa \
+#                           --reads "$R1" \
+#                           --read_type "$READ_TYPE" \
+#                           --threads "$THREADS" \
+#                           --output_path read2tree_output \
+#                           --debug
+#             fi
+#         done
+#     else
+#         # If no *_1.fastq.gz files exist, assume all reads are single-end
+#         echo "No *_1.fastq.gz files detected. Assuming all reads are single-end."
+#         single_reads=($(find "$READS_DIR" -name "*.fastq.gz"))
+#         for read_file in "${single_reads[@]}"; do
+#             base_name="$(basename "$read_file" .fastq.gz)"
+#             echo "Processing single-end read: $base_name"
+#             read2tree --step 2map \
+#                       --standalone_path marker_genes \
+#                       --dna_reference dna_ref.fa \
+#                       --reads "$read_file" \
+#                       --read_type "$READ_TYPE" \
+#                       --threads "$THREADS" \
+#                       --output_path read2tree_output \
+#                       --debug
+#         done
+#     fi
+
+# else
+#     echo "Error: Unsupported read type '$READ_TYPE'. Use 'long-ont', 'long-hifi', or 'short'."
+#     exit 1
+# fi
 
 
 
 #echo "Merging..."
-#read2tree --step 3combine --standalone_path marker_genes --dna_reference dna_ref.fa --output_path read2tree_output --tree --debug
-#iqtree -T ${THREADS} -s read2tree_output/concat_*_aa.phy -bb 1000
+read2tree --step 3combine --standalone_path marker_genes --dna_reference dna_ref.fa --output_path read2tree_output --tree --debug
+iqtree -T ${THREADS} -s read2tree_output/concat_*_aa.phy -bb 1000
 #iqtree -T ${THREADS} -s read2tree_output/concat_*_dna.phy 
