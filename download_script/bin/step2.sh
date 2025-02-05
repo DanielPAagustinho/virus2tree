@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-set -x #bug fixes
+#set -x #bug fixes
 echo -e "Script invoked with: $0 $*\n"
 
 ############################################
@@ -9,12 +9,13 @@ echo -e "Script invoked with: $0 $*\n"
 READ_TYPE=""
 READS=()         # Array to store multiple input reads
 TEMP_DIR=""      # If empty, we will create a new one with mktemp
+OUT_DIR=""
 DEDUP=false
-DEDUP_L=""       # optional argument for czid-dedup
+DEDUP_L=0       # optional argument for czid-dedup
 DOWNSAMPLE=false
 # Downsampling method can be coverage & genome_size, or number_of_bases, or number_of_reads
-COVERAGE=0
-GENOME_SIZE=0
+COVERAGE=0.0
+GENOME_SIZE=""
 NUM_BASES=0
 NUM_READS=0
 THREADS=4        # you can adjust a default or parse it
@@ -48,8 +49,8 @@ log_error() {
 }
 
 usage() {
-  echo "Usage: $0 -r <file1> [file2...] -t <read_type> [options]"
-  echo "Try '$0 --help' for more information."
+  echo -e "Usage: $0 -r <file1> [file2...] -t <read_type> [options]\n"
+  #echo "Try '$0 --help' for more information."
 }
 
 show_help() {
@@ -60,24 +61,55 @@ $(usage)
     -r, --reads <file1> [file2 file3 ...]            Input fastq/fastq.gz
     -t, --read_type <se_short|pe_short|pacbio|ont>    Type of reads
 
-
   Optional:
     -T, --threads <int>      Threads to use (default 4)
-    --temp_dir <dir>         Specify existing temp directory (otherwise mktemp -d is used)
+    --temp_dir <dir>         Specify temp directory (otherwise mktemp -d is used)
+    --out_dir <dir>          Specify output dir for read2tree results
     --dedup                  Run czid-dedup
     --dedup_l <int>          Provide '-l <int>' to czid-dedup
     --downsample             Run rasusa
-    --coverage <int>         Coverage to target (requires --genome_size)
-    --genome_size <int>      Genome size in bases
+    --coverage <float>       Coverage to target (requires --genome_size)
+    --genome_size <size>     Genome size to calculate coverage with respect to. E.g., 4.3kb, 7Tb, 9000, 4.1MB
     --num_bases <int>        Target number of bases
     --num_reads <int>        Target number of reads
-    --debug                  Keeps temporary directory  
+    --debug                  Keep temporary directory  
     -h, --help               Show this help
+
 Examples:
   $0 -t se_short -r sample.fastq.gz --dedup --downsample --num_reads 10000
   $0 --read_type pe_short --reads R1.fastq R2.fastq --coverage 30 --genome_size 5000000
+
 EOF
   exit 0
+}
+
+#function to analyze each fastq
+analyze_fastq() {
+    local fastq_file="$1"
+    local output_file="$2"
+    local total_lines total_reads total_bases avg_length
+
+    # Verify if the file is compressed
+    if [[ "$fastq_file" == *.gz ]]; then
+        total_lines=$(zcat "$fastq_file" | wc -l)
+        total_bases=$(zcat "$fastq_file" | awk 'NR % 4 == 2 {total += length($0)} END {print total}')
+    else
+        total_lines=$(wc -l < "$fastq_file")
+        total_bases=$(awk 'NR % 4 == 2 {total += length($0)} END {print total}' "$fastq_file")
+    fi
+
+    # Each read correspond to four lines
+    total_reads=$((total_lines / 4))
+
+    #Get mean length
+    if [[ "$total_reads" -gt 0 ]]; then
+        avg_length=$((total_bases / total_reads))
+    else
+        avg_length=0
+    fi
+
+    # Print results in tabular format
+    printf "%s\t%'d\t%'d\t%'d\n" "$fastq_file" "$total_reads" "$avg_length" "$total_bases" >> "$output_file"
 }
 
 ############################################
@@ -86,6 +118,7 @@ EOF
 
 if [[ $# -eq 0 ]]; then
   usage
+  echo "Try '$0 --help' for more information."
   exit 1
 fi
 
@@ -108,7 +141,11 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     --temp_dir)
-      TEMP_DIR="$2"
+      TEMP_DIR="${2%/}"
+      shift 2
+      ;;
+    --out_dir)
+      OUT_DIR="${2%/}"
       shift 2
       ;;
     --dedup)
@@ -149,13 +186,16 @@ while [[ $# -gt 0 ]]; do
     *)
       log_error "Unknown parameter passed: $1"
       usage
+      echo "Try '$0 --help' for more information."
       exit 1
       ;;
   esac
 done
+
 ############################################
 # Validate required parameters
 ############################################
+echo "Validating"
 
 if [[ -z "$READ_TYPE" ]]; then
   log_error "Please specify --read_type"
@@ -179,6 +219,7 @@ esac
 
 if [[ "$READ_TYPE" == "pe_short" && ${#READS[@]} -ne 2 ]]; then
   log_error "Paired-end short reads requires exactly 2 files."
+  echo "${READS[@]} and ${#READS[@]}, THESE ARE: "${READS[0]}","
   usage
   exit 1
 fi
@@ -186,14 +227,17 @@ fi
 #Verify the use of just one of the 3 rasusa options
 if [[ "$DOWNSAMPLE" == true ]]; then
   method_count=0
-  if [[ $COVERAGE -gt 0 && $GENOME_SIZE -gt 0 ]]; then
-    ((method_count++))
+  echo "$GENOME_SIZE"
+  if [[ $(echo "$COVERAGE > 0" | bc -l) -eq 1 && -n "$GENOME_SIZE" ]]; then
+    echo "here in if"
+    (( method_count+=1 )) 
+    echo "here after adding 1"
   fi
   if [[ $NUM_BASES -gt 0 ]]; then
-    ((method_count++))
+    (( method_count+=1 ))
   fi
   if [[ $NUM_READS -gt 0 ]]; then
-    ((method_count++))
+    (( method_count+=1 ))
   fi
   if [[ $method_count -eq 0 ]]; then
     log_error "Downsampling requires --coverage + --genome_size OR --num_bases OR --num_reads."
@@ -201,6 +245,11 @@ if [[ "$DOWNSAMPLE" == true ]]; then
   fi
   if [[ $method_count -gt 1 ]]; then
     log_error "Please specify only ONE downsampling method (coverage+genome_size) OR num_bases OR num_reads."
+    exit 1
+  fi
+else
+  if [[ $(echo "$COVERAGE != 0" | bc -l) -eq 1 || -n "$GENOME_SIZE" || $NUM_BASES -gt 0 || $NUM_READS -gt 0 ]]; then
+    log_error "Downsampling parameters provided without specifying --downsample. Please include --downsample."
     exit 1
   fi
 fi
@@ -216,11 +265,23 @@ else
   if [[ ! -d "$TEMP_DIR" ]]; then
     mkdir -p "$TEMP_DIR"
   fi
-  log_info "Using existing temp directory: $TEMP_DIR"
+  log_info "Using temp directory: $TEMP_DIR"
+fi
+
+if [[ -z "$OUT_DIR" ]]; then
+  OUT_DIR=read2tree_output
+  log_info "No name for the read2tree directory was specified, assuming it is $OUT_DIR"
+else
+  # Validate if it is a directory
+  if [[ ! -d "$OUT_DIR" ]]; then
+    log_error "Please provide a read2tree directory that exists and where step1 has been executed"
+    exit 1
+  fi
+  log_info "Using read2tree directory: $OUT_DIR"
 fi
 
 if [[ "$DEBUG" == false ]]; then
-  trap 'rm -rf "$TEMP_DIR"' EXIT
+  trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "$TEMP_DIR"' EXIT
 else
   log_info "Debug mode enabled, keeping temporary directory: $TEMP_DIR"
 fi
@@ -232,7 +293,8 @@ FINAL_READS=()
 if [[ ${#READS[@]} -gt 1 ]]; then
   if [[ ${READ_TYPE} == "pe_short" ]]; then
     for READ_SAMPLE in "${READS[@]}"; do
-      output_file=$TEMP_DIR/${READ_SAMPLE%.gz}
+      filename=$(basename "$READ_SAMPLE")
+      output_file=$TEMP_DIR/${filename%.gz}
       if gzip -t "$READ_SAMPLE" 2>/dev/null; then
         zcat "$READ_SAMPLE" > "$output_file"
       else
@@ -242,7 +304,8 @@ if [[ ${#READS[@]} -gt 1 ]]; then
     done
   else
     log_info "Concatenating multiple files..."
-    output_file=$TEMP_DIR/${READS[0]%.gz}
+    filename=$(basename "${READS[0]}")
+    output_file=$TEMP_DIR/${filename%.gz}
     for READ_SAMPLE in "${READS[@]}"; do
       if gzip -t "$READ_SAMPLE" 2>/dev/null; then
         zcat "$READ_SAMPLE" >> "$output_file"
@@ -253,7 +316,8 @@ if [[ ${#READS[@]} -gt 1 ]]; then
     FINAL_READS=("$output_file")
   fi
 else
-  output_file=$TEMP_DIR/${READS[0]%.gz}
+  filename=$(basename "${READS[0]}")
+  output_file=$TEMP_DIR/${filename%.gz}
   if gzip -t "${READS[0]}" 2>/dev/null; then
     zcat "${READS[0]}" > "$output_file"
   else
@@ -262,19 +326,19 @@ else
   FINAL_READS=("$output_file")
 fi
 
-   
 ############################################
 # Deduplication with czid-dedup (optional) 
 ############################################
 if [[ "$DEDUP" == true ]]; then
   log_info "Running czid-dedup on the reads..."
-  DEDUP_READS=()
   if [[ "$READ_TYPE" == "pe_short" ]]; then
     input_file_1="${FINAL_READS[0]}"
     input_file_2="${FINAL_READS[1]}"
-    output_file_1="$TEMP_DIR/dedup_1.fastq"
-    output_file_2="$TEMP_DIR/dedup_2.fastq"
-    if [[ -n "$DEDUP_L" ]]; then
+    filename_1=$(basename "$input_file_1")
+    filename_2=$(basename "$input_file_2")
+    output_file_1="$TEMP_DIR/${filename_1%.fastq}_dedup.fastq"
+    output_file_2="$TEMP_DIR/${filename_2%.fastq}_dedup.fastq"
+    if [[ "$DEDUP_L" -gt 0 ]]; then
       czid-dedup-Linux -i "$input_file_1" -i "$input_file_2" -o "$output_file_1" -o "$output_file_2" -l "$DEDUP_L"
     else
       czid-dedup-Linux -i "$input_file_1" -i "$input_file_2" -o "$output_file_1" -o "$output_file_2"
@@ -283,8 +347,10 @@ if [[ "$DEDUP" == true ]]; then
   else
     # single file
     input_file="${FINAL_READS[0]}"
-    output_file="$TEMP_DIR/dedup_single.fastq"
-    if [[ -n "$DEDUP_L" ]]; then
+    filename=$(basename "$input_file")
+    output_file="$TEMP_DIR/${filename%.fastq}_dedup.fastq"
+
+    if [[ "$DEDUP_L" -gt 0 ]]; then
       czid-dedup-Linux -i "$input_file" -o "$output_file" -l "$DEDUP_L"
     else
       czid-dedup-Linux -i "$input_file" -o "$output_file"
@@ -305,16 +371,18 @@ if [[ "$DOWNSAMPLE" == true ]]; then
     # we have two files in FINAL_READS
     input_file_1="${FINAL_READS[0]}"
     input_file_2="${FINAL_READS[1]}"
-    output_file_1="$TEMP_DIR/ds_1.fastq"
-    output_file_2="$TEMP_DIR/ds_2.fastq"
+    filename_1=$(basename "$input_file_1")
+    filename_2=$(basename "$input_file_2")
+    output_file_1="$TEMP_DIR/${filename_1%.fastq}_ds.fastq"
+    output_file_2="$TEMP_DIR/${filename_2%.fastq}_ds.fastq"
     # Decide which rasusa flags to use:
     RASUSA_CMD=(rasusa reads)
-    if [[ $COVERAGE -gt 0 && $GENOME_SIZE -gt 0 ]]; then
-      RASUSA_CMD+=(--coverage "$COVERAGE" --genome_size "$GENOME_SIZE")
+    if [[ $(echo "$COVERAGE > 0" | bc -l) -eq 1 && -n $GENOME_SIZE ]]; then
+      RASUSA_CMD+=(--coverage "$COVERAGE" --genome-size "$GENOME_SIZE")
     elif [[ $NUM_BASES -gt 0 ]]; then
-      RASUSA_CMD+=(--bp "$NUM_BASES")
+      RASUSA_CMD+=(--bases "$NUM_BASES")
     elif [[ $NUM_READS -gt 0 ]]; then
-      RASUSA_CMD+=(--limit "$NUM_READS")
+      RASUSA_CMD+=(--num "$NUM_READS")
     fi
     RASUSA_CMD+=(-o "$output_file_1" -o "$output_file_2" "$input_file_1" "$input_file_2")
     #Here show commands before execute
@@ -325,14 +393,15 @@ if [[ "$DOWNSAMPLE" == true ]]; then
   else
     # single file
     input_file="${FINAL_READS[0]}"
-    output_file="$TEMP_DIR/ds_${FINAL_READS[0]}"
+    filename=$(basename "$input_file")
+    output_file="$TEMP_DIR/${filename%.fastq}_ds.fastq"
     RASUSA_CMD=(rasusa reads)
-    if [[ $COVERAGE -gt 0 && $GENOME_SIZE -gt 0 ]]; then
-      RASUSA_CMD+=(--coverage "$COVERAGE" --genome_size "$GENOME_SIZE")
+    if [[ $(echo "$COVERAGE > 0" | bc -l) -eq 1 && -n $GENOME_SIZE ]]; then
+      RASUSA_CMD+=(--coverage "$COVERAGE" --genome-size "$GENOME_SIZE")
     elif [[ $NUM_BASES -gt 0 ]]; then
-      RASUSA_CMD+=(--bp "$NUM_BASES")
+      RASUSA_CMD+=(--bases "$NUM_BASES")
     elif [[ $NUM_READS -gt 0 ]]; then
-      RASUSA_CMD+=(--limit "$NUM_READS")
+      RASUSA_CMD+=(--num "$NUM_READS")
     fi
     RASUSA_CMD+=(-o "$output_file" "$input_file")
     log_info "Executing: ${RASUSA_CMD[*]}"
@@ -340,6 +409,54 @@ if [[ "$DOWNSAMPLE" == true ]]; then
     FINAL_READS=("$output_file")
   fi
 fi
+
+###########################################
+# Create summary table with read_statistics
+###########################################
+
+export -f analyze_fastq
+
+#Analyze fastq in parallel, keep the parallelizing?
+OUTPUT_FILE="$OUT_DIR/../reads_statistics.txt"
+
+input_file="${FINAL_READS[0]}"
+filename=$(basename "$input_file")
+sample_code=$(echo ${filename} |sed -E 's/(_dedup|_ds|_dedup_ds)?\.fastq//')
+
+#Create header
+if [[ ! -s "$OUTPUT_FILE" ]]; then
+    {
+        printf "%s\t%s\t%s\t%s\n" "FASTQ File" "Num Reads" "Avg Length" "Total Bases"
+        #printf "%s\t%s\t%s\t%s\n" "------------------------------" "------------" "------------" "------------"
+    } > "$OUTPUT_FILE"
+fi
+
+if [[ "$READ_TYPE" == "pe_short" ]]; then
+    input_file2="${FINAL_READS[1]}"
+    filename2=$(basename "$input_file2")
+    sample_code2=$(echo "${filename2}" | sed -E 's/(_dedup|_ds|_dedup_ds)?\.fastq//')
+    echo "Sample code 1: $sample_code"
+    echo "Sample code 2: $sample_code2"
+
+    echo "What find is finding"
+    find "$TEMP_DIR" -type f \( -name "${sample_code}*.fastq" -o -name "${sample_code2}*.fastq" \) -print0 | sort -z
+
+    find "$TEMP_DIR" -type f \( -name "${sample_code}*.fastq" -o -name "${sample_code2}*.fastq" \) -print0 | sort -z | while IFS= read -r -d '' fastq_file; do
+      echo "Processing: $fastq_file"
+      analyze_fastq "$fastq_file" "$OUTPUT_FILE"
+    done
+else
+    echo "Sample code: $sample_code"
+    echo "What find is finding"
+    find "$TEMP_DIR" -type f \( -name "${sample_code}*.fastq" \) -print0 | sort -z
+
+    find "$TEMP_DIR" -type f \( -name "${sample_code}*.fastq" \) -print0 | sort -z | while IFS= read -r -d '' fastq_file; do
+      echo "Processing: $fastq_file"
+      analyze_fastq "$fastq_file" "$OUTPUT_FILE"
+    done
+fi
+
+log_info "Read statistics have been saved in file: $OUTPUT_FILE"
 
 ############################################
 # Finally, run read2tree
@@ -352,7 +469,7 @@ READ2TREE_CMD=( read2tree --step 2map
                 --standalone_path marker_genes
                 --dna_reference dna_ref.fa
                 --threads "$THREADS"
-                --output_path read2tree_output
+                --output_path "$OUT_DIR"
                 --debug )
 
 # For the read_type we might do:
@@ -383,12 +500,12 @@ log_info "Executing: ${READ2TREE_CMD[*]}"
 log_info "read2tree step 2map completed successfully."
 
 # Optionally do step 3combine
-log_info "Running read2tree --step 3combine..."
-read2tree --step 3combine \
-          --standalone_path marker_genes \
-          --dna_reference dna_ref.fa \
-          --output_path read2tree_output \
-          --tree \
-          --debug
+# log_info "Running read2tree --step 3combine..."
+# read2tree --step 3combine \
+#           --standalone_path marker_genes \
+#           --dna_reference dna_ref.fa \
+#           --output_path read2tree_output \
+#           --tree \
+#           --debug
 
 log_info "Done. If you want to run iqtree or similar, you can do so now."

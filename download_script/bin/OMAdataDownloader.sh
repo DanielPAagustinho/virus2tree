@@ -1,7 +1,18 @@
 #!/bin/bash
-set -e 
-set -u
-set -o pipefail
+set -euo pipefail
+#set -x
+echo -e "Script invoked with: $0 $*\n"
+
+MAIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPTS_DIR="${MAIN_DIR}/../scripts"
+OMA="${MAIN_DIR}/../oma/bin"
+PARAMETERS_FILE="parameters.drw"
+FIVE_LETTER_FILE="five_letter_taxon.tsv"
+OUTGROUP_FILE=""
+THREADS=12
+TEMP_DIR=""
+OUT_DIR=""
+DEBUG=false
 
 if [ -t 1 ]; then
   RED="\033[1;31m"
@@ -27,38 +38,29 @@ log_error() {
   echo -e "${RED}[$(date '+%Y-%m-%d %H:%M:%S')] [ERROR]${NC} $*"
 }
 
-MAIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SCRIPTS_DIR="${MAIN_DIR}/../scripts"
-OMA="${MAIN_DIR}/../oma/bin"
-PARAMETERS_FILE="parameters.drw"
-FIVE_LETTER_FILE="five_letter_taxon.tsv"
-#TEMP_DIR=$(mktemp -d -p /tmp mytempdir.XXXXXX)
-OUTGROUP_FILE=""
-READ_TYPE="short"  # Default read type
-THREADS=12
-TEMP_DIR=""
-READS_DIR="" # Default to current working directory
-DEBUG=false
-
+usage() {
+  echo -e "Usage: $0 -i <input> [-o <outgroup>] [options]\n"
+  #echo "Try '$0 --help' for more information."
+}
 
 show_help() {
   cat << EOF
-Usage: $0 -i <input> [-o <outgroup>] [-t <read-type>] [-n <threads>] [-r <reads-dir>] [-h]
+$(usage)
 
 Required:
-  -i, --input <file>       Path to the accession file (comma-separated file with the structure: taxon(s)/species/strain(s),code(optional),accession(s)). Note: If provided, the code should have exactly 5 alphanumeric characters.
+  -i, --input <file>                           Path to the accession file (comma-separated file with the structure: taxon(s)/species/strain(s),code(optional),accession(s)). Note: If provided, the code should have exactly 5 alphanumeric characters.
 
 Optional:
   -o, --outgroup <file>                        Path to the outgroup taxon/species/strain file
-  -t, --read-type <short|long-hifi|long-ont>   Type of reads: long-ont, long-hifi, or short [default: short]
   -T, --threads <int>                          Number of threads [default: 12]
-  --temp_dir <dir>                             Specify existing temp directory (otherwise mktemp -d is used)
-  -r, --reads-dir <dir>                        Directory with read files [default: current directory]
+  --temp_dir <dir>                             Specify temp directory (otherwise mktemp -d is used)
+  --out_dir <dir>                              Specify output directory for read2tree step1
   --debug                                      Keeps temporary directory
   -h, --help                                   Show this help message
 
 Example:
-  $0 -i accessions.txt -o outgroups.txt -t short -r /path/to/reads
+  $0 -i accessions.txt -o outgroups.txt
+
 EOF
 exit 0
 }
@@ -191,14 +193,14 @@ generate_og_gene_tsv() {
     local tmp_file  
     local -A SPECIES_TO_CODE
     while IFS=$'\t' read -r species_val code_val; do
-          echo "HEREEE, ${FIVE_LETTER_FILE}, ${species_val} and ${code_val}"
           SPECIES_TO_CODE["$species_val"]="$code_val"
     done < "$FIVE_LETTER_FILE"
     # Example usage
     # process_genes ~/oma/test3_illumina/db ~/oma/test3_illumina/marker_genes output_table.tsv
     #temp file
     #flag -p specifies the dir to store the temp file 
-    tmp_file=$(mktemp -p "$TEMP_DIR" file.XXXXXX)
+    #tmp_file=$(mktemp -p "$TEMP_DIR" file.XXXXXX)
+    tmp_file="$TEMP_DIR/OG_genes_unsorted.tsv"
     while IFS=: read -r file line; do
         #Example of the complete input line: db/rsv_11_cds_from_genomic.fna:>lcl|MG813984.1_cds_AZQ19553.1_6 [gene=SH] [protein=small hydrophobic protein] [protein_id=AZQ19553.1] [location=4251..4445] [gbkey=CDS]
         local protein_id="NA"
@@ -307,8 +309,6 @@ generate_og_gene_tsv() {
       }'
     } > "$unique_output_file"
 
-    rm -f "$tmp_file"
-
     log_info "OG-Gene TSV generation complete: $output_file"
 }
 
@@ -321,7 +321,8 @@ generate_og_gene_tsv() {
 # Parse flags
 
 if [[ $# -eq 0 ]]; then
-  show_help
+  usage
+  echo "Try '$0 --help' for more information."
   exit 1
 fi
 
@@ -329,12 +330,12 @@ while [[ "$#" -gt 0 ]]; do
     case $1 in
         -i|--input) INPUT_FILE="$2"; shift ;;
         -o|--outgroup) OUTGROUP_FILE="$2"; shift ;;
-        -t|--read-type) READ_TYPE="$2"; shift ;;
         -T|--threads) THREADS="$2"; shift ;;
-        --temp_dir) TEMP_DIR="$2";shift 2;;
-        -r|--reads-dir) READS_DIR="$2"; shift ;;
+        --temp_dir) TEMP_DIR="${2%/}"; shift ;;
+        --out_dir) OUT_DIR="${2%/}"; shift ;;
+        --debug) DEBUG=true;;
         -h|--help) show_help; exit 0 ;;
-        *) log_error "Unknown parameter passed: $1"; show_help; exit 1 ;;
+        *) log_error "Unknown parameter passed: $1"; usage; echo "Try '$0 --help' for more information."; exit 1 ;;
     esac
     shift
 done
@@ -357,13 +358,9 @@ if [[ -n "$OUTGROUP_FILE" ]] && ([[ ! -f "$OUTGROUP_FILE" ]] || [[ ! -s "$OUTGRO
     exit 1
 fi
 
-if [[ -z "$READS_DIR" ]]; then
-  READS_DIR="$(pwd)"
-fi
-
-if [[ ! -d "$READS_DIR" || -z "$(ls -A "$READS_DIR" 2>/dev/null)" ]]; then
-    log_error "Error: The reads directory '$READS_DIR' does not exist or is empty."
-    exit 1
+if ! [[ "$THREADS" =~ ^[1-9][0-9]*$ ]]; then
+  log_error "Error: THREADS must be a positive integer."
+  exit 1
 fi
 
 if [[ -z "$TEMP_DIR" ]]; then
@@ -374,17 +371,28 @@ else
   if [[ ! -d "$TEMP_DIR" ]]; then
     mkdir -p "$TEMP_DIR"
   fi
-  log_info "Using existing temp directory: $TEMP_DIR"
+  log_info "Using temp directory: $TEMP_DIR"
+fi
+
+if [[ -z "$OUT_DIR" ]]; then
+  OUT_DIR=read2tree_output
+  log_info "No name for the read2tree directory was specified, using $OUT_DIR"
+else
+  if [[ -d "$OUT_DIR" ]]; then
+    log_error "The read2tree output directory "$OUT_DIR" already exists. Please provide a novel read2tree directory"
+    exit 1
+  fi
+  log_info "Using output directory: $OUT_DIR"
 fi
 
 if [[ "$DEBUG" == false ]]; then
-  trap 'rm -rf "$TEMP_DIR"' EXIT
+  trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "$TEMP_DIR"' EXIT
 else
   log_info "Debug mode enabled, keeping temporary directory: $TEMP_DIR"
 fi
 
-READS_DIR=${READS_DIR%/}
-CLEAN_FILE="$(mktemp -p "$TEMP_DIR" file.XXXXXX)"  #Temporary file for cleaned input
+#CLEAN_FILE="$(mktemp -p "$TEMP_DIR" file.XXXXXX)"  #Temporary file for cleaned input
+CLEAN_FILE="$TEMP_DIR/input_clean_file.txt"
 # Extract the header line from the input file
 grep -v '^#' "$INPUT_FILE" | grep -v '^$' > "$CLEAN_FILE"
 HEADER_LINE="$(head -n1 "$CLEAN_FILE" | tr -d '[:space:]')"
@@ -428,6 +436,7 @@ elif [[ "${#HEADER_COLS[@]}" -eq 2 ]]; then
     exit 1
   fi
 fi
+
 mkdir -p db
 
 log_info "Starting retrieval of sequences from $INPUT_FILE..."
@@ -446,12 +455,12 @@ tail -n +2 "$CLEAN_FILE" | parallel -j 1 fetch_data {}
 #echo "Total lines processed: $count"
 
 log_info "Finished retrieval of nucleotide sequences."
+log_info "Cleaning cds for OMA and r2t."
 
 #Adding 5 letter code and cleaning for r2t
 if $HAS_CODE_COLUMN; then
   # If the user gave a CODE column, we pass db_codes.tsv as second argument
   python "${SCRIPTS_DIR}/clean_fasta_cdna_cds2.py" db "$FIVE_LETTER_FILE"
-  echo "HEREEEEE"
 else
   # If no code was provided, the Python script generates codes on its own
   python "${SCRIPTS_DIR}/clean_fasta_cdna_cds2.py" db
@@ -511,169 +520,93 @@ fi
 
 log_info "Running Read2Tree (step 1marker) with ${THREADS} threads..."
 #read2tree --standalone_path ./marker_genes --output_path read2tree_output --dna_reference dna_ref.fa
-read2tree --step 1marker --standalone_path marker_genes --dna_reference dna_ref.fa --output_path read2tree_output --debug 
-echo "Starting read processing..."
-echo "Searching for FASTQ files in: $READS_DIR"
-all_fastq=( $(find "$READS_DIR" -maxdepth 1 -type f \( -name "*.fastq" -o -name "*.fastq.gz" \) ) )
-echo "Found ${#all_fastq[@]} FASTQ files."
+read2tree --step 1marker --standalone_path marker_genes --dna_reference dna_ref.fa --output_path $OUT_DIR --debug 
+# echo "Starting read processing..."
+# echo "Searching for FASTQ files in: $READS_DIR"
+# all_fastq=( $(find "$READS_DIR" -maxdepth 1 -type f \( -name "*.fastq" -o -name "*.fastq.gz" \) ) )
+# echo "Found ${#all_fastq[@]} FASTQ files."
 
-# Declare associative arrays for both reads
-declare -A sampleR1
-declare -A sampleR2
+# # Declare associative arrays for both reads
+# declare -A sampleR1
+# declare -A sampleR2
 
-# First we define sampleR1 / sampleR2
-for f in "${all_fastq[@]}"; do
-    base="$(basename "$f")"
-    noext="${base%.fastq.gz}"
-    if [[ "$noext" == "$base" ]]; then
-        noext="${base%.fastq}"
-    fi
+# # First we define sampleR1 / sampleR2
+# for f in "${all_fastq[@]}"; do
+#     base="$(basename "$f")"
+#     noext="${base%.fastq.gz}"
+#     if [[ "$noext" == "$base" ]]; then
+#         noext="${base%.fastq}"
+#     fi
 
-    # If _1 is detected => Paired R1
-    if [[ "$noext" =~ (.*)_1$ ]]; then
-        sample="${BASH_REMATCH[1]}"
-        sampleR1["$sample"]="$f"
-        echo "Detected paired-end R1: $f (Sample: $sample)"
+#     # If _1 is detected => Paired R1
+#     if [[ "$noext" =~ (.*)_1$ ]]; then
+#         sample="${BASH_REMATCH[1]}"
+#         sampleR1["$sample"]="$f"
+#         echo "Detected paired-end R1: $f (Sample: $sample)"
 
-    # If _2 is detected => Paired R2
-    elif [[ "$noext" =~ (.*)_2$ ]]; then
-        sample="${BASH_REMATCH[1]}"
-        sampleR2["$sample"]="$f"
-        echo "Detected paired-end R2: $f (Sample: $sample)"
+#     # If _2 is detected => Paired R2
+#     elif [[ "$noext" =~ (.*)_2$ ]]; then
+#         sample="${BASH_REMATCH[1]}"
+#         sampleR2["$sample"]="$f"
+#         echo "Detected paired-end R2: $f (Sample: $sample)"
 
-    else
-        # Otherwise => single-end
-        sampleR1["$noext"]="$f"
-        echo "Detected single-end read: $f (Sample: $noext)"
-    fi
-done
+#     else
+#         # Otherwise => single-end
+#         sampleR1["$noext"]="$f"
+#         echo "Detected single-end read: $f (Sample: $noext)"
+#     fi
+# done
 
-# Get the union of all detected samples
-all_samples=()
-all_samples+=( "${!sampleR1[@]}" )
-all_samples+=( "${!sampleR2[@]}" )
-# We create a unique list by removing duplicates
-readarray -t unique_samples < <(printf '%s\n' "${all_samples[@]}" | sort -u)
+# # Get the union of all detected samples
+# all_samples=()
+# all_samples+=( "${!sampleR1[@]}" )
+# all_samples+=( "${!sampleR2[@]}" )
+# # We create a unique list by removing duplicates
+# readarray -t unique_samples < <(printf '%s\n' "${all_samples[@]}" | sort -u)
 
-#main loop for processing each sample
-for sample in "${unique_samples[@]}"; do
-    R1="${sampleR1[$sample]:-}"
-    R2="${sampleR2[$sample]:-}"
+# #main loop for processing each sample
+# for sample in "${unique_samples[@]}"; do
+#     R1="${sampleR1[$sample]:-}"
+#     R2="${sampleR2[$sample]:-}"
 
-    if [[ -n "$R1" && -n "$R2" ]]; then
-        # => Paired-end => force short read type
-        echo "Processing short paired-end reads for sample '$sample':"
-        echo "  R1: $R1"
-        echo "  R2: $R2"
-        read2tree --step 2map \
-                  --standalone_path marker_genes \
-                  --dna_reference dna_ref.fa \
-                  --reads "$R1" "$R2" \
-                  --read_type "short" \
-                  --threads "$THREADS" \
-                  --output_path read2tree_output \
-                  --debug
-    else
-        # => Single-end => use READ_TYPE ('short', 'long-ont', 'long-hifi')
-        #    (if only R2 or only R1 exists, treat it as single-end)
-        SE_FILE="$R1"
-        if [[ -z "$SE_FILE" ]]; then
-            SE_FILE="$R2"
-        fi
-        echo "Processing single-end reads for sample '$sample' (READ_TYPE=$READ_TYPE):"
-        echo "  Read file: $SE_FILE"
-        read2tree --step 2map \
-                  --standalone_path marker_genes \
-                  --dna_reference dna_ref.fa \
-                  --reads "$SE_FILE" \
-                  --read_type "$READ_TYPE" \
-                  --threads "$THREADS" \
-                  --output_path read2tree_output \
-                  --debug
-    fi
-done
-
-echo "Read processing completed successfully."
-
-
-
-# # Process files based on read type
-# if [[ "$READ_TYPE" == "long-ont" || "$READ_TYPE" == "long-hifi" ]]; then
-#     # --- Long reads processing ---
-#     reads=($(find "$READS_DIR" -name "*.fastq.gz" -exec basename {} .fastq.gz \;))  # Find all long-read FASTQ files
-#     for read in "${reads[@]}"; do
-#         echo "Processing long read file: ${read}.fastq.gz"
+#     if [[ -n "$R1" && -n "$R2" ]]; then
+#         # => Paired-end => force short read type
+#         echo "Processing short paired-end reads for sample '$sample':"
+#         echo "  R1: $R1"
+#         echo "  R2: $R2"
 #         read2tree --step 2map \
 #                   --standalone_path marker_genes \
 #                   --dna_reference dna_ref.fa \
-#                   --reads "${read}.fastq.gz" \
+#                   --reads "$R1" "$R2" \
+#                   --read_type "short" \
+#                   --threads "$THREADS" \
+#                   --output_path read2tree_output \
+#                   --debug
+#     else
+#         # => Single-end => use READ_TYPE ('short', 'long-ont', 'long-hifi')
+#         #    (if only R2 or only R1 exists, treat it as single-end)
+#         SE_FILE="$R1"
+#         if [[ -z "$SE_FILE" ]]; then
+#             SE_FILE="$R2"
+#         fi
+#         echo "Processing single-end reads for sample '$sample' (READ_TYPE=$READ_TYPE):"
+#         echo "  Read file: $SE_FILE"
+#         read2tree --step 2map \
+#                   --standalone_path marker_genes \
+#                   --dna_reference dna_ref.fa \
+#                   --reads "$SE_FILE" \
 #                   --read_type "$READ_TYPE" \
 #                   --threads "$THREADS" \
 #                   --output_path read2tree_output \
 #                   --debug
-#     done
-
-# elif [[ "$READ_TYPE" == "short" ]]; then
-#     # --- Short reads processing ---
-#     # Detect paired-end reads based on the existence of *_1.fastq.gz
-#     paired_samples=($(find "$READS_DIR" -name "*_1.fastq.gz" -exec basename {} _1.fastq.gz \;))
-
-#     if [[ ${#paired_samples[@]} -gt 0 ]]; then
-#         echo "Detected potential paired-end samples..."
-
-#         for sample in "${paired_samples[@]}"; do
-#             R1="${READS_DIR}/${sample}_1.fastq.gz"
-#             R2="${READS_DIR}/${sample}_2.fastq.gz"
-
-#             if [[ -f "$R1" && -f "$R2" ]]; then
-#                 echo "Processing paired-end reads: $R1 and $R2"
-#                 read2tree --step 2map \
-#                           --standalone_path marker_genes \
-#                           --dna_reference dna_ref.fa \
-#                           --reads "$R1" "$R2" \
-#                           --read_type "$READ_TYPE" \
-#                           --threads "$THREADS" \
-#                           --output_path read2tree_output \
-#                           --debug
-#             else
-#                 # If R2 is missing, treat R1 as a single-end read
-#                 echo "Warning: Pair file for $sample not found. Processing as single-end."
-#                 read2tree --step 2map \
-#                           --standalone_path marker_genes \
-#                           --dna_reference dna_ref.fa \
-#                           --reads "$R1" \
-#                           --read_type "$READ_TYPE" \
-#                           --threads "$THREADS" \
-#                           --output_path read2tree_output \
-#                           --debug
-#             fi
-#         done
-#     else
-#         # If no *_1.fastq.gz files exist, assume all reads are single-end
-#         echo "No *_1.fastq.gz files detected. Assuming all reads are single-end."
-#         single_reads=($(find "$READS_DIR" -name "*.fastq.gz"))
-#         for read_file in "${single_reads[@]}"; do
-#             base_name="$(basename "$read_file" .fastq.gz)"
-#             echo "Processing single-end read: $base_name"
-#             read2tree --step 2map \
-#                       --standalone_path marker_genes \
-#                       --dna_reference dna_ref.fa \
-#                       --reads "$read_file" \
-#                       --read_type "$READ_TYPE" \
-#                       --threads "$THREADS" \
-#                       --output_path read2tree_output \
-#                       --debug
-#         done
 #     fi
+# done
 
-# else
-#     echo "Error: Unsupported read type '$READ_TYPE'. Use 'long-ont', 'long-hifi', or 'short'."
-#     exit 1
-# fi
-
-
+# echo "Read processing completed successfully."
 
 #echo "Merging..."
-read2tree --step 3combine --standalone_path marker_genes --dna_reference dna_ref.fa --output_path read2tree_output --tree --debug
-iqtree -T ${THREADS} -s read2tree_output/concat_*_aa.phy -bb 1000
+#read2tree --step 3combine --standalone_path marker_genes --dna_reference dna_ref.fa --output_path read2tree_output --tree --debug
+#
+
+#iqtree -T ${THREADS} -s read2tree_output/concat_*_aa.phy -bb 1000
 #iqtree -T ${THREADS} -s read2tree_output/concat_*_dna.phy 
