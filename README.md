@@ -68,7 +68,90 @@ That scrit contains basically one line, calling OMA. I need to run on sbatch bec
 
 # Progress Adrián
 
-This new version of **read2tree** allows creating a reference database using coding sequences obtained from **NCBI**. Additionally, read samples can be deduplicated using **czid-dedup** and downsampled with **rasusa**. For now it assumes both programs are in your PATH.
+This new version of **read2tree** enables the creation of a reference database via **OMA Standalone** using coding sequences from **NCBI**. It also supports read deduplication with **czid-dedup** and downsampling with **rasusa**.
+
+## Installation of dependencies
+
+This software relies on four external tools: [OMA Standalone](https://omabrowser.org/standalone/), [Rasusa](https://github.com/mbhall88/rasusa?tab=readme-ov-file#install), [czid-dedup](https://github.com/chanzuckerberg/czid-dedup?tab=readme-ov-file#installation), and [Read2Tree](https://github.com/DessimozLab/read2tree/tree/minimap2?tab=readme-ov-file#installation). It assumes all programs are in your Conda environment or `PATH`. 
+Below are two general ways to install all the required dependencies. For more details, please visit the respective web pages.
+
+### 1. Installation with Conda
+
+[Conda](https://docs.anaconda.com/miniconda/) is a package manager that allows you to install all dependencies quickly and easily.
+
+```bash
+conda create -n my_env python=3.10.8 -y 
+conda activate my_env && conda install -c bioconda oma rasusa read2tree -y
+```
+**Notes:** 
+* `czid-dedup` is not available on Conda. See the "From Source" section below for installation.
+* Installing `read2tree` via Conda does not include the minimap2 branch. If you need this branch, follow the "From Source" instructions.
+
+### 2. Installation from source
+
+If you prefer to install the tools manually from their source code, use the following commands:
+
+**OMA Standalone**
+
+```bash
+wget -O oma.tgz https://omabrowser.org/standalone/OMA.2.6.0.tgz && tar xvzf oma.tgz && cd OMA.2.6.0 && ./install.sh /your/install/path
+```
+
+After installation, make sure the bin folder of OMA is in your PATH variable. Add the following line to your shell configuration file (`~/.bashrc`, `~/.zshrc`, etc.):
+
+```bash
+export PATH=$PATH:/your/install/path/OMA/bin
+```
+
+Then, reload your shell configuration to apply the changes:
+
+```bash
+source ~/.bashrc  # or source ~/.zshrc
+```
+
+**Rasusa**
+```bash
+curl -sSL rasusa.mbh.sh | sh
+```
+
+**czid-dedup**
+
+`czid-dedup` requires [rust/cargo](https://www.rust-lang.org/tools/install) for compilation
+
+```bash
+git clone https://github.com/chanzuckerberg/czid-dedup.git && cd czid-dedup && cargo build --release 
+```
+As with OMA, make sure that the executable is in your PATH variable. Add the following line to your shell configuration file (`~/.bashrc`, `~/.zshrc`, etc.):
+```bash
+export PATH=$PATH:your/install/path/czid-dedup/target/release/czid-dedup
+```
+Then, reload your shell configuration to apply the changes:
+```bash
+source ~/.bashrc  # or source ~/.zshrc
+```
+**Read2Tree**
+```bash
+## Create conda env
+conda create -n r2t python=3.10.8 -y && conda activate r2t
+
+## Get required python packages
+conda install -c conda-forge biopython numpy Cython ete3 lxml tqdm scipy pyparsing requests natsort pyyaml filelock -y
+conda install -c bioconda dendropy pysam -y
+
+## Install required softwares
+conda install -c bioconda mafft iqtree minimap2 samtools -y
+
+## Clone minimap2 branch of read2tree
+git clone --branch minimap2 https://github.com/DessimozLab/read2tree.git && cd read2tree && python setup.py install
+```
+
+### 3. Verify Installation
+
+To verify that all tools are correctly installed and available in your Conda environment or `PATH`, run the following command:
+
+```bash
+oma -h && rasusa --help && czid-dedup --help && read2tree --help
+```
 
 ## Running step 1: Creating the reference database
 
@@ -163,7 +246,7 @@ parallel -j 4 ../r2t_2025/download_script/bin/step2.sh \
   -r {1} -t ont --dedup --temp_dir reads/temp --downsample --coverage 250 --genome_size 15kb --debug --out_dir read2tree/ -T 20 ::: \
   $(ls reads/*fastq* | sort) &>> "rsv_long_step2.log" &
 
-#For paired end illumina
+#For paired end illumina reads
 parallel -j 4 ../r2t_2025/download_script/bin/step2.sh \
   -r {1} {2} -t pe_short --dedup --temp_dir reads/temp --downsample --coverage 250 --genome_size 15kb --debug --out_dir read2tree/ -T 20 ::: \
   $(ls reads/*_1.fastq* | sort) :::+ $(ls reads/*_2.fastq* | sort) &>> "rsv_short_step2.log" &
@@ -183,7 +266,7 @@ parallel -j 4 ../r2t_2025/download_script/bin/step2.sh \
 | `--dedup_l`      | Prefix length used for deduplication (requires `--dedup`). |
 | `--downsample`   | Enables `rasusa` for read subsampling. It is required for all subsampling parameters |
 | `--coverage`     | Minimum coverage for subsampling (integer or float: e.g., `250`, `0.1`). Requires `--genome_size`. |
-| `--genome_size`  | Genome size for subsampling (integer or with a metric suffix: e.g., `15kb`, `4.1MB`). See `rasusa` manual for more details. Requires `--coverage`. |
+| `--genome_size`  | Genome size for subsampling (integer or with a metric suffix: e.g., `15kb`, `4.1MB`). See [rasusa manual](https://github.com/mbhall88/rasusa?tab=readme-ov-file#genome-size) for more details. Requires `--coverage`. |
 | `--num_bases`    | Target number of bases for subsampling (integer). Does not require `--genome_size` and `--coverage`. |
 | `--num_reads`    | Target number of reads for subsampling (integer). Does not require `--genome_size` and `--coverage`. |
 | `--out_dir`      | Directory containing read2tree Step 1 output. |

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 #set -x #bug fixes
-echo -e "Script invoked with: $0 $*\n"
 
 ############################################
 # Default values
@@ -11,7 +10,7 @@ READS=()         # Array to store multiple input reads
 TEMP_DIR=""      # If empty, we will create a new one with mktemp
 OUT_DIR=""
 DEDUP=false
-DEDUP_L=0       # optional argument for czid-dedup
+DEDUP_L=""       # optional argument for czid-dedup
 DOWNSAMPLE=false
 # Downsampling method can be coverage & genome_size, or number_of_bases, or number_of_reads
 COVERAGE=0.0
@@ -66,12 +65,12 @@ $(usage)
     --temp_dir <dir>         Specify temp directory (otherwise mktemp -d is used)
     --out_dir <dir>          Specify output dir for read2tree results
     --dedup                  Run czid-dedup
-    --dedup_l <int>          Provide '-l <int>' to czid-dedup
+    --dedup_l <int>          Provide '-l <int>' to czid-dedup (requires --dedup)
     --downsample             Run rasusa
-    --coverage <float>       Coverage to target (requires --genome_size)
-    --genome_size <size>     Genome size to calculate coverage with respect to. E.g., 4.3kb, 7Tb, 9000, 4.1MB
-    --num_bases <int>        Target number of bases
-    --num_reads <int>        Target number of reads
+    --coverage <float>       Coverage to target (requires --genome_size and --downsample)
+    --genome_size <size>     Genome size to calculate coverage with respect to. E.g., 4.3kb, 7Tb, 9000, 4.1MB (requires --coverage and --downsample)
+    --num_bases <int>        Target number of bases (requires --downsample)
+    --num_reads <int>        Target number of reads (requires --downsample)
     --debug                  Keep temporary directory  
     -h, --help               Show this help
 
@@ -115,6 +114,10 @@ analyze_fastq() {
 ############################################
 # Parse arguments
 ############################################
+
+log_info "Script invoked with: $0 $*\n"
+
+log_info "========== Step 2.1: Validating parameters =========="
 
 if [[ $# -eq 0 ]]; then
   usage
@@ -195,7 +198,6 @@ done
 ############################################
 # Validate required parameters
 ############################################
-echo "Validating"
 
 if [[ -z "$READ_TYPE" ]]; then
   log_error "Please specify --read_type"
@@ -206,9 +208,17 @@ if [[ ${#READS[@]} -eq 0 ]]; then
   log_error "Please specify at least one input file with --reads"
   usage
   exit 1
+else
+  for file in "${READS[@]}"; do
+    if [[ ! -f "$file" ]] || [[ ! -s "$file" ]]; then
+      log_error "File not found or is empty: $file"
+      exit 1
+    fi
+  done
 fi
 
 case "$READ_TYPE" in
+#test with Pe_Short
   se_short|pe_short|pacbio|ont) ;;
   *)
     log_error "Invalid read_type: $READ_TYPE. Must be one of se_short, pe_short, pacbio, ont."
@@ -218,10 +228,20 @@ case "$READ_TYPE" in
 esac
 
 if [[ "$READ_TYPE" == "pe_short" && ${#READS[@]} -ne 2 ]]; then
-  log_error "Paired-end short reads requires exactly 2 files."
-  echo "${READS[@]} and ${#READS[@]}, THESE ARE: "${READS[0]}","
+  log_error "Paired-end short reads requires exactly 2 files. You provided ${#READS[@]}"
   usage
   exit 1
+fi
+
+if [[ -n "$DEDUP_L" ]]; then
+    if [[ "$DEDUP" != true ]]; then
+        log_error "--dedup is required when using --dedup_l."
+        exit 1
+    fi
+    if [[ "$DEDUP_L" -le 0 ]]; then
+        log_error "Argument --dedup_l must be a positive integer"
+        exit 1
+    fi
 fi
 
 #Verify the use of just one of the 3 rasusa options
@@ -289,6 +309,9 @@ fi
 ############################################
 # Decompression and Concatenation if necessary
 ############################################
+
+log_info "========== Step 2.2: File decompression, concatenation and moving to the temporary directory =========="
+
 FINAL_READS=()
 if [[ ${#READS[@]} -gt 1 ]]; then
   if [[ ${READ_TYPE} == "pe_short" ]]; then
@@ -329,8 +352,11 @@ fi
 ############################################
 # Deduplication with czid-dedup (optional) 
 ############################################
+
+log_info "========== Step 2.3: Deduplication with czid-dedup (optional) =========="
+
 if [[ "$DEDUP" == true ]]; then
-  log_info "Running czid-dedup on the reads..."
+  log_info "Preparing input for czid-dedup..."
   if [[ "$READ_TYPE" == "pe_short" ]]; then
     input_file_1="${FINAL_READS[0]}"
     input_file_2="${FINAL_READS[1]}"
@@ -338,23 +364,25 @@ if [[ "$DEDUP" == true ]]; then
     filename_2=$(basename "$input_file_2")
     output_file_1="$TEMP_DIR/${filename_1%.fastq}_dedup.fastq"
     output_file_2="$TEMP_DIR/${filename_2%.fastq}_dedup.fastq"
-    if [[ "$DEDUP_L" -gt 0 ]]; then
-      czid-dedup-Linux -i "$input_file_1" -i "$input_file_2" -o "$output_file_1" -o "$output_file_2" -l "$DEDUP_L"
-    else
-      czid-dedup-Linux -i "$input_file_1" -i "$input_file_2" -o "$output_file_1" -o "$output_file_2"
+    DEDUP_CMD=(czid-dedup-Linux -i "$input_file_1" -i "$input_file_2" -o "$output_file_1" -o "$output_file_2")
+    if [[ -n "$DEDUP_L" ]]; then
+      DEDUP_CMD+=(-l "$DEDUP_L")
     fi
+    log_info "Executing czid-dedup command: ${DEDUP_CMD[*]}"
+    "${DEDUP_CMD[@]}"
     FINAL_READS=("$output_file_1" "$output_file_2")
   else
+    log_info "Running czid-dedup on reads..."
     # single file
     input_file="${FINAL_READS[0]}"
     filename=$(basename "$input_file")
     output_file="$TEMP_DIR/${filename%.fastq}_dedup.fastq"
-
-    if [[ "$DEDUP_L" -gt 0 ]]; then
-      czid-dedup-Linux -i "$input_file" -o "$output_file" -l "$DEDUP_L"
-    else
-      czid-dedup-Linux -i "$input_file" -o "$output_file"
+    DEDUP_CMD=(czid-dedup-Linux -i "$input_file" -o "$output_file")
+    if [[ -n "$DEDUP_L" ]]; then
+      DEDUP_CMD+=(-l "$DEDUP_L")
     fi
+    log_info "Executing czid-dedup command: ${DEDUP_CMD[*]}"
+    "${DEDUP_CMD[@]}"
     FINAL_READS=("$output_file")
   fi
 fi
@@ -363,8 +391,11 @@ fi
 # (Optional) Downsampling with rasusa
 ############################################
 # The user may specify coverage+genome_size, or num_bases, or num_reads
+
+log_info "========== Step 2.4: Downsampling with rasusa (optional) =========="
+
 if [[ "$DOWNSAMPLE" == true ]]; then
-  log_info "Running rasusa for downsampling..."
+  log_info "Preparing input for rasusa..."
 
   # We'll generate new file(s):
   if [[ "$READ_TYPE" == "pe_short" ]]; then
@@ -386,7 +417,7 @@ if [[ "$DOWNSAMPLE" == true ]]; then
     fi
     RASUSA_CMD+=(-o "$output_file_1" -o "$output_file_2" "$input_file_1" "$input_file_2")
     #Here show commands before execute
-    log_info "Executing: ${RASUSA_CMD[*]}"
+    log_info "Executing rasusa command: ${RASUSA_CMD[*]}"
     # run it
     "${RASUSA_CMD[@]}"
     FINAL_READS=("$output_file_1" "$output_file_2")
@@ -404,7 +435,7 @@ if [[ "$DOWNSAMPLE" == true ]]; then
       RASUSA_CMD+=(--num "$NUM_READS")
     fi
     RASUSA_CMD+=(-o "$output_file" "$input_file")
-    log_info "Executing: ${RASUSA_CMD[*]}"
+    log_info "Executing rasusa command: ${RASUSA_CMD[*]}"
     "${RASUSA_CMD[@]}"
     FINAL_READS=("$output_file")
   fi
@@ -413,9 +444,9 @@ fi
 ###########################################
 # Create summary table with read_statistics
 ###########################################
+log_info "========== Step 2.5: Create summary table with read_statistics =========="
 
 export -f analyze_fastq
-
 #Analyze fastq in parallel, keep the parallelizing?
 OUTPUT_FILE="$OUT_DIR/../reads_statistics.txt"
 
@@ -435,23 +466,23 @@ if [[ "$READ_TYPE" == "pe_short" ]]; then
     input_file2="${FINAL_READS[1]}"
     filename2=$(basename "$input_file2")
     sample_code2=$(echo "${filename2}" | sed -E 's/(_dedup|_ds|_dedup_ds)?\.fastq//')
-    echo "Sample code 1: $sample_code"
-    echo "Sample code 2: $sample_code2"
+    log_info "Sample code 1: $sample_code"
+    log_info "Sample code 2: $sample_code2"
 
-    echo "What find is finding"
-    find "$TEMP_DIR" -type f \( -name "${sample_code}*.fastq" -o -name "${sample_code2}*.fastq" \) -print0 | sort -z
+    #log_info "What find is finding"
+    #find "$TEMP_DIR" -type f \( -name "${sample_code}*.fastq" -o -name "${sample_code2}*.fastq" \) -print0 | sort -z
 
     find "$TEMP_DIR" -type f \( -name "${sample_code}*.fastq" -o -name "${sample_code2}*.fastq" \) -print0 | sort -z | while IFS= read -r -d '' fastq_file; do
-      echo "Processing: $fastq_file"
+      log_info "Processing: $fastq_file"
       analyze_fastq "$fastq_file" "$OUTPUT_FILE"
     done
 else
-    echo "Sample code: $sample_code"
-    echo "What find is finding"
-    find "$TEMP_DIR" -type f \( -name "${sample_code}*.fastq" \) -print0 | sort -z
+    log_info "Sample code: $sample_code"
+    #log_info "What find is finding"
+    #find "$TEMP_DIR" -type f \( -name "${sample_code}*.fastq" \) -print0 | sort -z
 
     find "$TEMP_DIR" -type f \( -name "${sample_code}*.fastq" \) -print0 | sort -z | while IFS= read -r -d '' fastq_file; do
-      echo "Processing: $fastq_file"
+      log_info "Processing: $fastq_file"
       analyze_fastq "$fastq_file" "$OUTPUT_FILE"
     done
 fi
@@ -461,6 +492,8 @@ log_info "Read statistics have been saved in file: $OUTPUT_FILE"
 ############################################
 # Finally, run read2tree
 ############################################
+log_info "========== Step 2.6: Running Read2tree (step 2 map) =========="
+
 log_info "Running read2tree --step 2map with read_type=$READ_TYPE, threads=$THREADS"
 
 # If we have pe_short => pass two files as arguments
@@ -494,10 +527,10 @@ case "$READ_TYPE" in
     ;;
 esac
 
-log_info "Executing: ${READ2TREE_CMD[*]}"
+log_info "Executing read2tree command: ${READ2TREE_CMD[*]}"
 "${READ2TREE_CMD[@]}"
 
-log_info "read2tree step 2map completed successfully."
+log_info "read2tree step 2 map completed successfully."
 
 # Optionally do step 3combine
 # log_info "Running read2tree --step 3combine..."
@@ -508,4 +541,4 @@ log_info "read2tree step 2map completed successfully."
 #           --tree \
 #           --debug
 
-log_info "Done. If you want to run iqtree or similar, you can do so now."
+#log_info "Done. If you want to run iqtree or similar, you can do so now."
