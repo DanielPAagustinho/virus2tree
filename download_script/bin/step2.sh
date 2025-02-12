@@ -19,6 +19,7 @@ NUM_BASES=0
 NUM_READS=0
 THREADS=4        # you can adjust a default or parse it
 DEBUG=false
+STATS_FILE=""
 
 ############################################
 # Functions
@@ -44,7 +45,7 @@ log_warn() {
 }
 
 log_error() {
-  echo -e "${RED}[$(date '+%Y-%m-%d %H:%M:%S')] [ERROR]${NC} $*"
+  echo -e "${RED}[$(date '+%Y-%m-%d %H:%M:%S')] [ERROR]${NC} $*" >&2
 }
 
 usage() {
@@ -64,6 +65,7 @@ $(usage)
     -T, --threads <int>      Threads to use (default 4)
     --temp_dir <dir>         Specify temp directory (otherwise mktemp -d is used)
     --out_dir <dir>          Specify output dir for read2tree results
+    --stats_file <file>      Specify the path to the read statistics file
     --dedup                  Run czid-dedup
     --dedup_l <int>          Provide '-l <int>' to czid-dedup (requires --dedup)
     --downsample             Run rasusa
@@ -82,10 +84,20 @@ EOF
   exit 0
 }
 
+append_stats() {
+  local stats_block="$1"
+  local lock_file="${STATS_FILE}.lock"
+  (
+    # Acquire an exclusive lock on the lock file
+    flock -x 200
+    echo -e "$stats_block" >> "$STATS_FILE"
+  ) 200>"$lock_file"
+}
+
 #function to analyze each fastq
 analyze_fastq() {
     local fastq_file="$1"
-    local output_file="$2"
+    #local output_file="$2"
     local total_lines total_reads total_bases avg_length
 
     # Verify if the file is compressed
@@ -101,15 +113,15 @@ analyze_fastq() {
     total_reads=$((total_lines / 4))
 
     #Get mean length
-    if [[ "$total_reads" -gt 0 ]]; then
-        avg_length=$((total_bases / total_reads))
-    else
-        avg_length=0
-    fi
+      if [[ "$total_reads" -gt 0 ]]; then
+          avg_length=$((total_bases / total_reads))
+      else
+          avg_length=0
+      fi
 
-    # Print results in tabular format
-    printf "%s\t%'d\t%'d\t%'d\n" "$fastq_file" "$total_reads" "$avg_length" "$total_bases" >> "$output_file"
-}
+      # Print results in tabular format
+      printf "%s\t%'d\t%'d\t%'d" "$fastq_file" "$total_reads" "$avg_length" "$total_bases"
+  }
 
 ############################################
 # Parse arguments
@@ -149,6 +161,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --out_dir)
       OUT_DIR="${2%/}"
+      shift 2
+      ;;
+    --stats_file)
+      STATS_FILE="$2"
       shift 2
       ;;
     --dedup)
@@ -300,11 +316,29 @@ else
   log_info "Using read2tree directory: $OUT_DIR"
 fi
 
+# Set default stats file if not provided (using an absolute path)
+if [[ -z "$STATS_FILE" ]]; then
+  STATS_FILE="$(realpath "$OUT_DIR/..")/reads_statistics.txt"
+  log_info "No --stats_file specified, using $STATS_FILE"
+else
+  # Make sure the stats file path is absolute
+  STATS_FILE="$(realpath "$STATS_FILE")"
+fi
+
+# Create the stats file header if it does not exist or is empty
+if [[ ! -s "$STATS_FILE" ]]; then
+  {
+    printf "%s\t%s\t%s\t%s\n" "FASTQ File" "Num Reads" "Avg Length" "Total Bases"
+  } > "$STATS_FILE"
+fi
+
 if [[ "$DEBUG" == false ]]; then
   trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "$TEMP_DIR"' EXIT
 else
   log_info "Debug mode enabled, keeping temporary directory: $TEMP_DIR"
 fi
+
+
 
 ############################################
 # Decompression and Concatenation if necessary
@@ -447,20 +481,12 @@ fi
 log_info "========== Step 2.5: Create summary table with read_statistics =========="
 
 export -f analyze_fastq
+export STATS_FILE
 #Analyze fastq in parallel, keep the parallelizing?
-OUTPUT_FILE="$OUT_DIR/../reads_statistics.txt"
 
 input_file="${FINAL_READS[0]}"
 filename=$(basename "$input_file")
 sample_code=$(echo ${filename} |sed -E 's/(_dedup|_ds|_dedup_ds)?\.fastq//')
-
-#Create header
-if [[ ! -s "$OUTPUT_FILE" ]]; then
-    {
-        printf "%s\t%s\t%s\t%s\n" "FASTQ File" "Num Reads" "Avg Length" "Total Bases"
-        #printf "%s\t%s\t%s\t%s\n" "------------------------------" "------------" "------------" "------------"
-    } > "$OUTPUT_FILE"
-fi
 
 if [[ "$READ_TYPE" == "pe_short" ]]; then
     input_file2="${FINAL_READS[1]}"
@@ -472,22 +498,43 @@ if [[ "$READ_TYPE" == "pe_short" ]]; then
     #log_info "What find is finding"
     #find "$TEMP_DIR" -type f \( -name "${sample_code}*.fastq" -o -name "${sample_code2}*.fastq" \) -print0 | sort -z
 
-    find "$TEMP_DIR" -type f \( -name "${sample_code}*.fastq" -o -name "${sample_code2}*.fastq" \) -print0 | sort -z | while IFS= read -r -d '' fastq_file; do
+    sample_stats=""
+    while IFS= read -r -d '' fastq_file; do
       log_info "Processing: $fastq_file"
-      analyze_fastq "$fastq_file" "$OUTPUT_FILE"
-    done
+      stats_line=$(analyze_fastq "$fastq_file")
+      if [ -z "$sample_stats" ]; then
+        sample_stats="$stats_line"
+      else
+        sample_stats+=$'\n'"$stats_line"
+      fi
+    done < <(find "$TEMP_DIR" -type f \( -name "${sample_code}*.fastq" -o -name "${sample_code2}*.fastq" \) -print0 | sort -z)
+    
+    # Write all the statistics for the sample at once
+    if [[ -n "$sample_stats" ]]; then
+      append_stats "$sample_stats"
+    fi
 else
     log_info "Sample code: $sample_code"
     #log_info "What find is finding"
     #find "$TEMP_DIR" -type f \( -name "${sample_code}*.fastq" \) -print0 | sort -z
 
-    find "$TEMP_DIR" -type f \( -name "${sample_code}*.fastq" \) -print0 | sort -z | while IFS= read -r -d '' fastq_file; do
+    sample_stats=""
+    while IFS= read -r -d '' fastq_file; do
       log_info "Processing: $fastq_file"
-      analyze_fastq "$fastq_file" "$OUTPUT_FILE"
-    done
+      stats_line=$(analyze_fastq "$fastq_file")
+      if [ -z "$sample_stats" ]; then
+        sample_stats="$stats_line"
+      else
+        sample_stats+=$'\n'"$stats_line"
+      fi
+    done < <(find "$TEMP_DIR" -type f -name "${sample_code}*.fastq" -print0 | sort -z)
+    
+    if [[ -n "$sample_stats" ]]; then
+      append_stats "$sample_stats"
+    fi
 fi
 
-log_info "Read statistics have been saved in file: $OUTPUT_FILE"
+log_info "Read statistics have been saved in file: $STATS_FILE"
 
 ############################################
 # Finally, run read2tree
@@ -531,6 +578,8 @@ log_info "Executing read2tree command: ${READ2TREE_CMD[*]}"
 "${READ2TREE_CMD[@]}"
 
 log_info "read2tree step 2 map completed successfully."
+rm -f "${STATS_FILE}.lock"
+
 
 # Optionally do step 3combine
 # log_info "Running read2tree --step 3combine..."

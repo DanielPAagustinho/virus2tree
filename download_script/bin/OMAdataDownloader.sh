@@ -4,9 +4,10 @@ set -euo pipefail
 
 MAIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SCRIPTS_DIR="${MAIN_DIR}/../scripts"
-OMA="${MAIN_DIR}/../oma/bin"
+#OMA="${MAIN_DIR}/../oma/bin"
 PARAMETERS_FILE="parameters.drw"
 FIVE_LETTER_FILE="five_letter_taxon.tsv"
+INPUT_FILE=""
 OUTGROUP_FILE=""
 THREADS=12
 TEMP_DIR=""
@@ -34,7 +35,7 @@ log_warn() {
 }
 
 log_error() {
-  echo -e "${RED}[$(date '+%Y-%m-%d %H:%M:%S')] [ERROR]${NC} $*"
+  echo -e "${RED}[$(date '+%Y-%m-%d %H:%M:%S')] [ERROR]${NC} $*" >&2
 }
 
 usage() {
@@ -77,11 +78,11 @@ fetch_data() {
   #   return 0
   # fi
   #delete all spaces
-  IFS=',' read -ra columns <<< "$(echo "$line" | tr -d [:space:])"
+  IFS=',' read -ra columns <<< "$(echo "$line" | tr -d '[:space:]')"
   local strain=$(clean_line "${columns[0]}")
   if [[ -z "$strain" ]]; then
-    log_error "Line with empty taxon: $line"
-    exit 1
+    log_error "Line with empty taxon: ${line}"
+    return 1
   else
     log_info "Processing line for taxon ${strain}"
   fi
@@ -94,7 +95,7 @@ fetch_data() {
       log_error "Line has fewer than 3 columns but we expected accessions. Line: $line"
       #this exit only gets me out of the subprocess, I don't think so, only of one instance of parallel?. The point is that the rest continue to run
       #Pending see what happens when parallel is remove and we use while instead
-      exit 1
+      return 1
     else
       code="${columns[1]}"
       accessions_list=$(IFS=','; echo "${columns[@]:2}")
@@ -103,14 +104,14 @@ fetch_data() {
     # No code column: second column onward => accessions
     if [[ "${#columns[@]}" -lt 2 ]]; then
       log_error "Line has fewer than 2 columns but we expected taxa and accessions. Line: $line"
-      exit 1
+      return 1
     fi
     accessions_list=$(IFS=','; echo "${columns[@]:1}")
   fi
 
   if [[ -z "$accessions_list" ]]; then
     log_error "Taxon with empty accession(s): $strain"
-    exit 1
+    return 1
   fi
 
   if [[ "$accessions_list" == *GCF_* || "$accessions_list" == *GCA_* ]]; then
@@ -133,7 +134,7 @@ fetch_data() {
       # Output error if no accessions were found
       if [[ ${#all_accs[@]} -eq 0 ]]; then
         log_error "No nucleotide accessions found for assembly: $assembly"
-        exit 1
+        return 1
       else
         # Let' see if at least one accession begins with NC_ (RefSeq)
         mapfile -t nc_only < <(printf '%s\n' "${all_accs[@]}" | grep '^NC_')
@@ -166,7 +167,7 @@ fetch_data() {
     > "db/${strain}_cds_from_genomic.fna" \
     || {
       log_error "Command efetch failed to fetch accession(s) for taxon ${strain}: ${accessions_list}"
-      exit 1
+      return 1
     }
   #write to the file only if fetching was successful
   if $HAS_CODE_COLUMN; then
@@ -202,7 +203,7 @@ generate_og_gene_tsv() {
         fi
         if [[ -z "$protein_id" ]] || [[ "$protein_id" == "NA" ]]; then
           log_error "Error: Missing or invalid protein_id in file: $file, line: $line"
-          exit 1
+          return 1
         fi
 
         local compressed_id="$(clean_line "$protein_id")"
@@ -332,7 +333,7 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
-if [[ -z "${INPUT_FILE:-}" ]]; then
+if [[ -z "${INPUT_FILE}" ]]; then
     log_error "Error: --input (-i) is required."
     usage
     exit 1
@@ -358,30 +359,30 @@ fi
 
 if [[ -z "$TEMP_DIR" ]]; then
   TEMP_DIR="$(mktemp -d)"
-  log_info "Created temp directory at $TEMP_DIR"
+  log_info "Created temp directory at '$TEMP_DIR'"
 else
   # Validate if it is a directory
   if [[ ! -d "$TEMP_DIR" ]]; then
     mkdir -p "$TEMP_DIR"
   fi
-  log_info "Using temp directory: $TEMP_DIR"
+  log_info "Using temp directory: '$TEMP_DIR'"
 fi
 
 if [[ -z "$OUT_DIR" ]]; then
   OUT_DIR=read2tree_output
-  log_info "No name for the read2tree directory was specified, using $OUT_DIR"
+  log_info "No name for the read2tree directory was specified, using '$OUT_DIR'"
 else
   if [[ -d "$OUT_DIR" ]]; then
-    log_error "The read2tree output directory "$OUT_DIR" already exists. Please provide a novel read2tree directory"
+    log_error "The read2tree output directory '$OUT_DIR' already exists. Please provide a novel read2tree directory"
     exit 1
   fi
-  log_info "Using output directory: $OUT_DIR"
+  log_info "Using output directory: '$OUT_DIR'"
 fi
 
 if [[ "$DEBUG" == false ]]; then
   trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "$TEMP_DIR"' EXIT
 else
-  log_info "Debug mode enabled, keeping temporary directory: $TEMP_DIR"
+  log_info "Debug mode enabled, keeping temporary directory: '$TEMP_DIR'"
 fi
 
 log_info "========== Step 1.2: Validating input file =========="
@@ -409,7 +410,7 @@ if [[ "${#HEADER_COLS[@]}" -eq 3 ]]; then
   if [[ "${LOWER_HEADER[1]}" =~ ^code(s)?$ ]]; then
     HAS_CODE_COLUMN=true
     line_number=1
-    while IFS= read -r line || [[ -n $line ]]; do
+    while IFS= read -r line || [[ -n "$line" ]]; do
       ((line_number+=1)) #How do I sum from
       if ! [[ "$line" =~ ^[[:alnum:]]{5}$ ]]; then
         log_error "Invalid 5-letter code on line $line_number:'$line'. The code must have 5 alphanumeric characters."
@@ -469,7 +470,7 @@ fi
 
 log_info "========== Step 1.5: Editing parameters.drw file for running OMA =========="
 
-"${OMA}/oma" -p 
+oma -p 
 sed -i '/#WriteOutput_\(Phy\|Par\|H\)/ s/^#//' parameters.drw
 outgroup_codes=()
 if [ -n "$OUTGROUP_FILE" ]; then
@@ -501,10 +502,10 @@ grep -q "^OutgroupSpecies" "$PARAMETERS_FILE" && \
 
 log_info "========== Step 1.6: Running OMA =========="
 
-"${OMA}/oma" -n ${THREADS}
+oma -n "${THREADS}"
 #oma-status
 #echo "End status"
-if "${OMA}/oma-status"; then
+if oma-status; then
     log_info "OMA finished successfully! OMA did great!"
 else
     log_error "OMA has failed."
@@ -527,7 +528,7 @@ fi
 log_info "========== Step 1.8: Running Read2tree (step 1 marker) =========="
 log_info "Using ${THREADS} threads..."
 #read2tree --standalone_path ./marker_genes --output_path read2tree_output --dna_reference dna_ref.fa
-read2tree --step 1marker --standalone_path marker_genes --dna_reference dna_ref.fa --output_path $OUT_DIR --debug 
+read2tree --step 1marker --standalone_path marker_genes --dna_reference dna_ref.fa --output_path "$OUT_DIR" --debug 
 # echo "Starting read processing..."
 # echo "Searching for FASTQ files in: $READS_DIR"
 # all_fastq=( $(find "$READS_DIR" -maxdepth 1 -type f \( -name "*.fastq" -o -name "*.fastq.gz" \) ) )

@@ -243,12 +243,12 @@ After generating the reference database of orthologous groups, we proceed to add
 ```bash
 #For long nanopore reads
 parallel -j 4 ../r2t_2025/download_script/bin/step2.sh \
-  -r {1} -t ont --dedup --temp_dir reads/temp --downsample --coverage 250 --genome_size 15kb --debug --out_dir read2tree/ -T 20 ::: \
+  -r {1} -t ont --dedup --downsample --coverage 250 --genome_size 15kb --out_dir read2tree -T 20 ::: \
   $(ls reads/*fastq* | sort) &>> "rsv_long_step2.log" &
 
 #For paired end illumina reads
 parallel -j 4 ../r2t_2025/download_script/bin/step2.sh \
-  -r {1} {2} -t pe_short --dedup --temp_dir reads/temp --downsample --coverage 250 --genome_size 15kb --debug --out_dir read2tree/ -T 20 ::: \
+  -r {1} {2} -t pe_short --dedup --downsample --coverage 250 --genome_size 15kb --out_dir read2tree -T 20 ::: \
   $(ls reads/*_1.fastq* | sort) :::+ $(ls reads/*_2.fastq* | sort) &>> "rsv_short_step2.log" &
 
 ```
@@ -257,10 +257,11 @@ parallel -j 4 ../r2t_2025/download_script/bin/step2.sh \
 
 | **Parameter**      | **Description** |
 |--------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| `-r, --reads`     | Input reads file(s) in `fastq` or `fastq.gz` format. If multiple files are provided and `--read_type` is not `pe_short`, they will be concatenated, assuming they belong to the same sample. |
-| `-t, --read_type` | Read type: `se_short` (short single-end), `pe_short` (short paired-end), `pacbio`, `ont`. If `pe_short`, two input files are required in `--reads`. |
+| `-r, --reads`     | **Mandatory.** Input reads file(s) in `fastq` or `fastq.gz` format. If multiple files are provided and `--read_type` is not `pe_short`, they will be concatenated, assuming they belong to the same sample. |
+| `-t, --read_type` | **Mandatory.** Read type: `se_short` (short single-end), `pe_short` (short paired-end), `pacbio`, `ont`. If `pe_short`, two input files are required in `--reads`. |
 | `-T, --threads`   | Number of cores to use during step 2 of read2tree. |
 | `--temp_dir`      | Directory for temporary files. |
+| `--stats_file`   | Name of the summary read statistics file |    
 | `--debug`        | Prevents the removal of the temporary directory upon script termination. |
 | `--dedup`        | Enables `czid-dedup` to remove duplicate reads. |
 | `--dedup_l`      | Prefix length used for deduplication (requires `--dedup`). |
