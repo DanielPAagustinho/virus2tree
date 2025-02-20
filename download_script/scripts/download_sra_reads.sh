@@ -76,9 +76,15 @@ chunk_array() {
 usage() {
   cat <<EOF
 Usage: $(basename "$0") -i <input_file> [-o <output_dir>] [--chunk-size N] [--sleep-secs N] [-l SINGLE|PAIRED]
-  
-  -i, --input         Input file with lines:
-                      <species_name>,ACCESSION1,ACCESSION2,...
+
+Required:
+  -i, --input         Input file containing SRA IDs with one taxon per line:
+                      <species_name>,SRA_ID1,SRA_ID2,SRA_ID3,...
+                      <species_name2>,SRA_ID4,SRA_ID5,SRA_ID6,...
+                      Where <species_name> is the taxon name, and SRA_IDs must be either all SRA RUNs (SRR, ERR, DRR) 
+                      or all SRA EXPERIMENTs (SRX, ERX, DRX) per line.
+
+Optional:
   -o, --outdir        Output directory (default: current dir)
   -c, --chunk-size    Number of SRA IDs in each chunk when fetching metadata using 
                       esearch and efetch (default: 350)
@@ -88,6 +94,7 @@ Usage: $(basename "$0") -i <input_file> [-o <output_dir>] [--chunk-size N] [--sl
 
 Example:
   $(basename "$0") -i species_accessions.txt -o results --chunk-size 100 --sleep-secs 2
+
 EOF
 }
 
