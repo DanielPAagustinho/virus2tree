@@ -5,6 +5,7 @@ set -euo pipefail
 ############################################
 # Default values
 ############################################
+PROGNAME="$(basename "$0")"
 READ_TYPE=""
 READS=()         # Array to store multiple input reads
 TEMP_DIR=""      # If empty, we will create a new one with mktemp
@@ -49,7 +50,7 @@ log_error() {
 }
 
 usage() {
-  echo -e "Usage: $0 -r <file1> [file2...] -t <read_type> [options]\n"
+  echo -e "Usage: ${PROGNAME} -r <file1> [file2...] -t <read_type> [options]\n"
   #echo "Try '$0 --help' for more information."
 }
 
@@ -333,7 +334,7 @@ if [[ ! -s "$STATS_FILE" ]]; then
 fi
 
 if [[ "$DEBUG" == false ]]; then
-  trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "$TEMP_DIR"' EXIT
+  trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "./$TEMP_DIR"' EXIT
 else
   log_info "Debug mode enabled, keeping temporary directory: $TEMP_DIR"
 fi
@@ -486,7 +487,7 @@ export STATS_FILE
 
 input_file="${FINAL_READS[0]}"
 filename=$(basename "$input_file")
-sample_code=$(echo ${filename} |sed -E 's/(_dedup|_ds|_dedup_ds)?\.fastq//')
+sample_code=$(echo "${filename}" |sed -E 's/(_dedup|_ds|_dedup_ds)?\.fastq//')
 
 if [[ "$READ_TYPE" == "pe_short" ]]; then
     input_file2="${FINAL_READS[1]}"
@@ -578,7 +579,7 @@ log_info "Executing read2tree command: ${READ2TREE_CMD[*]}"
 "${READ2TREE_CMD[@]}"
 
 log_info "read2tree step 2 map completed successfully."
-rm -f "${STATS_FILE}.lock"
+rm -f "./${STATS_FILE}.lock"
 
 
 # Optionally do step 3combine

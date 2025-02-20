@@ -60,7 +60,7 @@ def clean_translate(records, species_fivelet, strain):
             record.seq = sequence
         #Delete trouble symbols
         id_old = str(record.id).replace("_", "").replace(".", "")
-        strain =''.join(c for c in strain if c.isalnum())
+        strain =''.join(c for c in strain if c.isalnum()) #really necessary? this has already been solved by fetch_data
         id_new = species_fivelet+"||"+strain + "||" + id_old
         
         nuc_seq = SeqIO.SeqRecord(sequence, id=id_new, description="cleaned for r2t", name=id_new)

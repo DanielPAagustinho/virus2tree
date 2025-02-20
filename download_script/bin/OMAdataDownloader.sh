@@ -39,7 +39,7 @@ log_error() {
 }
 
 usage() {
-  echo -e "Usage: $0 -i <input> [-o <outgroup>] [options]\n"
+  echo -e "Usage: ${PROGNAME} -i <input> [-o <outgroup>] [options]\n"
   #echo "Try '$0 --help' for more information."
 }
 
@@ -79,7 +79,7 @@ fetch_data() {
   # fi
   #delete all spaces
   IFS=',' read -ra columns <<< "$(echo "$line" | tr -d '[:space:]')"
-  local strain=$(clean_line "${columns[0]}")
+  local strain=$(clean_line "${columns[0]}") #Here I'm revoing everything that is alnum, so it is not necessary to do this in the funcion clean..py
   if [[ -z "$strain" ]]; then
     log_error "Line with empty taxon: ${line}"
     return 1
@@ -162,7 +162,7 @@ fetch_data() {
   fi
   # Fetch data
   
-  log_info "Fetching data for taxon: "$strain". Final nucleotide accessions used: ${accessions_list//,/ }."
+  log_info "Fetching data for taxon: ${strain}. Final nucleotide accessions used: ${accessions_list//,/ }."
   efetch -db nucleotide -id "$accessions_list" -format fasta_cds_na \
     > "db/${strain}_cds_from_genomic.fna" \
     || {
@@ -347,7 +347,7 @@ if [[ ! -f "$INPUT_FILE" ]] || [[ ! -s "$INPUT_FILE" ]]; then
 fi
 
 # Validate outgroup file if provided, yes -f tolerates sym links
-if [[ -n "$OUTGROUP_FILE" ]] && ([[ ! -f "$OUTGROUP_FILE" ]] || [[ ! -s "$OUTGROUP_FILE" ]]); then
+if [[ -n "$OUTGROUP_FILE" ]] && { [[ ! -f "$OUTGROUP_FILE" ]] || [[ ! -s "$OUTGROUP_FILE" ]]; }; then
     log_error "Error: The outgroup file '$OUTGROUP_FILE' is missing or empty."
     exit 1
 fi
@@ -380,7 +380,7 @@ else
 fi
 
 if [[ "$DEBUG" == false ]]; then
-  trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "$TEMP_DIR"' EXIT
+  trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "./$TEMP_DIR"' EXIT
 else
   log_info "Debug mode enabled, keeping temporary directory: '$TEMP_DIR'"
 fi
@@ -416,7 +416,7 @@ if [[ "${#HEADER_COLS[@]}" -eq 3 ]]; then
         log_error "Invalid 5-letter code on line $line_number:'$line'. The code must have 5 alphanumeric characters."
         exit 1
       fi
-    done <<< "$(cat "$CLEAN_FILE" | tail -n +2 |cut -d',' -f2|tr -d '[:blank:]')"
+    done <<< "$(tail -n +2 "$CLEAN_FILE" |cut -d',' -f2|tr -d '[:blank:]')"
     #first I deleted complete void lines, so if -z works, it is detecting a row that has its second field void
     log_info "'Code(s)' column has been detected and validated."
   else
