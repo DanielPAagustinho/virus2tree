@@ -3,7 +3,7 @@ set -euo pipefail
 #set -x
 
 MAIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SCRIPTS_DIR="${MAIN_DIR}/../scripts"
+SCRIPTS_DIR="${MAIN_DIR}"
 #OMA="${MAIN_DIR}/../oma/bin"
 PARAMETERS_FILE="parameters.drw"
 FIVE_LETTER_FILE="five_letter_taxon.tsv"
@@ -462,10 +462,10 @@ log_info "========== Step 1.4: Preparing format of coding sequences for OMA and 
 #Adding 5 letter code and cleaning for r2t
 if $HAS_CODE_COLUMN; then
   # If the user gave a CODE column, we pass db_codes.tsv as second argument
-  python "${SCRIPTS_DIR}/clean_fasta_cdna_cds2.py" db "$FIVE_LETTER_FILE"
+  python "${SCRIPTS_DIR}/clean_fasta_cdna_cds.py" db "$FIVE_LETTER_FILE"
 else
   # If no code was provided, the Python script generates codes on its own
-  python "${SCRIPTS_DIR}/clean_fasta_cdna_cds2.py" db
+  python "${SCRIPTS_DIR}/clean_fasta_cdna_cds.py" db
 fi
 
 log_info "========== Step 1.5: Editing parameters.drw file for running OMA =========="
