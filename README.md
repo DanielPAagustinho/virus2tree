@@ -156,7 +156,7 @@ oma -h && rasusa --help && czid-dedup --help && read2tree --help
 ## Running step 1: Creating the reference database
 
 ```bash
-./OMAdataDownloader.sh -i rsv_accessions.txt -o rsv_outgroups.txt -T 25 --out_dir read2tree --temp_dir temp --debug &> def_rsv_long.log &
+virus2tree_step1.sh -i rsv_accessions.txt -o rsv_outgroups.txt -T 25 --out_dir read2tree --temp_dir temp --debug &> def_rsv_long.log &
 ```
 To create the reference database, two key input files are required:
 
@@ -242,12 +242,12 @@ After generating the reference database of orthologous groups, we proceed to add
 
 ```bash
 #For long nanopore reads
-parallel -j 4 ../r2t_2025/download_script/bin/step2.sh \
+parallel -j 4 virus2tree_step2.sh \
   -r {1} -t ont --dedup --downsample --coverage 250 --genome_size 15kb --out_dir read2tree -T 20 ::: \
   $(ls reads/*fastq* | sort) &>> "rsv_long_step2.log" &
 
 #For paired end illumina reads
-parallel -j 4 ../r2t_2025/download_script/bin/step2.sh \
+parallel -j 4 virus2tree_step2.sh \
   -r {1} {2} -t pe_short --dedup --downsample --coverage 250 --genome_size 15kb --out_dir read2tree -T 20 ::: \
   $(ls reads/*_1.fastq* | sort) :::+ $(ls reads/*_2.fastq* | sort) &>> "rsv_short_step2.log" &
 
