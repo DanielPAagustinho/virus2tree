@@ -385,7 +385,7 @@ for line in "${lines[@]}"; do
 
   log_info "Done with $local_name"
   log_info "Removing intermediate taxon directory: $species_outdir"
-  rm -r ./${species_outdir}
+  rm -r ./"${species_outdir}"
   #echo
 done
 

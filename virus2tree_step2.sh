@@ -319,7 +319,7 @@ fi
 
 # Set default stats file if not provided (using an absolute path)
 if [[ -z "$STATS_FILE" ]]; then
-  STATS_FILE="$(realpath "$OUT_DIR/..")/reads_statistics.txt"
+  STATS_FILE="$(realpath "$OUT_DIR/..")/reads_statistics.tsv"
   log_info "No --stats_file specified, using $STATS_FILE"
 else
   # Make sure the stats file path is absolute
