@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 #set -x
-
+PROGNAME="$(basename "$0")"
 MAIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SCRIPTS_DIR="${MAIN_DIR}"
 #OMA="${MAIN_DIR}/../oma/bin"
@@ -376,6 +376,7 @@ else
     log_error "The read2tree output directory '$OUT_DIR' already exists. Please provide a novel read2tree directory"
     exit 1
   fi
+  mkdir -p "$OUT_DIR"
   log_info "Using output directory: '$OUT_DIR'"
 fi
 

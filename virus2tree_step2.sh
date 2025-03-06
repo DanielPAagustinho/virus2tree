@@ -264,11 +264,11 @@ fi
 #Verify the use of just one of the 3 rasusa options
 if [[ "$DOWNSAMPLE" == true ]]; then
   method_count=0
-  echo "$GENOME_SIZE"
+  #echo "$GENOME_SIZE"
   if [[ $(echo "$COVERAGE > 0" | bc -l) -eq 1 && -n "$GENOME_SIZE" ]]; then
-    echo "here in if"
+    #echo "here in if"
     (( method_count+=1 )) 
-    echo "here after adding 1"
+    #echo "here after adding 1"
   fi
   if [[ $NUM_BASES -gt 0 ]]; then
     (( method_count+=1 ))
