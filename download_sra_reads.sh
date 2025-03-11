@@ -167,9 +167,6 @@ fi
 OUTPUT_DIR="${OUTPUT_DIR%/}"
 mkdir -p "$OUTPUT_DIR"
 
-# Conda
-#source "$(conda info --base)/etc/profile.d/conda.sh"
-#conda activate sratools
 
 ########################################
 # Main

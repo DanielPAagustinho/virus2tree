@@ -49,6 +49,29 @@ log_error() {
   echo -e "${RED}[$(date '+%Y-%m-%d %H:%M:%S')] [ERROR]${NC} $*" >&2
 }
 
+check_dependencies() {
+  #Initialize array to map tools to messages
+  local missing=0
+  declare -A tools=(
+    ["read2tree"]="read2tree"
+    ["oma"]="OMA standalone"
+    ["efetch"]="Entrez Direct utilities"
+    ["rasusa"]="rasusa"
+    ["czid-dedup-Linux"]="czid-dedup"
+  )
+
+  #log_info "Checking system dependencies..."
+  #Looping through the array to test for commands and detect possible missing tools  
+  for cmd in "${!tools[@]}"; do
+    if ! command -v "$cmd" &>/dev/null; then
+      log_error "Missing requirement: ${tools[$cmd]}"
+      ((missing++))
+    #else
+      #log_info "Found: ${tools[$cmd]}"
+    fi
+  done
+}
+
 usage() {
   echo -e "Usage: ${PROGNAME} -r <file1> [file2...] -t <read_type> [options]\n"
   #echo "Try '$0 --help' for more information."
@@ -128,15 +151,15 @@ analyze_fastq() {
 # Parse arguments
 ############################################
 
-log_info "Script invoked with: $0 $*\n"
-
-log_info "========== Step 2.1: Validating parameters =========="
-
 if [[ $# -eq 0 ]]; then
   usage
   echo "Try '$0 --help' for more information."
   exit 1
 fi
+
+log_info "Script invoked with: $PROGNAME $*\n"
+
+log_info "========== Step 2.1: Validating parameters =========="
 
 #Not positional arguments different from the options below
 while [[ $# -gt 0 ]]; do
@@ -215,6 +238,9 @@ done
 ############################################
 # Validate required parameters
 ############################################
+
+check_dependencies
+log_info "Checked system dependencies"
 
 if [[ -z "$READ_TYPE" ]]; then
   log_error "Please specify --read_type"

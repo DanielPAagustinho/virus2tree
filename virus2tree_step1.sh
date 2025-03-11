@@ -13,7 +13,8 @@ THREADS=12
 TEMP_DIR=""
 OUT_DIR=""
 DEBUG=false
-
+RES_DOWN=false
+RES_DOWN_VOID=false
 if [ -t 1 ]; then
   RED="\033[1;31m"
   GREEN="\033[1;32m"
@@ -25,7 +26,7 @@ else
   YELLOW=""
   NC=""
 fi
-
+# rest
 log_info() {
   echo -e "${GREEN}[$(date '+%Y-%m-%d %H:%M:%S')] [INFO]${NC} $*"
 }
@@ -38,6 +39,27 @@ log_error() {
   echo -e "${RED}[$(date '+%Y-%m-%d %H:%M:%S')] [ERROR]${NC} $*" >&2
 }
 
+check_dependencies() {
+  #Initialize array to map tools to messages
+  local missing=0
+  declare -A tools=(
+    ["read2tree"]="read2tree"
+    ["oma"]="OMA"
+    ["efetch"]="Entrez Direct utilities"
+  )
+
+  #log_info "Checking system dependencies..."
+  #Looping through the array to test for commands and detect possible missing tools  
+  for cmd in "${!tools[@]}"; do
+    if ! command -v "$cmd" &>/dev/null; then
+      log_error "Missing requirement: ${tools[$cmd]}"
+      ((missing++))
+    #else
+      #log_info "Found: ${tools[$cmd]}"
+    fi
+  done
+}
+
 usage() {
   echo -e "Usage: ${PROGNAME} -i <input> [-o <outgroup>] [options]\n"
   #echo "Try '$0 --help' for more information."
@@ -48,13 +70,14 @@ show_help() {
 $(usage)
 
 Required:
-  -i, --input <file>                           Path to the accession file (comma-separated file with the structure: taxon(s)/species/strain(s),code(optional),accession(s)). Note: If provided, the code should have exactly 5 alphanumeric characters.
+  -i, --input <file>                           Path to the accession file. Should be a comma-separated file with the structure: taxon(s)/species/strain(s),code(optional),accession(s). If provided, the code should have exactly 5 alphanumeric characters.
 
 Optional:
   -o, --outgroup <file>                        Path to the outgroup taxon/species/strain file
   -T, --threads <int>                          Number of threads [default: 12]
   --temp_dir <dir>                             Specify temp directory (otherwise mktemp -d is used)
-  --out_dir <dir>                              Specify output directory for read2tree step1
+  --out_dir <dir>                              Specify output directory for read2tree step1 default: [read2tree_output]
+  --resume_download                            Detects and skips taxa that have already been downloaded from NCBI                                 
   --debug                                      Keeps temporary directory
   -h, --help                                   Show this help message
 
@@ -70,6 +93,44 @@ clean_line() {
   echo "$input" | tr -cd '[:alnum:]'
 }
 
+skip_taxa() {
+    local CLEAN_FILE="$1"
+    local filtered_input_file="${CLEAN_FILE%.*}_filtered.csv"
+    local taxon_list=""
+    local downloaded_taxa
+    echo "This is the filtered_input_file: ${filtered_input_file}"
+    # Create list of downloaded taxa
+    downloaded_taxa=$(
+        printf '%s\n' db/*_cds_from_genomic.fna | awk -F '/' '{print $2}' | 
+        awk -F '_cds_' '{print $1}' | tr '\n' '|' | sed 's/|$//'
+    )
+    {
+        head -n1 "$CLEAN_FILE"
+        while IFS= read -r line || [[ -n "$line" ]]; do
+            # Clean taxa
+            raw_taxon=$(cut -d',' -f1 <<<"$line" | tr -cd '[:alnum:]')
+            if [[ "$raw_taxon" =~ $downloaded_taxa ]]; then
+                taxon_list+="${raw_taxon}_cds_from_genomic.fna, "
+            else
+                # If not in list, keep in the filtered
+                echo "$line"
+            fi
+        done < <(tail -n +2 "$CLEAN_FILE")
+    } > "$filtered_input_file"
+
+    if awk 'NR >=2 && NF {found=1; exit} END {exit !found}' "$filtered_input_file"; then #The NF verifies if there are fields, if so, found=1, and the exit will give 0, which is success
+        log_info "Skipping the download of the following detected input files: ${taxon_list%, }"
+    else
+        log_info "All taxa had a corresponding file, skipping downloading from NCBI"
+        RES_DOWN_VOID=true
+        #log_info "Look at the value of RESDOWN VOID = ${RES_DOWN_VOID}"
+        #Here somehow skip all the downloading section, use a flag?
+    fi
+
+    cp "$filtered_input_file" "$CLEAN_FILE"
+    rm "$filtered_input_file"
+}
+
 fetch_data() {
   #error or warn and skip? better error!!
   local line="$1"
@@ -79,12 +140,12 @@ fetch_data() {
   # fi
   #delete all spaces
   IFS=',' read -ra columns <<< "$(echo "$line" | tr -d '[:space:]')"
-  local strain=$(clean_line "${columns[0]}") #Here I'm revoing everything that is alnum, so it is not necessary to do this in the funcion clean..py
+  local strain=$(clean_line "${columns[0]}") #Here I'm revoing everything that is not alnum, so it is not necessary to do this in the funcion clean..py
   if [[ -z "$strain" ]]; then
     log_error "Line with empty taxon: ${line}"
     return 1
-  else
-    log_info "Processing line for taxon ${strain}"
+  #else
+    #log_info "Processing line for taxon ${strain}"
   fi
   # Decide if we have a code column or not
   local code=""
@@ -110,7 +171,7 @@ fetch_data() {
   fi
 
   if [[ -z "$accessions_list" ]]; then
-    log_error "Taxon with empty accession(s): $strain"
+    log_error "Taxon with empty accession(s): ${strain}"
     return 1
   fi
 
@@ -122,7 +183,7 @@ fetch_data() {
     for acc in "${accessions[@]}"; do
       [[ $acc == GCF_* || $acc == GCA_* ]] && assembly_accessions+=("$acc") || regular_accessions+=("$acc")
     done
-    log_info "Detected the following GCF/GCA assemblies in taxon ${strain}: ${assembly_accessions[*]}"
+    log_info "Analyzing taxon ${strain}. Detected the following GCF/GCA assemblies: ${assembly_accessions[*]}"
     local nc_accessions=()
     for assembly in "${assembly_accessions[@]}"; do
       log_info "Retrieving nucleotide accessions associated with assembly: ${assembly}"
@@ -175,7 +236,7 @@ fetch_data() {
     echo -e "${strain}\t${code}" >> "${FIVE_LETTER_FILE}"
   fi
   sleep 1
-  log_info "Successfully fetched data for taxon ${strain}"
+  log_info "Successfully fetched data for taxon ${strain}\n"
 }
 #declare -A SPECIES_TO_CODE
 # Function to process files and generate the output table
@@ -309,15 +370,15 @@ generate_og_gene_tsv() {
 
 ###################################################
 
-log_info "Script invoked with: $0 $*\n"
-
-log_info "========== Step 1.1: Validating parameters =========="
-
 if [[ $# -eq 0 ]]; then
   usage
   echo "Try '$0 --help' for more information."
   exit 1
 fi
+
+log_info "Script invoked with: $PROGNAME $*\n"
+
+log_info "========== Step 1.1: Validating parameters =========="
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
@@ -327,11 +388,16 @@ while [[ "$#" -gt 0 ]]; do
         --temp_dir) TEMP_DIR="${2%/}"; shift ;;
         --out_dir) OUT_DIR="${2%/}"; shift ;;
         --debug) DEBUG=true;;
+        --resume_download) RES_DOWN=true;;
         -h|--help) show_help;;
         *) log_error "Unknown parameter passed: $1"; usage; echo "Try '$0 --help' for more information."; exit 1 ;;
     esac
     shift
 done
+
+# Validate dependencies at the very beggining
+check_dependencies
+log_info "Checked system dependencies"
 
 if [[ -z "${INPUT_FILE}" ]]; then
     log_error "Error: --input (-i) is required."
@@ -386,13 +452,30 @@ else
   log_info "Debug mode enabled, keeping temporary directory: '$TEMP_DIR'"
 fi
 
+if [[ "$RES_DOWN" == true ]]; then
+    #This should be done at the very beggining
+    if [[ ! -d "db" ]]; then
+        log_error "Directory 'db/' does not exist. Are you sure about resuming a previous download?"
+    fi
+else
+  mkdir -p db
+fi
+
+
+
+
 log_info "========== Step 1.2: Validating input file =========="
+
+# Export the functions and variables
+export -f skip_taxa fetch_data log_info log_warn log_error clean_line 
+export RED YELLOW GREEN NC FIVE_LETTER_FILE HAS_CODE_COLUMN 
 
 #CLEAN_FILE="$(mktemp -p "$TEMP_DIR" file.XXXXXX)"  #Temporary file for cleaned input
 CLEAN_FILE="$TEMP_DIR/input_clean_file.txt"
 # Extract the header line from the input file
 log_info "Cleaning accessions file and saving to $CLEAN_FILE"
 grep -v '^#' "$INPUT_FILE" | grep -v '^$' > "$CLEAN_FILE"
+
 HEADER_LINE="$(head -n1 "$CLEAN_FILE" | tr -d '[:space:]')"
 IFS=',' read -ra HEADER_COLS <<< "$HEADER_LINE"
 LOWER_HEADER=("${HEADER_COLS[@],,}")
@@ -420,6 +503,9 @@ if [[ "${#HEADER_COLS[@]}" -eq 3 ]]; then
     done <<< "$(tail -n +2 "$CLEAN_FILE" |cut -d',' -f2|tr -d '[:blank:]')"
     #first I deleted complete void lines, so if -z works, it is detecting a row that has its second field void
     log_info "'Code(s)' column has been detected and validated."
+    if [[ "$RES_DOWN" == true ]]; then
+      skip_taxa "$CLEAN_FILE"
+    fi
   else
     log_error "The header has 3 columns, but the second is not a 'code(s)' column (Found: '${HEADER_COLS[1]}')."
     exit 1
@@ -428,37 +514,39 @@ elif [[ "${#HEADER_COLS[@]}" -eq 2 ]]; then
   # If has exactly 2 columns, check if they are valid (STRAIN/SPECIES and ACCESSIONS)
   if [[ "${LOWER_HEADER[0]}" =~ ^(taxon(s)?|strain(s)?|species)$ ]] && [[ "${LOWER_HEADER[1]}" =~ ^accession(s)?$ ]]; then
     log_info "Detected only 2 columns in the header: 'taxon/species/strain' and 'accession(s)' (or equivalent). No code column found. Unique codes for each taxon in the format 'sXXXX' will be automatically generated."
+    if [[ "$RES_DOWN" == true ]]; then
+      skip_taxa "$CLEAN_FILE"
+    fi
+
   else
     log_error "The header columns are not correct. Expected 'taxon/species/strain' and 'accession(s)' (or equivalent). Found: '${HEADER_COLS[0]}' and '${HEADER_COLS[1]}'."
     exit 1
   fi
 fi
+if [[ "$RES_DOWN_VOID" == false ]]; then
+  log_info "========== Step 1.3: Retrieving coding sequences from NCBI =========="
 
-mkdir -p db
+  log_info "Starting retrieval of sequences from $INPUT_FILE..."
 
-log_info "========== Step 1.3: Retrieving coding sequences from NCBI =========="
+  count=0
+  #count has nothing to do, exit status are always cero, the IFS is end of line and the $ are where they should be,
+  #the only clue is that this always happens in GCF/GCA lines of the clean file and never with parallel!! this did not happen with parallel
+  #it is not sth of the while loop, as I ran it apart and ran well, its sth of the fetch_data function!!, but I dont know what 
+  #because the exit code is always cero!!!, and when it stops it simply gets out the while loop WITHOUT passing by my error message!!!
+  #And after 3 hours of trials, the solution was to add <dev/null to prevent the function (or the commands it invokes) from consuming the standard script input.
+  while IFS= read -r line || [[ -n $line ]]; do
+    log_info "Processing line: $line"
+    if ! fetch_data "$line" < /dev/null; then
+      log_error "Failed to fetch data for line: $line"
+      exit 1
+    fi
+    ((count++))
+  done <<< "$(tail -n +2 "$CLEAN_FILE")"
 
-log_info "Starting retrieval of sequences from $INPUT_FILE..."
-# Export the functions and variables
-export -f fetch_data log_info log_warn log_error clean_line 
-export RED YELLOW GREEN NC FIVE_LETTER_FILE HAS_CODE_COLUMN 
-count=0
-#count has nothing to do, exit status are always cero, the IFS is end of line and the $ are where they should be,
-#the only clue is that this always happens in GCF/GCA lines of the clean file and never with parallel!! this did not happen with parallel
-#it is not sth of the while loop, as I ran it apart and ran well, its sth of the fetch_data function!!, but I dont know what 
-#because the exit code is always cero!!!, and when it stops it simply gets out the while loop WITHOUT passing by my error message!!!
-#And after 3 hours of trials, the solution was to add <dev/null to prevent the function (or the commands it invokes) from consuming the standard script input.
-while IFS= read -r line || [[ -n $line ]]; do
-  (( count+=1 ))
-  log_info "Processing line $count: $line"
-  if ! fetch_data "$line" < /dev/null; then
-    log_error "Failed to fetch data for line $count: $line"
-    exit 1
-  fi
-done <<< "$(tail -n +2 "$CLEAN_FILE")"
+  log_info "Processed $count lines from the accession file"
+  log_info "Nucleotide sequences retrieval completed successfully.\n"
+fi
 
-log_info "Processed $count lines from the accession file"
-log_info "Nucleotide sequences retrieval completed successfully."
 log_info "========== Step 1.4: Preparing format of coding sequences for OMA and read2tree =========="
 #Adding 5 letter code and cleaning for r2t
 if $HAS_CODE_COLUMN; then
