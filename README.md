@@ -19,7 +19,7 @@ conda activate my_env && conda install -c bioconda rasusa read2tree sra-tools en
 
 **Notes:** 
 * OMA standalone and czid-dedup are not available via Conda. Please, follow the "Installation From Source" instructions below.
-* The Conda version of `read2tree` does not include the minimap2 branch. If you need this branch, follow the "Installation from Source" instructions.
+* The Conda version of read2tree does not include the minimap2 branch. If you need this branch, follow the "Installation from Source" instructions.
 
 ### 2. Installation from source
 
