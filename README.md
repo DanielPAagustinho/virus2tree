@@ -8,7 +8,7 @@ This new version of read2tree enables the creation of a reference database via O
 This software relies on four external tools: [OMA Standalone](https://omabrowser.org/standalone/), [Rasusa](https://github.com/mbhall88/rasusa?tab=readme-ov-file#install), [czid-dedup](https://github.com/chanzuckerberg/czid-dedup?tab=readme-ov-file#installation), and [Read2Tree](https://github.com/DessimozLab/read2tree/tree/minimap2?tab=readme-ov-file#installation). It assumes all programs are in your Conda environment or `PATH`. 
 Below are two general ways to install all the required dependencies. For more details, please visit the respective web pages.
 
-### 1. Installation with Conda (Not possible for all dependencies)
+### 1. Installation with Conda (not possible for all dependencies)
 
 [Conda](https://docs.anaconda.com/miniconda/) is a package manager that allows you to install all dependencies quickly and easily.
 
@@ -19,7 +19,7 @@ conda activate my_env && conda install -c bioconda rasusa read2tree sra-tools en
 
 **Notes:** 
 * OMA standalone and czid-dedup are not available via Conda. Please, follow the "Installation From Source" instructions below.
-*The Conda version of `read2tree` does not include the minimap2 branch. If you need this branch, follow the "Installation from Source" instructions.
+* The Conda version of `read2tree` does not include the minimap2 branch. If you need this branch, follow the "Installation from Source" instructions.
 
 ### 2. Installation from source
 
