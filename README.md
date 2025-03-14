@@ -1,7 +1,7 @@
 
 # r2t 2025
 
-This new version of **read2tree** enables the creation of a reference database via **OMA Standalone** using coding sequences from **NCBI**. The final tree combines the presence of assemblies (input as the reference) and the read samples. It also supports read deduplication with **czid-dedup** and downsampling with **rasusa**.
+This new version of read2tree enables the creation of a reference database via OMA Standalone using coding sequences from NCBI. The final tree combines the presence of assemblies (input as the reference) and the read samples. It also supports read deduplication with czid-dedup and downsampling with rasusa.
 
 ## Installation of dependencies
 
@@ -16,10 +16,10 @@ Below are two general ways to install all the required dependencies. For more de
 conda create -n my_env python=3.10.8 -y 
 conda activate my_env && conda install -c bioconda rasusa read2tree sra-tools entrez-direct -y
 ```
+
 **Notes:** 
-* Unfortunately, the OMA standalone is not available from Conda. Please, see the "From Source" section below for installation.
-* `czid-dedup` is not available on Conda. See the "From Source" section below for installation.
-* Installing `read2tree` via Conda does not include the minimap2 branch. If you need this branch, follow the "Installation from Source" instructions.
+* OMA standalone and czid-dedup are not available via Conda. Please, follow the "Installation From Source" instructions below.
+*The Conda version of `read2tree` does not include the minimap2 branch. If you need this branch, follow the "Installation from Source" instructions.
 
 ### 2. Installation from source
 
@@ -28,42 +28,36 @@ If you prefer to install the tools manually from their source code, use the foll
 **OMA Standalone**
 
 ```bash
-wget -O oma.tgz https://omabrowser.org/standalone/OMA.2.6.0.tgz && tar xvzf oma.tgz && cd OMA.2.6.0 && ./install.sh /your/install/path
-```
+## Download your own version, in this case is 2.6.0
+wget -O oma.tgz https://omabrowser.org/standalone/OMA.2.6.0.tgz && tar xvzf oma.tgz && cd OMA.2.6.0
 
-After installation, make sure the bin folder of OMA is in your PATH variable. Add the following line to your shell configuration file (`~/.bashrc`, `~/.zshrc`, etc.):
+## Below choose your install path, if not OMA will be installed in /usr/local/OMA (you might need to use sudo in this case)
+./install.sh /your/install/path
 
-```bash
-export PATH=$PATH:/your/install/path/OMA/bin
-```
-
-Then, reload your shell configuration to apply the changes:
-
-```bash
-source ~/.bashrc  # or source ~/.zshrc
+## After installation, make sure the bin folder of OMA is in your PATH variable. For that, edit your shell configuration file (`~/.bashrc`, `~/.zshrc`, etc.)
+echo 'export PATH=$PATH:/your/install/path/OMA/bin' >> ~/.bashrc && source ~/.bashrc
 ```
 
 **Rasusa**
+
 ```bash
+## When rasusa is downloaded it is automatically added to your PATH
 curl -sSL rasusa.mbh.sh | sh
 ```
 
 **czid-dedup**
 
-`czid-dedup` requires [rust/cargo](https://www.rust-lang.org/tools/install) for compilation
+Take into account that `czid-dedup` requires [rust/cargo](https://www.rust-lang.org/tools/install) for compilation
 
 ```bash
 git clone https://github.com/chanzuckerberg/czid-dedup.git && cd czid-dedup && cargo build --release 
+
+#As with OMA, make sure that the executable is in your PATH variable
+echo 'export PATH=$PATH:your/install/path/czid-dedup/target/release/czid-dedup' >> ~/.bashrc && source ~/.bashrc
 ```
-As with OMA, make sure that the executable is in your PATH variable. Add the following line to your shell configuration file (`~/.bashrc`, `~/.zshrc`, etc.):
-```bash
-export PATH=$PATH:your/install/path/czid-dedup/target/release/czid-dedup
-```
-Then, reload your shell configuration to apply the changes:
-```bash
-source ~/.bashrc  # or source ~/.zshrc
-```
+
 **Read2Tree**
+
 ```bash
 ## Create conda env
 conda create -n r2t python=3.10.8 -y && conda activate r2t
@@ -77,19 +71,22 @@ conda install -c bioconda mafft iqtree minimap2 samtools -y
 
 ## Clone minimap2 branch of read2tree
 git clone --branch minimap2 https://github.com/DessimozLab/read2tree.git && cd read2tree && python setup.py install
+## read2tree will be placed in the default bin folder of your Conda installation
 ```
-**SRA tools**
+
+**SRA Toolkit**
+
 ```bash
-wget https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubuntu64.tar.gz
-tar -xvzf sratoolkit.current-ubuntu64.tar.gz
+wget https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubuntu64.tar.gz && tar -xvzf sratoolkit.current-ubuntu64.tar.gz
+
 ## Add executable to your path (using your own version, in this case is 3.2.0)
 echo 'export PATH="$PATH:/your/install/path/sratoolkit.3.2.0-ubuntu64/bin' >> ~/.bashrc && source ~/.bashrc
-## Check installation
-fasterq-dump --help
 ```
+
 **Entrez direct**
+
 ```bash
-## Getting the scripts and download them in an "edirect folder" in the user's home directory
+## Get the scripts and download them in an "edirect folder" in the user's home directory
 sh -c "$(wget -q https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/install-edirect.sh -O -)"
 ```
 
@@ -98,7 +95,7 @@ sh -c "$(wget -q https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/install-edirec
 To verify that all tools are correctly installed and available in your Conda environment or `PATH`, run the following command:
 
 ```bash
-oma -h && rasusa --help && czid-dedup --help && read2tree --help
+oma -h && rasusa --help && czid-dedup-Linux --help && read2tree --help && fasterq-dump --help && esearch -h
 ```
 
 ## Running step 1: Creating the reference database
@@ -118,15 +115,16 @@ If this file is not specified, OMA Standalone will use midpoint rooting, which i
 | **Parameter**       | **Description** |
 |--------------------|-----------------------------|
 | `-i`, `--input`    | **Mandatory.** Input file with NCBI accessions (CSV format). |
-| `-o`, `--outgroup` | **Optional.** File with taxon names used as outgroups. |
+| `-o`, `--outgroup` | **Optional** but highly recommended. File with taxon names used as outgroups. |
 | `-T`, `--threads`  | Number of threads to use for OmaStandalone and the first step of read2tree. |
 | `--out_dir`        | Path to place the output of read2tree. **Default:** `read2tree_output`. |
-| `--temp_dir`       | Directory for intermediate temporary files. |
+| `--temp_dir`       | Directory for intermediate temporary files. **Default:** `/tmp`|
+| `--resume_download`       |Resumes by skipping taxa already downloaded from NCBI into the `db` folder |
 | `--debug`         | Prevents the removal of the temporary directory upon script termination. |
 
 ### **Accession File Format**
 
-The accession file must be a **comma-separated values (CSV) text file**, with the first line as the header. Each line represents a taxon/species/strain with associated accessions. The format varies depending on whether a five-letter code is included.
+The accession file must be a comma-separated values (CSV) text file, with the first line as the header. Each line represents a taxon/species/strain with associated accessions. The format varies depending on whether a five-letter code is included.
 
 #### **Columns:**
 1. **First column (mandatory):** Taxon/species/strain name. Header: taxon(s),species or strain(s).
@@ -276,7 +274,7 @@ It means to analyze the input file `sra_runs_rsv.csv`, extract the SRA IDs, fetc
 
 ### **Input File Format**
 
-The input file is a **comma-separated values (CSV) text file**. No header is required. Each line represents a taxon name (or any identifier of your choice) with one or more SRA IDs separated by commas. 
+The input file is a comma-separated values (CSV) text file. No header is required. Each line represents a taxon name (or any identifier of your choice) with one or more SRA IDs separated by commas. 
 
 #### **Columns:**
 1. **First column:** Species name (or any identifier). Spaces are allowed but should be avoided for simplicity. This is used for file naming and is sanitized to contain only alphanumeric characters

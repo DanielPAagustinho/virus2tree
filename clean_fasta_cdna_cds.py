@@ -95,7 +95,7 @@ if __name__ == '__main__':
     else:
         five_letter_species_dic = create_five_letter(file_names)
         # Output clean_five_letter_species.tsv only if no TSV was provided
-        output_five_letter_tsv = "five_letter_species.tsv"
+        output_five_letter_tsv = "five_letter_taxon.tsv"
         with open(output_five_letter_tsv, "w") as file_out:
             for species_name, five_letter in five_letter_species_dic.items():
                 file_out.write(f"{species_name}\t{five_letter}\n")

@@ -76,8 +76,8 @@ Optional:
   -o, --outgroup <file>                        Path to the outgroup taxon/species/strain file
   -T, --threads <int>                          Number of threads [default: 12]
   --temp_dir <dir>                             Specify temp directory (otherwise mktemp -d is used)
-  --out_dir <dir>                              Specify output directory for read2tree step1 default: [read2tree_output]
-  --resume_download                            Detects and skips taxa that have already been downloaded from NCBI                                 
+  --out_dir <dir>                              Specify output directory for read2tree step1 [default: read2tree_output]
+  --resume_download                            Skips taxa whose coding sequences have already been downloaded from NCBI to the db folder                                
   --debug                                      Keeps temporary directory
   -h, --help                                   Show this help message
 
@@ -98,7 +98,7 @@ skip_taxa() {
     local filtered_input_file="${CLEAN_FILE%.*}_filtered.csv"
     local taxon_list=""
     local downloaded_taxa
-    echo "This is the filtered_input_file: ${filtered_input_file}"
+    #echo "This is the filtered_input_file: ${filtered_input_file}"
     # Create list of downloaded taxa
     downloaded_taxa=$(
         printf '%s\n' db/*_cds_from_genomic.fna | awk -F '/' '{print $2}' | 
@@ -540,7 +540,7 @@ if [[ "$RES_DOWN_VOID" == false ]]; then
       log_error "Failed to fetch data for line: $line"
       exit 1
     fi
-    ((count++))
+    ((count+=1))
   done <<< "$(tail -n +2 "$CLEAN_FILE")"
 
   log_info "Processed $count lines from the accession file"
