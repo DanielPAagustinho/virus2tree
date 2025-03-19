@@ -18,8 +18,8 @@ conda activate my_env && conda install -c bioconda rasusa read2tree sra-tools en
 ```
 
 **Notes:** 
-* OMA standalone and czid-dedup are not available via Conda. Please, follow the "Installation From Source" instructions below.
-* The Conda version of read2tree does not include the minimap2 branch. If you need this branch, follow the "Installation from Source" instructions.
+* OMA standalone and czid-dedup are not available via Conda. Please, follow the "Installation from source" instructions below.
+* The Conda version of read2tree does not include the minimap2 branch. If you need this branch, follow the "Installation from source" instructions.
 
 ### 2. Installation from source
 
@@ -36,7 +36,7 @@ wget -O oma.tgz https://omabrowser.org/standalone/OMA.2.6.0.tgz && tar xvzf oma.
 
 ## After installation, make sure the bin folder of OMA is in your PATH variable. For that, edit your shell configuration file (`~/.bashrc`, `~/.zshrc`, etc.)
 echo 'export PATH=$PATH:/your/install/path/OMA/bin' >> ~/.bashrc && source ~/.bashrc
-```
+`ˋ`
 
 **Rasusa**
 
@@ -307,3 +307,4 @@ For EXPERIMENT mode (e.g., SRX000111 with RUN SRR000999 from Species A) it gener
 * SpeciesA_SRX000111_SRR000999.fastq (if layout is SINGLE).
 
 At the end of execution, the script removes the directories containing the .sra and metadata files, leaving only the final FASTQ files in the specified output directory.
+
