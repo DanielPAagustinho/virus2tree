@@ -61,7 +61,7 @@ check_dependencies() {
 }
 
 usage() {
-  echo -e "Usage: ${PROGNAME} -i <input> [-o <outgroup>] [options]\n"
+  echo -e "Usage: ${PROGNAME} -i <input> [-g <outgroup>] [options]\n"
   #echo "Try '$0 --help' for more information."
 }
 
@@ -73,7 +73,7 @@ Required:
   -i, --input <file>                           Path to the accession file. Should be a comma-separated file with the structure: taxon(s)/species/strain(s),code(optional),accession(s). If provided, the code should have exactly 5 alphanumeric characters.
 
 Optional:
-  -o, --outgroup <file>                        Path to the outgroup taxon/species/strain file
+  -g, --outgroup <file>                        Path to the outgroup taxon/species/strain file
   -T, --threads <int>                          Number of threads [default: 12]
   --temp_dir <dir>                             Specify temp directory (otherwise mktemp -d is used)
   --out_dir <dir>                              Specify output directory for read2tree step1 [default: read2tree_output]
@@ -82,7 +82,7 @@ Optional:
   -h, --help                                   Show this help message
 
 Example:
-  $0 -i accessions.txt -o outgroups.txt
+  $0 -i accessions.txt -g outgroups.txt
 
 EOF
 exit 0
@@ -383,7 +383,7 @@ log_info "========== Step 1.1: Validating parameters =========="
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         -i|--input) INPUT_FILE="$2"; shift ;;
-        -o|--outgroup) OUTGROUP_FILE="$2"; shift ;;
+        -g|--outgroup) OUTGROUP_FILE="$2"; shift ;;
         -T|--threads) THREADS="$2"; shift ;;
         --temp_dir) TEMP_DIR="${2%/}"; shift ;;
         --out_dir) OUT_DIR="${2%/}"; shift ;;
@@ -423,6 +423,20 @@ if ! [[ "$THREADS" =~ ^[1-9][0-9]*$ ]]; then
   exit 1
 fi
 
+if [[ "$RES_DOWN" == true ]]; then
+    #This should be done at the very beggining
+    if [[ ! -d "db" ]]; then
+        log_error "Directory 'db/' does not exist. Are you sure about resuming a previous download?"
+        exit 1
+    fi
+    if [[ -d "$TEMP_DIR" ]]; then
+	      log_error "Temporary directory '$(realpath "$TEMP_DIR")' already exists. Please specify a novel directory to avoid conflicts when resuming the download."
+        exit 1
+    fi
+else
+  mkdir -p db
+fi
+
 if [[ -z "$TEMP_DIR" ]]; then
   TEMP_DIR="$(mktemp -d)"
   log_info "Created temp directory at '$TEMP_DIR'"
@@ -431,38 +445,31 @@ else
   if [[ ! -d "$TEMP_DIR" ]]; then
     mkdir -p "$TEMP_DIR"
   fi
-  log_info "Using temp directory: '$TEMP_DIR'"
-fi
-
-if [[ -z "$OUT_DIR" ]]; then
-  OUT_DIR=read2tree_output
-  log_info "No name for the read2tree directory was specified, using '$OUT_DIR'"
-else
-  if [[ -d "$OUT_DIR" ]]; then
-    log_error "The read2tree output directory '$OUT_DIR' already exists. Please provide a novel read2tree directory"
-    exit 1
-  fi
-  mkdir -p "$OUT_DIR"
-  log_info "Using output directory: '$OUT_DIR'"
+  log_info "Using temp directory: '$(realpath "$TEMP_DIR")'"
 fi
 
 if [[ "$DEBUG" == false ]]; then
   trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "./$TEMP_DIR"' EXIT
 else
-  log_info "Debug mode enabled, keeping temporary directory: '$TEMP_DIR'"
+  log_info "Debug mode enabled, keeping temporary directory: '$(realpath "$TEMP_DIR")'"
 fi
 
-if [[ "$RES_DOWN" == true ]]; then
-    #This should be done at the very beggining
-    if [[ ! -d "db" ]]; then
-        log_error "Directory 'db/' does not exist. Are you sure about resuming a previous download?"
-    fi
+
+if [[ -z "$OUT_DIR" ]]; then
+  OUT_DIR=read2tree_output
+  log_info "No name for the read2tree directory was specified, using '$(realpath "$OUT_DIR")'"
+  if [[ -d "$OUT_DIR" ]]; then
+	  log_error "The read2tree output directory '$(realpath "$OUT_DIR")' already exists. Please provide a novel read2tree directory"
+    exit 1
+  fi
 else
-  mkdir -p db
+  if [[ -d "$OUT_DIR" ]]; then
+	  log_error "The read2tree output directory '$(realpath "$OUT_DIR")' already exists. Please provide a novel read2tree directory"
+    exit 1
+  fi
+  mkdir -p "$OUT_DIR"
+  log_info "Using output directory: '$(realpath "$OUT_DIR")'"
 fi
-
-
-
 
 log_info "========== Step 1.2: Validating input file =========="
 
@@ -473,7 +480,7 @@ export RED YELLOW GREEN NC FIVE_LETTER_FILE HAS_CODE_COLUMN
 #CLEAN_FILE="$(mktemp -p "$TEMP_DIR" file.XXXXXX)"  #Temporary file for cleaned input
 CLEAN_FILE="$TEMP_DIR/input_clean_file.txt"
 # Extract the header line from the input file
-log_info "Cleaning accessions file and saving to $CLEAN_FILE"
+log_info "Cleaning accession file and saving to '$(realpath "$CLEAN_FILE")'"
 grep -v '^#' "$INPUT_FILE" | grep -v '^$' > "$CLEAN_FILE"
 
 HEADER_LINE="$(head -n1 "$CLEAN_FILE" | tr -d '[:space:]')"
@@ -490,29 +497,35 @@ elif [[ "${#HEADER_COLS[@]}" -gt 3 ]]; then
 fi
 # Check specific column structure
 if [[ "${#HEADER_COLS[@]}" -eq 3 ]]; then
-  # If has exactly 3 columns, check if the second column is CODE
-  if [[ "${LOWER_HEADER[1]}" =~ ^code(s)?$ ]]; then
-    HAS_CODE_COLUMN=true
-    line_number=1
-    while IFS= read -r line || [[ -n "$line" ]]; do
-      ((line_number+=1)) #How do I sum from
-      if ! [[ "$line" =~ ^[[:alnum:]]{5}$ ]]; then
-        log_error "Invalid 5-letter code on line $line_number:'$line'. The code must have 5 alphanumeric characters."
-        exit 1
+  if [[ "${LOWER_HEADER[0]}" =~ ^(taxon|taxa|strain(s)?|species)$ ]] && [[ "${LOWER_HEADER[2]}" =~ ^accession(s)?$ ]]; then
+    log_info "Detected taxon and accession columns in the header. Now checking for the code column..." 
+    # If has exactly 3 columns, check if the second column is CODE
+    if [[ "${LOWER_HEADER[1]}" =~ ^code(s)?$ ]]; then
+      HAS_CODE_COLUMN=true
+      line_number=1
+      while IFS= read -r line || [[ -n "$line" ]]; do
+        ((line_number+=1)) #How do I sum from
+        if ! [[ "$line" =~ ^[[:alnum:]]{5}$ ]]; then
+          log_error "Invalid 5-letter code on line $line_number:'$line'. The code must have 5 alphanumeric characters."
+          exit 1
+        fi
+      done <<< "$(tail -n +2 "$CLEAN_FILE" |cut -d',' -f2|tr -d '[:blank:]')"
+      #first I deleted complete void lines, so if -z works, it is detecting a row that has its second field void
+      log_info "The code column has been detected and validated."
+      if [[ "$RES_DOWN" == true ]]; then
+        skip_taxa "$CLEAN_FILE"
       fi
-    done <<< "$(tail -n +2 "$CLEAN_FILE" |cut -d',' -f2|tr -d '[:blank:]')"
-    #first I deleted complete void lines, so if -z works, it is detecting a row that has its second field void
-    log_info "'Code(s)' column has been detected and validated."
-    if [[ "$RES_DOWN" == true ]]; then
-      skip_taxa "$CLEAN_FILE"
+    else
+      log_error "The header has 3 columns, but the second is not a 'code(s)' column (Found: '${HEADER_COLS[1]}')."
+      exit 1
     fi
   else
-    log_error "The header has 3 columns, but the second is not a 'code(s)' column (Found: '${HEADER_COLS[1]}')."
+    log_error "The header columns are not correct. Expected 'taxon/species/strain' and 'accession(s)' (or equivalent). Found: '${HEADER_COLS[0]}' and '${HEADER_COLS[2]}'."
     exit 1
   fi
 elif [[ "${#HEADER_COLS[@]}" -eq 2 ]]; then
   # If has exactly 2 columns, check if they are valid (STRAIN/SPECIES and ACCESSIONS)
-  if [[ "${LOWER_HEADER[0]}" =~ ^(taxon(s)?|strain(s)?|species)$ ]] && [[ "${LOWER_HEADER[1]}" =~ ^accession(s)?$ ]]; then
+  if [[ "${LOWER_HEADER[0]}" =~ ^(taxon|taxa|strain(s)?|species)$ ]] && [[ "${LOWER_HEADER[1]}" =~ ^accession(s)?$ ]]; then
     log_info "Detected only 2 columns in the header: 'taxon/species/strain' and 'accession(s)' (or equivalent). No code column found. Unique codes for each taxon in the format 'sXXXX' will be automatically generated."
     if [[ "$RES_DOWN" == true ]]; then
       skip_taxa "$CLEAN_FILE"
@@ -640,12 +653,15 @@ read2tree --step 1marker --standalone_path marker_genes --dna_reference dna_ref.
 #         sample="${BASH_REMATCH[1]}"
 #         sampleR1["$sample"]="$f"
 #         echo "Detected paired-end R1: $f (Sample: $sample)"
+#         echo "Detected paired-end R2: $f (Sample: $sample)"
 
-#     # If _2 is detected => Paired R2
+# If _2 is detected => Paired R2
 #     elif [[ "$noext" =~ (.*)_2$ ]]; then
 #         sample="${BASH_REMATCH[1]}"
 #         sampleR2["$sample"]="$f"
 #         echo "Detected paired-end R2: $f (Sample: $sample)"
+
+#     else
 
 #     else
 #         # Otherwise => single-end

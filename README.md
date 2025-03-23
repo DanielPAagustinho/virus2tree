@@ -101,13 +101,13 @@ oma -h && rasusa --help && czid-dedup-Linux --help && read2tree --help && faster
 ## Running step 1: Creating the reference database
 
 ```bash
-virus2tree_step1.sh -i rsv_accessions.csv -o rsv_outgroups -T 25 --out_dir read2tree --temp_dir temp --debug &> def_rsv_long.log &
+virus2tree_step1.sh -i rsv_accessions.csv -g rsv_outgroups -T 25 --out_dir read2tree --temp_dir temp --debug &> def_rsv_long.log &
 ```
 To create the reference database, two key input files are required:
 
 `-i`, `--input` (mandatory): A file containing the NCBI accessions to be used for reference (`rsv_accessions.csv`).
 
-`-o`, `--outgroup` (optional but recommended): A file containing taxon(s) to be used as outgroups by OMA Standalone during orthologous group detection (`rsv_outgroups`).  
+`-g`, `--outgroup` (optional but recommended): A file containing taxon(s) to be used as outgroups by OMA Standalone during orthologous group detection (`rsv_outgroups`).  
 If this file is not specified, OMA Standalone will use midpoint rooting, which is likely incorrect and will significantly affect hierarchical orthologous groups (HOGs) inferred by OMA.
 
 ### **Command Parameters**
@@ -115,11 +115,11 @@ If this file is not specified, OMA Standalone will use midpoint rooting, which i
 | **Parameter**       | **Description** |
 |--------------------|-----------------------------|
 | `-i`, `--input`    | **Mandatory.** Input file with NCBI accessions (CSV format). |
-| `-o`, `--outgroup` | **Optional** but highly recommended. File with taxon names used as outgroups. |
+| `-g`, `--outgroup` | **Optional** but highly recommended. File with taxon names used as outgroups. |
 | `-T`, `--threads`  | Number of threads to use for OmaStandalone and the first step of read2tree. |
 | `--out_dir`        | Path to place the output of read2tree. **Default:** `read2tree_output`. |
 | `--temp_dir`       | Directory for intermediate temporary files. **Default:** `/tmp`|
-| `--resume_download`       |Resumes by skipping taxa already downloaded from NCBI into the `db` folder |
+| `--resume_download`       |Resumes by skipping taxa already downloaded from NCBI into the `db` folder. If all taxa have already been downloaded, it resumes with the next step. |
 | `--debug`         | Prevents the removal of the temporary directory upon script termination. |
 
 ### **Accession File Format**
@@ -127,8 +127,8 @@ If this file is not specified, OMA Standalone will use midpoint rooting, which i
 The accession file must be a comma-separated values (CSV) text file, with the first line as the header. Each line represents a taxon/species/strain with associated accessions. The format varies depending on whether a five-letter code is included.
 
 #### **Columns:**
-1. **First column (mandatory):** Taxon/species/strain name. Header: taxon(s),species or strain(s).
-2. **Second column (optional):** Five-letter code (must be exactly 5 alphanumeric characters). Header: code(s). If not provided, a random five-letter code for each taxa will be generated and saved in the file five_letter_taxon.tsv
+1. **First column (mandatory):** Taxon/species/strain name. Header: taxon (or taxa),species or strain(s).
+2. **Second column (optional):** Five-letter code (must be exactly 5 alphanumeric characters). Header: code(s). If not provided, a random five-letter code for each taxon will be generated and saved in the file five_letter_taxon.tsv
 3. **Third and onward (mandatory):** One or more accession numbers (comma-separated) to obtain coding sequences. Accepts NCBI Nucleotide database accessions and assembly identifiers (GCF_/GCA_). Header: accession(s).
 
 Commented lines starting with # are ignored.
