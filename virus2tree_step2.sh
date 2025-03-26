@@ -73,7 +73,7 @@ check_dependencies() {
 }
 
 usage() {
-  echo -e "Usage: ${PROGNAME} -r <file1> [file2...] -t <read_type> [options]\n"
+  log_info "Usage: ${PROGNAME} -r <read_file1> [read_file2...] -t <read_type> [options]\n"
   #echo "Try '$0 --help' for more information."
 }
 
@@ -153,7 +153,7 @@ analyze_fastq() {
 
 if [[ $# -eq 0 ]]; then
   usage
-  echo "Try '$0 --help' for more information."
+  log_info "Try '$0 --help' for more information."
   exit 1
 fi
 

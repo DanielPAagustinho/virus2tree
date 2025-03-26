@@ -40,6 +40,26 @@ log_error() {
 # Functions
 ########################################
 
+check_dependencies() {
+  #Initialize array to map tools to messages
+  local missing=0
+  declare -A tools=(
+    ["prefetch"]="SRA Toolkit"
+    ["efetch"]="Entrez Direct utilities"
+  )
+
+  #log_info "Checking system dependencies..."
+  #Looping through the array to test for commands and detect possible missing tools  
+  for cmd in "${!tools[@]}"; do
+    if ! command -v "$cmd" &>/dev/null; then
+      log_error "Missing requirement: ${tools[$cmd]}"
+      ((missing++))
+    #else
+      #log_info "Found: ${tools[$cmd]}"
+    fi
+  done
+}
+
 # For species dir name: allow only alnum
 sanitize_name() {
   local input="$1"
@@ -74,8 +94,13 @@ chunk_array() {
 }
 
 usage() {
+  log_info "Usage: $(basename "$0") -i <input_file> [-o <output_dir>] [options]\n"
+  #echo "Try '$0 --help' for more information."
+}
+
+show_help() {
   cat <<EOF
-Usage: $(basename "$0") -i <input_file> [-o <output_dir>] [--chunk-size N] [--sleep-secs N] [-l SINGLE|PAIRED]
+$(usage)
 
 Required:
   -i, --input         Input file containing SRA IDs with one taxon per line:
@@ -110,6 +135,13 @@ USER_LAYOUT=""    # If the user determines SINGLE or PAIRED
 ########################################
 # Parse arguments
 ########################################
+
+if [[ $# -eq 0 ]]; then
+  usage
+  log_info "Try '$0 --help' for more information."
+  exit 1
+fi
+
 while [[ $# -gt 0 ]]; do
   case "$1" in
     -i|--input)
@@ -133,7 +165,7 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     -h|--help)
-      usage
+      show_help
       exit 0
       ;;
     *)
@@ -143,6 +175,9 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+check_dependencies
+log_info "Checked system dependencies"
 
 if [[ -z "$INPUT_FILE" ]]; then
   log_error "-i/--input is required."
@@ -382,7 +417,7 @@ for line in "${lines[@]}"; do
 
   log_info "Done with $local_name"
   log_info "Removing intermediate taxon directory: $species_outdir"
-  rm -r ./"${species_outdir}"
+  #rm -r ./"${species_outdir}"
   #echo
 done
 

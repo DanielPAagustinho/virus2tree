@@ -44,7 +44,7 @@ check_dependencies() {
   local missing=0
   declare -A tools=(
     ["read2tree"]="read2tree"
-    ["oma"]="OMA"
+    ["oma"]="OMA standalone"
     ["efetch"]="Entrez Direct utilities"
   )
 
@@ -61,7 +61,7 @@ check_dependencies() {
 }
 
 usage() {
-  echo -e "Usage: ${PROGNAME} -i <input> [-g <outgroup>] [options]\n"
+  log_info "Usage: ${PROGNAME} -i <accession_file> [-g <outgroup_file>] [options]\n"
   #echo "Try '$0 --help' for more information."
 }
 
@@ -171,7 +171,7 @@ fetch_data() {
   fi
 
   if [[ -z "$accessions_list" ]]; then
-    log_error "Taxon with empty accession(s): ${strain}"
+    log_error "Taxon with empty accessions: ${strain}"
     return 1
   fi
 
@@ -186,7 +186,7 @@ fetch_data() {
     log_info "Analyzing taxon ${strain}. Detected the following GCF/GCA assemblies: ${assembly_accessions[*]}"
     local nc_accessions=()
     for assembly in "${assembly_accessions[@]}"; do
-      log_info "Retrieving nucleotide accessions associated with assembly: ${assembly}"
+	    log_info "Retrieving nucleotide accession(s) associated with assembly ${assembly}"
       # Input all the accessions to the array all_accs
       mapfile -t all_accs < <(esearch -db assembly -query "$assembly" \
         | elink -target nuccore \
@@ -200,10 +200,10 @@ fetch_data() {
         # Let' see if at least one accession begins with NC_ (RefSeq)
         mapfile -t nc_only < <(printf '%s\n' "${all_accs[@]}" | grep '^NC_')
         if [[ ${#nc_only[@]} -gt 0 ]]; then
-          log_info "Retrieved ${#nc_only[@]} RefSeq accessions for assembly $assembly: ${nc_only[*]}."
+		log_info "Retrieved ${#nc_only[@]} RefSeq accession(s) for assembly $assembly: ${nc_only[*]}."
           nc_accessions+=("${nc_only[@]}")
         else
-          log_info "No RefSeq (NC_*) accessions found for assembly: $assembly. Falling back to ${#all_accs[@]} GenBank accessions: ${all_accs[*]}."
+		log_info "No RefSeq (NC_*) accessions found for assembly: $assembly. Falling back to ${#all_accs[@]} GenBank accession(s): ${all_accs[*]}."
           # Add all accessions (GenBank)
           nc_accessions+=("${all_accs[@]}")
         fi
@@ -218,12 +218,12 @@ fetch_data() {
     #   #echo "There are regular accessions: ${regular_accessions[@]}"
     #   accessions_list=$(IFS=','; echo "${nc_accessions[*]},${regular_accessions[*]}")
     # fi
-    #echo "Final accesion list has ${#regular_accessions[@]} accessions and ${#nc_accessions[@]} assembly accessions. The assembly accessions are: ${nc_accessions[@]}"
+    #echo "Final accesion list has ${#regular_accessions[@]} accession(s) and ${#nc_accessions[@]} assembly accession(s). The assembly accession(s) are: ${nc_accessions[@]}"
     local accessions_list=$(IFS=','; echo "${accessions[*]}")
   fi
   # Fetch data
   
-  log_info "Fetching data for taxon: ${strain}. Final nucleotide accessions used: ${accessions_list//,/ }."
+  log_info "Fetching data for taxon: ${strain}. Final nucleotide accession(s) used: ${accessions_list//,/ }."
   efetch -db nucleotide -id "$accessions_list" -format fasta_cds_na \
     > "db/${strain}_cds_from_genomic.fna" \
     || {
@@ -372,7 +372,7 @@ generate_og_gene_tsv() {
 
 if [[ $# -eq 0 ]]; then
   usage
-  echo "Try '$0 --help' for more information."
+  log_info "Try '$0 --help' for more information."
   exit 1
 fi
 
@@ -526,7 +526,7 @@ if [[ "${#HEADER_COLS[@]}" -eq 3 ]]; then
 elif [[ "${#HEADER_COLS[@]}" -eq 2 ]]; then
   # If has exactly 2 columns, check if they are valid (STRAIN/SPECIES and ACCESSIONS)
   if [[ "${LOWER_HEADER[0]}" =~ ^(taxon|taxa|strain(s)?|species)$ ]] && [[ "${LOWER_HEADER[1]}" =~ ^accession(s)?$ ]]; then
-    log_info "Detected only 2 columns in the header: 'taxon/species/strain' and 'accession(s)' (or equivalent). No code column found. Unique codes for each taxon in the format 'sXXXX' will be automatically generated."
+    log_info "Detected only taxon and accession columns in the header. No code column found. Unique codes for each taxon in the format 'sXXXX' will be automatically generated."
     if [[ "$RES_DOWN" == true ]]; then
       skip_taxa "$CLEAN_FILE"
     fi
@@ -624,7 +624,7 @@ if ls Output/OrthologousGroupsFasta/*.fa >/dev/null 2>&1; then
     #####cat Output/OrthologousGroupsFasta/*.fa > dna_ref.fa
     mv Output/OrthologousGroupsFasta/*.fa marker_genes
 else
-    log_error "No files found in Output/OrthologousGroupsFasta."
+    log_error "No files found in '$(realpath Output/OrthologousGroupsFasta.)'"
     exit 1
 fi
 log_info "========== Step 1.8: Running Read2tree (step 1 marker) =========="
