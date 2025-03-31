@@ -13,6 +13,7 @@ THREADS=12
 TEMP_DIR=""
 OUT_DIR=""
 DEBUG=false
+MAT_PEPTIDES=false
 RES_DOWN=false
 RES_DOWN_VOID=false
 if [ -t 1 ]; then
@@ -74,6 +75,7 @@ Required:
 
 Optional:
   -g, --outgroup <file>                        Path to the outgroup taxon/species/strain file
+  -p, --use_mat_peptides                       Downloads gdbk file for each accession, if it detects at least one mature peptide, it uses them as coding sequences, if not, proceeds with normal downloading
   -T, --threads <int>                          Number of threads [default: 12]
   --temp_dir <dir>                             Specify temp directory (otherwise mktemp -d is used)
   --out_dir <dir>                              Specify output directory for read2tree step1 [default: read2tree_output]
@@ -224,6 +226,22 @@ fetch_data() {
   # Fetch data
   
   log_info "Fetching data for taxon: ${strain}. Final nucleotide accession(s) used: ${accessions_list//,/ }."
+  
+  if $MAT_PEPTIDES; then
+    #downloads all the ids in a single gbk file
+    log_info "--use_mat_peptides parameter specified, searching for gbk file and evaluating..."
+    
+    efetch -db nucleotide -id "$accessions_list" -format gbwithparts > "${TEMP_DIR}/gbk_dir/${strain}.gbk"
+    if python "${SCRIPTS_DIR}/write_mat_peptides.py" "${TEMP_DIR}/gbk_dir/${strain}.gbk" "db/${strain}_cds_from_genomic.fna"; then
+      if [[ -f "db/${strain}_cds_from_genomic.fna" ]] && [[ -s "db/${strain}_cds_from_genomic.fna" ]]; then
+        return 0
+      fi
+    else
+      log_error "Processing of '$( realpath "${TEMP_DIR}/gbk_dir/${strain}.gbk")' file failed"
+      return 1
+    fi
+  fi
+
   efetch -db nucleotide -id "$accessions_list" -format fasta_cds_na \
     > "db/${strain}_cds_from_genomic.fna" \
     || {
@@ -315,7 +333,7 @@ generate_og_gene_tsv() {
               #local compressed_id="$(echo "$protein_id" | sed 's/[^a-zA-Z0-9]//g')"
               #echo "Got correct features from *fna for ${protein_id}"
               [[ "$gene" == "NA" ]]       && log_info "Missing gene for protein ID $protein_id in $file"
-              [[ "$protein" == "NA" ]]    && log_info "Missing protein for protein ID $protein_id in $file"
+              [[ "$protein" == "NA" ]]    && log_info "Missing product(protein) for protein ID $protein_id in $file"
               [[ "$location" == "NA" ]]  && log_info "Missing location for protein ID $protein_id in $file"
               [[ "$locus_tag" == "NA" ]]  && log_info "Missing locus_tag for protein ID $protein_id in $file"
               [[ "$db_xref" == "NA" ]]  && log_info "Missing db_xref for protein ID $protein_id in $file"
@@ -384,6 +402,7 @@ while [[ "$#" -gt 0 ]]; do
     case $1 in
         -i|--input) INPUT_FILE="$2"; shift ;;
         -g|--outgroup) OUTGROUP_FILE="$2"; shift ;;
+        -p|--use_mat_peptides) MAT_PEPTIDES=true;;
         -T|--threads) THREADS="$2"; shift ;;
         --temp_dir) TEMP_DIR="${2%/}"; shift ;;
         --out_dir) OUT_DIR="${2%/}"; shift ;;
@@ -423,6 +442,12 @@ if ! [[ "$THREADS" =~ ^[1-9][0-9]*$ ]]; then
   exit 1
 fi
 
+if [[ "$DEBUG" == false ]]; then
+  trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "./$TEMP_DIR"' EXIT
+else
+  log_info "Debug mode enabled, keeping temporary directory: '$(realpath "$TEMP_DIR")'"
+fi
+
 if [[ "$RES_DOWN" == true ]]; then
     #This should be done at the very beggining
     if [[ ! -d "db" ]]; then
@@ -434,6 +459,10 @@ if [[ "$RES_DOWN" == true ]]; then
         exit 1
     fi
 else
+  if [[ -d "db" ]]; then
+        log_error "Directory $(realpath "db/")' already exists, please remove it"
+        exit 1
+  fi
   mkdir -p db
 fi
 
@@ -444,16 +473,12 @@ else
   # Validate if it is a directory
   if [[ ! -d "$TEMP_DIR" ]]; then
     mkdir -p "$TEMP_DIR"
+    log_info "Using temp directory: '$(realpath "$TEMP_DIR")'"
+  else 
+    log_error "Temporary directory '$(realpath "$TEMP_DIR")' already exists. Please specify a novel directory to avoid conflicts with the new run."
+    exit 1
   fi
-  log_info "Using temp directory: '$(realpath "$TEMP_DIR")'"
 fi
-
-if [[ "$DEBUG" == false ]]; then
-  trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "./$TEMP_DIR"' EXIT
-else
-  log_info "Debug mode enabled, keeping temporary directory: '$(realpath "$TEMP_DIR")'"
-fi
-
 
 if [[ -z "$OUT_DIR" ]]; then
   OUT_DIR=read2tree_output
@@ -469,6 +494,10 @@ else
   fi
   mkdir -p "$OUT_DIR"
   log_info "Using output directory: '$(realpath "$OUT_DIR")'"
+fi
+
+if [[ "$MAT_PEPTIDES" == true ]]; then
+  mkdir -p "$TEMP_DIR"/gbk_dir
 fi
 
 log_info "========== Step 1.2: Validating input file =========="
@@ -560,48 +589,55 @@ if [[ "$RES_DOWN_VOID" == false ]]; then
   log_info "Nucleotide sequences retrieval completed successfully.\n"
 fi
 
-log_info "========== Step 1.4: Preparing format of coding sequences for OMA and read2tree =========="
-#Adding 5 letter code and cleaning for r2t
-if $HAS_CODE_COLUMN; then
-  # If the user gave a CODE column, we pass db_codes.tsv as second argument
-  python "${SCRIPTS_DIR}/clean_fasta_cdna_cds.py" db "$FIVE_LETTER_FILE"
+if [ "$RES_DOWN_VOID" = "true" ] && [ -d "DB" ]; then
+    log_info "========== Skipping Step 1.4: All files were already downloaded from NCBI and 'DB' folder already exists =========="
 else
-  # If no code was provided, the Python script generates codes on its own
-  python "${SCRIPTS_DIR}/clean_fasta_cdna_cds.py" db
+  log_info "========== Step 1.4: Preparing format of coding sequences for OMA and read2tree =========="
+  #Adding 5 letter code and cleaning for r2t
+  if $HAS_CODE_COLUMN; then
+    # If the user gave a CODE column, we pass db_codes.tsv as second argument
+    python "${SCRIPTS_DIR}/clean_fasta_cdna_cds.py" db "$FIVE_LETTER_FILE"
+  else
+    # If no code was provided, the Python script generates codes on its own
+    python "${SCRIPTS_DIR}/clean_fasta_cdna_cds.py" db
+  fi
 fi
-
-log_info "========== Step 1.5: Editing parameters.drw file for running OMA =========="
-
-oma -p 
-sed -i '/#WriteOutput_\(Phy\|Par\|H\)/ s/^#//' parameters.drw
-outgroup_codes=()
-if [ -n "$OUTGROUP_FILE" ]; then
-    log_info "Reading outgroup taxon(s) from $OUTGROUP_FILE..."
-    while IFS= read -r species || [[ -n "$species" ]]; do
-        species=$(clean_line "${species}")
-        if grep -q "^${species}[[:space:]]" "$FIVE_LETTER_FILE"; then
-            code=$(awk -v sp="$species" '$1 == sp {print $1}' "$FIVE_LETTER_FILE")
-            outgroup_codes+=("$code")
-        else
-            log_error "Outgroup taxon '$species' not found in $FIVE_LETTER_FILE."
-            exit 1
-        fi
-    done < "$OUTGROUP_FILE"
-fi
-
-#Verify codes and edit the parameters file
-if [ ${#outgroup_codes[@]} -gt 0 ]; then
-    outgroup_list=$(IFS=,; echo "${outgroup_codes[*]}")
-    OUTGROUPS="OutgroupSpecies := [${outgroup_list}];"
-    log_info "Using the following 5-letter code outgroup(s) to edit the parameters file: ${outgroup_list//,/ }"
+if [ "$RES_DOWN_VOID" = "true" ] && [ -f "parameters.drw" ]; then
+    log_info "========== Skipping Step 1.5: parameters.drw file already exists =========="
 else
-    log_warn "No valid outgroup taxon provided. Using default 'none'."
-    OUTGROUPS="OutgroupSpecies := 'none';"
-fi
-#map initial file with the new 5 letter code given by the clean...py
-grep -q "^OutgroupSpecies" "$PARAMETERS_FILE" && \
-    sed -i "s/^OutgroupSpecies.*/$OUTGROUPS/" "$PARAMETERS_FILE"
+  log_info "========== Step 1.5: Editing parameters.drw file for running OMA =========="
 
+  outgroup_codes=()
+  if [ -n "$OUTGROUP_FILE" ]; then
+      log_info "Reading outgroup taxon(s) from $OUTGROUP_FILE..."
+      while IFS= read -r species || [[ -n "$species" ]]; do
+          species=$(clean_line "${species}")
+          if grep -q "^${species}[[:space:]]" "$FIVE_LETTER_FILE"; then
+              code=$(awk -v sp="$species" '$1 == sp {print $1}' "$FIVE_LETTER_FILE")
+              outgroup_codes+=("$code")
+          else
+              log_error "Outgroup taxon '$species' not found in $FIVE_LETTER_FILE."
+              exit 1
+          fi
+      done < "$OUTGROUP_FILE"
+  fi
+
+  #Verify codes and edit the parameters file
+  if [ ${#outgroup_codes[@]} -gt 0 ]; then
+      outgroup_list=$(IFS=,; echo "${outgroup_codes[*]}")
+      OUTGROUPS="OutgroupSpecies := [${outgroup_list}];"
+      log_info "Creating the parameters.drw file for OMA"
+      oma -p 
+      sed -i '/#WriteOutput_\(Phy\|Par\|H\)/ s/^#//' parameters.drw
+      log_info "Using the following 5-letter code outgroup(s) to edit the parameters file: ${outgroup_list//,/ }"
+  else
+      log_warn "No valid outgroup taxon provided. Using default 'none'."
+      OUTGROUPS="OutgroupSpecies := 'none';"
+  fi
+  #map initial file with the new 5 letter code given by the clean...py
+  grep -q "^OutgroupSpecies" "$PARAMETERS_FILE" && \
+      sed -i "s/^OutgroupSpecies.*/$OUTGROUPS/" "$PARAMETERS_FILE"
+fi
 log_info "========== Step 1.6: Running OMA =========="
 
 oma -n "${THREADS}"
