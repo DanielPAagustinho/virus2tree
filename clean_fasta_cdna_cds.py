@@ -4,6 +4,24 @@ from Bio.Seq import Seq
 import sys
 from os import listdir
 import os
+from datetime import datetime
+
+if sys.stdout.isatty():
+    RED = "\033[1;31m"
+    GREEN = "\033[1;32m"
+    YELLOW = "\033[1;33m"
+    NC = "\033[0m"
+else:
+    RED = GREEN = YELLOW = NC = ""
+
+def log_info(message):
+    print(f"{GREEN}[{datetime.now():%Y-%m-%d %H:%M:%S}] [INFO]{NC} {message}")
+
+def log_warn(message):
+    print(f"{YELLOW}[{datetime.now():%Y-%m-%d %H:%M:%S}] [WARN]{NC} {message}")
+
+def log_error(message):
+    print(f"{RED}[{datetime.now():%Y-%m-%d %H:%M:%S}] [ERROR]{NC} {message}", file=sys.stderr)
 
 def read_fasta_files(input_folder, format_input="fna"):
     files = listdir(input_folder)
@@ -15,11 +33,11 @@ def read_fasta_files(input_folder, format_input="fna"):
             records = list(SeqIO.parse(input_folder + file, "fasta"))
             records_all.append(records)        
         else:
-            print("Skipping file: " + str(input_folder + file) + " (not ." + format_input + ")")
+            log_info("Skipping file: " + str(input_folder + file) + " (not ." + format_input + ")")
     if records_all:
-        print(f"Found {len(file_names)} '{format_input}' files. First file has {len(records_all[0])} sequences.")
+        log_info(f"Found {len(file_names)} '{format_input}' files. First file has {len(records_all[0])} sequences.")
     else:
-        print(f"No '{format_input}' files found in {input_folder}.")
+        log_info(f"No '{format_input}' files found in {input_folder}.")
     return file_names, records_all
 
 def load_provided_codes(tsv_file):
@@ -32,11 +50,11 @@ def load_provided_codes(tsv_file):
                 continue
             parts = line.split('\t')
             if len(parts) != 2:
-                print(f"Skipping invalid line in {tsv_file}: {line}")
+                log_warn(f"Skipping invalid line in {tsv_file}: {line}")
                 continue
             strain, code = parts
             code_mapping[strain] = code
-    print(f"Loaded {len(code_mapping)} strain-code pairs from {tsv_file}.")
+    log_info(f"Loaded {len(code_mapping)} strain-code pairs from {tsv_file}.")
     return code_mapping
 
 def create_five_letter(file_names):
@@ -45,7 +63,7 @@ def create_five_letter(file_names):
     for idx, file_name in enumerate(file_names):
         five_letter_species = "s" + str(idx).zfill(4) 
         five_letter_species_dic[file_name.replace("_cds_from_genomic.fna","")] = five_letter_species
-    print("Generated automatic 5-letter codes.")
+    log_info("Generated automatic 5-letter codes.")
     return five_letter_species_dic
 
 def clean_translate(records, species_fivelet, strain):
@@ -69,12 +87,12 @@ def clean_translate(records, species_fivelet, strain):
         records_nuc.append(nuc_seq)
         records_aa.append(protein_seq)
     
-    print(f"Cleaned nucleotide and protein sequences for {species_fivelet}.")
+    log_info(f"Cleaned nucleotide and protein sequences for {species_fivelet}.")
     return records_nuc, records_aa
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print("Usage: python script.py <input_folder_fna> [strain_code_tsv]")
+        log_info("Usage: python script.py <input_folder_fna> [strain_code_tsv]")
         sys.exit(1)
 
     input_folder_fna = sys.argv[1].rstrip('/') + "/"
@@ -90,7 +108,7 @@ if __name__ == '__main__':
         for file_name in file_names:
             strain = file_name.replace("_cds_from_genomic.fna", "")
             if strain not in five_letter_species_dic:
-                print(f"Error: No 5-letter code provided for strain '{strain}'.")
+                log_error(f"No 5-letter code provided for strain '{strain}'.")
                 sys.exit(1)
     else:
         five_letter_species_dic = create_five_letter(file_names)
@@ -99,14 +117,14 @@ if __name__ == '__main__':
         with open(output_five_letter_tsv, "w") as file_out:
             for species_name, five_letter in five_letter_species_dic.items():
                 file_out.write(f"{species_name}\t{five_letter}\n")
-        print(f"Generated codes written to {output_five_letter_tsv}.")
+        log_info(f"Generated codes written to {output_five_letter_tsv}.")
 
     # Create output folder for amino acid sequences
     folder_aa = "DB"
     if not os.path.exists(folder_aa):
         os.makedirs(folder_aa)
     else:
-        print(f"ERROR: The folder '{folder_aa}' already exists. Please remove it.")
+        log_error(f"The folder '{folder_aa}' already exists. Please remove it.")
         sys.exit(1)
 
     # Process files and clean/translate sequences
@@ -123,5 +141,5 @@ if __name__ == '__main__':
 
     # Write all nucleotide sequences to dna_ref.fa
     SeqIO.write(records_nuc_all_clean, "dna_ref.fa", "fasta")
-    print(f"Processed {len(file_names)} files. Cleaned nucleotide sequences saved to 'dna_ref.fa'.")
-    print(f"Amino acid sequences saved to '{folder_aa}'.")
+    log_info(f"Processed {len(file_names)} files. Cleaned nucleotide sequences saved to 'dna_ref.fa'.")
+    log_info(f"Amino acid sequences saved to '{folder_aa}'.")

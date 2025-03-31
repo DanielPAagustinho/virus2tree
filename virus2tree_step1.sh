@@ -463,7 +463,11 @@ else
         log_error "Directory $(realpath "db/")' already exists, please remove it"
         exit 1
   fi
-  mkdir -p db
+  if [[ -d "$TEMP_DIR" ]]; then
+    log_error "Temporary directory '$(realpath "$TEMP_DIR")' already exists. Please specify a novel directory to avoid conflicts with the new run."
+    exit 1
+  fi
+    mkdir -p db
 fi
 
 if [[ -z "$TEMP_DIR" ]]; then

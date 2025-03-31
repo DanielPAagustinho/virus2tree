@@ -2,6 +2,24 @@
 from Bio import SeqIO
 from Bio.SeqRecord import SeqRecord
 import sys
+from datetime import datetime
+
+if sys.stdout.isatty():
+    RED = "\033[1;31m"
+    GREEN = "\033[1;32m"
+    YELLOW = "\033[1;33m"
+    NC = "\033[0m"
+else:
+    RED = GREEN = YELLOW = NC = ""
+
+def log_info(message):
+    print(f"{GREEN}[{datetime.now():%Y-%m-%d %H:%M:%S}] [INFO]{NC} {message}")
+
+def log_warn(message):
+    print(f"{YELLOW}[{datetime.now():%Y-%m-%d %H:%M:%S}] [WARN]{NC} {message}")
+
+def log_error(message):
+    print(f"{RED}[{datetime.now():%Y-%m-%d %H:%M:%S}] [ERROR]{NC} {message}", file=sys.stderr)
 
 def process_genbank(input_file: str, output_file: str) -> bool:
     """
@@ -24,20 +42,19 @@ def process_genbank(input_file: str, output_file: str) -> bool:
         mat_peptides = [f for f in features if f.type == "mat_peptide"]
         
         if not mat_peptides:
-            print(f"[INFO] No mat_peptide features found in {input_file}")
-            return True  # Valid outcome, not an error
+            log_info(f"No mat_peptide features found in {input_file}")
+            return True  # Valid outcome, not an error, simply go back to main bash function and retrieve cds
         cds_features = [f for f in features if f.type == "CDS"]
         fallback_gene, fallback_protein_id, fallback_locus_tag = "", "", ""
 
-        # Find polyprotein CDS as fallback source for features
+        # use CDS as fallback source if not features are found in any mat peptide
         if len(cds_features) == 1:
             # Use the single CDS as fallback for all mat_peptides
             fallback_cds = cds_features[0]
             fallback_gene = fallback_cds.qualifiers.get("gene", [""])[0]
             fallback_locus_tag = fallback_cds.qualifiers.get("locus_tag", [""])[0]
             fallback_protein_id = fallback_cds.qualifiers.get("protein_id", [""])[0]
-            print(f" [INFO] Using features from {fallback_gene if fallback_gene else fallback_locus_tag} CDS as fallback in case no corresponding features are found in any mat_peptide", 
-                  file=sys.stderr)
+            log_info(f'Using features from "{fallback_gene if fallback_gene else fallback_locus_tag}" CDS as fallback in case no corresponding features are found in any mat_peptide')
 
         # Process each mat_peptide
         subproteins = []
@@ -54,7 +71,7 @@ def process_genbank(input_file: str, output_file: str) -> bool:
                 product = feature.qualifiers.get("product", [None])[0]
                 locus_tag = feature.qualifiers.get("locus_tag", [fallback_locus_tag])[0]
 
-                # Validate essential fields
+                #If werent found then get them for the corresponding cds that contains the mat_peptide
                 if not (gene and protein_id and locus_tag):
                     for cds in cds_features:
                         cds_start = int(cds.location.start)
@@ -77,6 +94,7 @@ def process_genbank(input_file: str, output_file: str) -> bool:
                     f"[protein_id={protein_id}]",
                     f"[location={location}]"
                 ]
+                #Be sure that gene is first, or locus tag if there is not gene, or prodcut goes first if there is neither gene nor locustag
                 if gene:
                     description_parts.insert(0, f"[gene={gene}]")
                 if locus_tag:
@@ -102,23 +120,21 @@ def process_genbank(input_file: str, output_file: str) -> bool:
         # Write output
         with open(output_file, "w") as f:
             SeqIO.write(subproteins, f, "fasta")
-        print(f"[INFO] Generated {len(subproteins)} subproteins in {output_file}")
+        log_info(f"Generated {len(subproteins)} subproteins in {output_file}")
         return True
 
     except Exception as e:
-        print(f"[ERROR] {str(e)}", file=sys.stderr)
+        log_error(f"{str(e)}", file=sys.stderr)
         return False
 
 if __name__ == "__main__":
-    # Validate arguments
     if len(sys.argv) != 3:
-        print("Usage: python genbank_to_fasta.py <input.gbk> <output.fasta>")
+        log_info("Usage: python genbank_to_fasta.py <input.gbk> <output.fasta>")
         sys.exit(1)
         
     input_path = sys.argv[1]
     output_path = sys.argv[2]
     
-    # Execute processing
     if not process_genbank(input_path, output_path):
         sys.exit(1)
     sys.exit(0)
