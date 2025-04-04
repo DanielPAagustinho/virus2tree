@@ -18,6 +18,8 @@ ONLY_MAT_PEPTIDES=false
 RES_DOWN=false
 RES_DOWN_VOID=false
 NCBI_DOWNLOAD_COUNT=0
+P_FLAG=false
+Q_FLAG=false
 if [ -t 1 ]; then
   RED="\033[1;31m"
   GREEN="\033[1;32m"
@@ -287,6 +289,7 @@ generate_og_gene_tsv() {
     done < "$FIVE_LETTER_FILE"
     # Example usage
     # process_genes ~/oma/test3_illumina/db ~/oma/test3_illumina/marker_genes output_table.tsv
+    # process_genes ~/oma/test3_illumina/db ~/oma/test3_illumina/marker_genes output_table.tsv
     tmp_file="$TEMP_DIR/OG_genes_unsorted.tsv"
     output_file2="$TEMP_DIR/${output_file}.tmp"
     unique_output_file2="$TEMP_DIR/${unique_output_file}.tmp"
@@ -416,7 +419,7 @@ generate_og_gene_tsv() {
           data[NR] = $0
       }
       END {
-          # Reconstruye la cabecera usando directamente el arreglo nonNA
+      #Now remades the header suing directly the nonNA array
           out = ""
           for (i = 1; i <= n; i++) {
              if (nonNA[i])
@@ -424,7 +427,7 @@ generate_og_gene_tsv() {
           }
           sub(OFS "$", "", out)
           print out
-          # Reconstruye cada línea de datos usando el arreglo nonNA
+	  #Now writes each row of data using nonNA array
           for (j = 2; j <= NR; j++) {
              split(data[j], fields, FS)
              out_line = ""
@@ -460,8 +463,8 @@ while [[ "$#" -gt 0 ]]; do
     case $1 in
         -i|--input) INPUT_FILE="$2"; shift ;;
         -g|--outgroup) OUTGROUP_FILE="$2"; shift ;;
-        -p|--use_mat_peptides) MAT_PEPTIDES=true;;
-        -q|--use_only_mat_peptides) MAT_PEPTIDES=true; ONLY_MAT_PEPTIDES=true;;
+        -p|--use_mat_peptides) MAT_PEPTIDES=true; P_FLAG=true;;
+        -q|--use_only_mat_peptides) MAT_PEPTIDES=true; ONLY_MAT_PEPTIDES=true; Q_FLAG=true;;
         -T|--threads) THREADS="$2"; shift ;;
         --temp_dir) TEMP_DIR="${2%/}"; shift ;;
         --out_dir) OUT_DIR="${2%/}"; shift ;;
@@ -499,6 +502,11 @@ fi
 if ! [[ "$THREADS" =~ ^[1-9][0-9]*$ ]]; then
   log_error "Error: THREADS must be a positive integer."
   exit 1
+fi
+
+if [ "$P_FLAG" = true ] && [ "$Q_FLAG" = true ]; then
+    log_error "Options -p and -q cannot be used together"
+    exit 1
 fi
 
 if [[ "$RES_DOWN" == true ]]; then
@@ -728,7 +736,7 @@ if ls Output/OrthologousGroupsFasta/*.fa >/dev/null 2>&1; then
     #####cat Output/OrthologousGroupsFasta/*.fa > dna_ref.fa
     mv Output/OrthologousGroupsFasta/*.fa marker_genes
 else
-    log_error "No files found in '$(realpath Output/OrthologousGroupsFasta.)'"
+    log_error "No files found in '$(realpath Output/OrthologousGroupsFasta)'"
     exit 1
 fi
 log_info "========== Step 1.8: Running Read2tree (step 1 marker) =========="
