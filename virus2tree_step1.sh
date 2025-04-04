@@ -14,8 +14,10 @@ TEMP_DIR=""
 OUT_DIR=""
 DEBUG=false
 MAT_PEPTIDES=false
+ONLY_MAT_PEPTIDES=false
 RES_DOWN=false
 RES_DOWN_VOID=false
+NCBI_DOWNLOAD_COUNT=0
 if [ -t 1 ]; then
   RED="\033[1;31m"
   GREEN="\033[1;32m"
@@ -75,9 +77,10 @@ Required:
 
 Optional:
   -g, --outgroup <file>                        Path to the outgroup taxon/species/strain file
-  -p, --use_mat_peptides                       Downloads gdbk file for each accession, if it detects at least one mature peptide, it uses them as coding sequences, if not, proceeds with normal downloading
+  -p, --use_mat_peptides                       Downloads the gbk file for each taxon's accession(s). If at least one mature peptide feature is detected, these features are used as the coding sequences; otherwise, the standard CDS features are downloaded.
+  -q, --use_only_mat_peptides                  Downloads the gbk file for each taxon's accession(s). If at least one mature peptide feature is detected, these features are used as the coding sequences; if none are detected, that taxon is skipped.
   -T, --threads <int>                          Number of threads [default: 12]
-  --temp_dir <dir>                             Specify temp directory (otherwise mktemp -d is used)
+  --temp_dir <dir>                             Specify temporary directory (otherwise mktemp -d is used)
   --out_dir <dir>                              Specify output directory for read2tree step1 [default: read2tree_output]
   --resume_download                            Skips taxa whose coding sequences have already been downloaded from NCBI to the db folder                                
   --debug                                      Keeps temporary directory
@@ -234,8 +237,19 @@ fetch_data() {
     efetch -db nucleotide -id "$accessions_list" -format gbwithparts > "${TEMP_DIR}/gbk_dir/${strain}.gbk"
     if python "${SCRIPTS_DIR}/write_mat_peptides.py" "${TEMP_DIR}/gbk_dir/${strain}.gbk" "db/${strain}_cds_from_genomic.fna"; then
       if [[ -f "db/${strain}_cds_from_genomic.fna" ]] && [[ -s "db/${strain}_cds_from_genomic.fna" ]]; then
+        if $HAS_CODE_COLUMN; then
+          log_info "Writing 5-letter code for taxon ${strain} to ${FIVE_LETTER_FILE}"
+          echo -e "${strain}\t${code}" >> "${FIVE_LETTER_FILE}"
+        fi
+        ((NCBI_DOWNLOAD_COUNT++))
         return 0
+      elif [[ $ONLY_MAT_PEPTIDES == true ]]; then
+	      log_info "Skipping taxon ${strain}..."
+	      return 0
+      else
+        log_info "Fetching CDS features..."
       fi
+      
     else
       log_error "Processing of '$( realpath "${TEMP_DIR}/gbk_dir/${strain}.gbk")' file failed"
       return 1
@@ -248,6 +262,8 @@ fetch_data() {
       log_error "Command efetch failed to fetch accession(s) for taxon ${strain}: ${accessions_list}"
       return 1
     }
+  ((NCBI_DOWNLOAD_COUNT++))
+
   #write to the file only if fetching was successful
   if $HAS_CODE_COLUMN; then
     log_info "Writing 5-letter code for taxon ${strain} to ${FIVE_LETTER_FILE}"
@@ -272,6 +288,8 @@ generate_og_gene_tsv() {
     # Example usage
     # process_genes ~/oma/test3_illumina/db ~/oma/test3_illumina/marker_genes output_table.tsv
     tmp_file="$TEMP_DIR/OG_genes_unsorted.tsv"
+    output_file2="$TEMP_DIR/${output_file}.tmp"
+    unique_output_file2="$TEMP_DIR/${unique_output_file}.tmp"
     log_info "Processing gene features from coding sequences files in directory: $fna_dir"
     while IFS=: read -r file line; do
         #Example of the complete input line: db/rsv_11_cds_from_genomic.fna:>lcl|MG813984.1_cds_AZQ19553.1_6 [gene=SH] [protein=small hydrophobic protein] [protein_id=AZQ19553.1] [location=4251..4445] [gbkey=CDS]
@@ -347,12 +365,12 @@ generate_og_gene_tsv() {
     done < <(grep '^>' "$fna_dir"/*.fna)
     log_info "Finished processing all coding sequences files in directory: $fna_dir"
     #-V option in sort from GNU coreutils
-    sort -k1,1 -V -k2,2 "$tmp_file" > "$output_file"
-    sed -i '1i OG\tGene\tProtein\tProtein_ID\tLocation\tAccession\tTaxon\tCode\tLocus_tag\tDb_xref' "$output_file"
-        {
-      echo -e "OG\tGene\tProtein\ttaxon"
+    sort -k1,1 -V -k2,2 "$tmp_file" > "$output_file2"
+    sed -i '1iOG\tGene\tProtein\tProtein_ID\tLocation\tAccession\tTaxon\tCode\tLocus_tag\tDb_xref' "$output_file2"
+    {
+      head -n +1 "$output_file2"
       # Skip the header of the main TSV
-      tail -n +2 "$output_file" \
+      tail -n +2 "$output_file2" \
       | awk -F'\t' '{
           # Key is combination of columns OG,Gene,Protein
           key=$1"\t"$2"\t"$3
@@ -377,8 +395,48 @@ generate_og_gene_tsv() {
              print k"\t"taxa[k]
           }
       }'
-    } > "$unique_output_file"
+    } > "$unique_output_file2"
 
+    for file in "$output_file2" "$unique_output_file2"; do
+      final_file_base="${file##*/}"; final_file="${final_file_base%.*}"
+      awk 'BEGIN { FS = OFS = "\t" }
+      NR==1 {
+          n = NF
+          for (i = 1; i <= NF; i++) {
+             header[i] = $i
+          }
+          next
+      }
+      {
+          for (i = 1; i <= NF; i++) {
+             if ($i != "NA") {
+                nonNA[i] = 1
+             }
+          }
+          data[NR] = $0
+      }
+      END {
+          # Reconstruye la cabecera usando directamente el arreglo nonNA
+          out = ""
+          for (i = 1; i <= n; i++) {
+             if (nonNA[i])
+                out = out header[i] OFS
+          }
+          sub(OFS "$", "", out)
+          print out
+          # Reconstruye cada línea de datos usando el arreglo nonNA
+          for (j = 2; j <= NR; j++) {
+             split(data[j], fields, FS)
+             out_line = ""
+             for (i = 1; i <= n; i++) {
+                if (nonNA[i])
+                   out_line = out_line fields[i] OFS
+             }
+             sub(OFS "$", "", out_line)
+             print out_line
+          }
+      }' "$file" > "$final_file"
+    done
     log_info "OG-Gene TSV generation complete: $output_file"
 }
 
@@ -403,6 +461,7 @@ while [[ "$#" -gt 0 ]]; do
         -i|--input) INPUT_FILE="$2"; shift ;;
         -g|--outgroup) OUTGROUP_FILE="$2"; shift ;;
         -p|--use_mat_peptides) MAT_PEPTIDES=true;;
+        -q|--use_only_mat_peptides) MAT_PEPTIDES=true; ONLY_MAT_PEPTIDES=true;;
         -T|--threads) THREADS="$2"; shift ;;
         --temp_dir) TEMP_DIR="${2%/}"; shift ;;
         --out_dir) OUT_DIR="${2%/}"; shift ;;
@@ -440,12 +499,6 @@ fi
 if ! [[ "$THREADS" =~ ^[1-9][0-9]*$ ]]; then
   log_error "Error: THREADS must be a positive integer."
   exit 1
-fi
-
-if [[ "$DEBUG" == false ]]; then
-  trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "./$TEMP_DIR"' EXIT
-else
-  log_info "Debug mode enabled, keeping temporary directory: '$(realpath "$TEMP_DIR")'"
 fi
 
 if [[ "$RES_DOWN" == true ]]; then
@@ -504,11 +557,17 @@ if [[ "$MAT_PEPTIDES" == true ]]; then
   mkdir -p "$TEMP_DIR"/gbk_dir
 fi
 
+if [[ "$DEBUG" == false ]]; then
+  trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "./$TEMP_DIR"' EXIT
+else
+  log_info "Debug mode enabled, keeping temporary directory: '$(realpath "$TEMP_DIR")'"
+fi
+
 log_info "========== Step 1.2: Validating input file =========="
 
 # Export the functions and variables
 export -f skip_taxa fetch_data log_info log_warn log_error clean_line 
-export RED YELLOW GREEN NC FIVE_LETTER_FILE HAS_CODE_COLUMN 
+export RED YELLOW GREEN NC FIVE_LETTER_FILE HAS_CODE_COLUMN NCBI_DOWNLOAD_COUNT RES_DOWN_VOID RES_DOWN ONLY_MAT_PEPTIDES MAT_PEPTIDES
 
 #CLEAN_FILE="$(mktemp -p "$TEMP_DIR" file.XXXXXX)"  #Temporary file for cleaned input
 CLEAN_FILE="$TEMP_DIR/input_clean_file.txt"
@@ -590,23 +649,28 @@ if [[ "$RES_DOWN_VOID" == false ]]; then
   done <<< "$(tail -n +2 "$CLEAN_FILE")"
 
   log_info "Processed $count lines from the accession file"
+  log_info "Downloaded accession(s) from $NCBI_DOWNLOAD_COUNT taxa" 
   log_info "Nucleotide sequences retrieval completed successfully.\n"
 fi
 
-if [ "$RES_DOWN_VOID" = "true" ] && [ -d "DB" ]; then
-    log_info "========== Skipping Step 1.4: All files were already downloaded from NCBI and 'DB' folder already exists =========="
+if [[ "$RES_DOWN_VOID" == false && "$NCBI_DOWNLOAD_COUNT" -eq 0 && "$RES_DOWN" == true && "$ONLY_MAT_PEPTIDES" == true ]]; then
+  RES_DOWN_VOID=true
+fi
+
+if [ "$RES_DOWN_VOID" == true ] && [ -d "DB" ] && [ -f "dna_ref.fa" ]; then
+    log_info "========== Skipping Step 1.4 : All files were already downloaded from NCBI and 'DB' folder and 'dna_ref.fa' file already exist =========="
 else
   log_info "========== Step 1.4: Preparing format of coding sequences for OMA and read2tree =========="
   #Adding 5 letter code and cleaning for r2t
   if $HAS_CODE_COLUMN; then
     # If the user gave a CODE column, we pass db_codes.tsv as second argument
-    python "${SCRIPTS_DIR}/clean_fasta_cdna_cds.py" db "$FIVE_LETTER_FILE"
+    python "${SCRIPTS_DIR}/clean_fasta_cdna_cds.py" db "$RES_DOWN" "$FIVE_LETTER_FILE" 
   else
     # If no code was provided, the Python script generates codes on its own
-    python "${SCRIPTS_DIR}/clean_fasta_cdna_cds.py" db
+    python "${SCRIPTS_DIR}/clean_fasta_cdna_cds.py" db "$RES_DOWN"
   fi
 fi
-if [ "$RES_DOWN_VOID" = "true" ] && [ -f "parameters.drw" ]; then
+if [ "$RES_DOWN_VOID" = true ] && [ -f "parameters.drw" ]; then
     log_info "========== Skipping Step 1.5: parameters.drw file already exists =========="
 else
   log_info "========== Step 1.5: Editing parameters.drw file for running OMA =========="

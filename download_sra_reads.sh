@@ -60,11 +60,18 @@ check_dependencies() {
   done
 }
 
-# For species dir name: allow only alnum
-sanitize_name() {
-  local input="$1"
-  echo "$input" | tr -cd '[:alnum:]'
-}
+# For species dir name: allow only alnum and replace spaces with underscores
+anitize_name() {
+	  shopt -s extglob 
+	  local input="$1"
+	  # Quitar espacios al inicio y final
+	  input="${input##+([[:space:]])}"
+	  input="${input%%+([[:space:]])}"
+     	  input="${input//+([[:space:]])/_}"
+	  input="${input//[^a-zA-Z0-9_]/}"
+	  echo "$input"
+ }
+
 
 is_run_prefix() {
   [[ "$1" == SRR* || "$1" == ERR* || "$1" == DRR* ]]

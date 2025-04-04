@@ -3,6 +3,7 @@ from Bio import SeqIO
 from Bio.SeqRecord import SeqRecord
 import sys
 from datetime import datetime
+import os
 
 if sys.stdout.isatty():
     RED = "\033[1;31m"
@@ -42,7 +43,7 @@ def process_genbank(input_file: str, output_file: str) -> bool:
         mat_peptides = [f for f in features if f.type == "mat_peptide"]
         
         if not mat_peptides:
-            log_info(f"No mat_peptide features found in {input_file}")
+            log_info(f"No mat_peptide features found for {os.path.splitext(os.path.basename(input_file))[0]}")
             return True  # Valid outcome, not an error, simply go back to main bash function and retrieve cds
         cds_features = [f for f in features if f.type == "CDS"]
         fallback_gene, fallback_protein_id, fallback_locus_tag = "", "", ""
@@ -64,7 +65,7 @@ def process_genbank(input_file: str, output_file: str) -> bool:
                 start = int(feature.location.start)
                 end = int(feature.location.end)
                 location = f"{start + 1}..{end}"
-
+                #""
                 # Get metadata with fallback to polyprotein features
                 gene = feature.qualifiers.get("gene", [fallback_gene])[0]
                 protein_id = feature.qualifiers.get("protein_id", [fallback_protein_id])[0]
@@ -91,7 +92,7 @@ def process_genbank(input_file: str, output_file: str) -> bool:
                 # Build FASTA header and description
                 header = f"lcl|{accession}_cds_{protein_id}_{idx}"
                 description_parts = [
-                    f"[protein_id={protein_id}]",
+                    f"[protein_id={protein_id}_{idx}]",
                     f"[location={location}]"
                 ]
                 #Be sure that gene is first, or locus tag if there is not gene, or prodcut goes first if there is neither gene nor locustag
@@ -115,7 +116,7 @@ def process_genbank(input_file: str, output_file: str) -> bool:
                     description=" ".join(description_parts)
                 ))
             except Exception as e:
-                sys.stderr.write(f"[ERROR] Failed to process mat_peptide {idx}: {str(e)}\n")
+                sys.stderr.write(f"[ERROR] Failed to process mat_peptide {idx} with location {int(feature.location.start) + 1}..{int(feature.location.end)}: {str(e)}\n")
                 return False
         # Write output
         with open(output_file, "w") as f:

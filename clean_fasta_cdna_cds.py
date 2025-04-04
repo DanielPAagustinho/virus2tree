@@ -92,13 +92,13 @@ def clean_translate(records, species_fivelet, strain):
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        log_info("Usage: python script.py <input_folder_fna> [strain_code_tsv]")
+        log_info("Usage: python script.py <input_folder_fna> [resuming_download] [strain_code_tsv]")
         sys.exit(1)
 
     input_folder_fna = sys.argv[1].rstrip('/') + "/"
-    strain_code_tsv = sys.argv[2] if len(sys.argv) > 2 else None
-
-    # Read input FASTA files
+    resuming_download = sys.argv[2].lower() == "true" if len(sys.argv) > 2 else False    # Read input FASTA files
+    strain_code_tsv = sys.argv[3] if len(sys.argv) > 3 else None
+    
     file_names, records_all = read_fasta_files(input_folder_fna, "fna")
 
     # Determine whether to use provided codes or generate them
@@ -123,6 +123,8 @@ if __name__ == '__main__':
     folder_aa = "DB"
     if not os.path.exists(folder_aa):
         os.makedirs(folder_aa)
+    elif resuming_download:
+        log_warn(f"The folder '{folder_aa}' already exists. New sequence(s) will be added to it.")
     else:
         log_error(f"The folder '{folder_aa}' already exists. Please remove it.")
         sys.exit(1)
