@@ -36,7 +36,7 @@ wget -O oma.tgz https://omabrowser.org/standalone/OMA.2.6.0.tgz && tar xvzf oma.
 
 ## After installation, make sure the bin folder of OMA is in your PATH variable. For that, edit your shell configuration file (`~/.bashrc`, `~/.zshrc`, etc.)
 echo 'export PATH=$PATH:/your/install/path/OMA/bin' >> ~/.bashrc && source ~/.bashrc
-`ˋ`
+```
 
 **Rasusa**
 
@@ -118,7 +118,7 @@ If this file is not specified, OMA Standalone will use midpoint rooting, which i
 | `-g`, `--outgroup` | **Optional** but highly recommended. File with taxon names used as outgroups. |
 | `--out_dir`        | Path to place the output of read2tree. **Default:** `read2tree_output`. |
 | `--temp_dir`       | Directory for intermediate temporary files. **Default:** `/tmp`|
-| `--resume_download`       |Resumes by skipping taxa already downloaded from NCBI into the `db` folder. If all taxa have already been downloaded, it resumes with the next step. Also, if the necessary files are present, it can skip multiple steps until the OMA Step 1.6. This parameter can be specified together with ˋ--use_mat_peptidesˋ or ˋ--use_only_mat_peptidesˋ. |
+| `--resume_download`       |Resumes by skipping taxa already downloaded from NCBI into the `db` folder. If all taxa had already been downloaded, it resumes with the next step. Additionally, if the required files are already present, multiple steps can be bypassed up to (but not including) the OMA Standalone run (Step 1.6). This parameter can be specified in conjunction with either `--use_mat_peptides` or `--use_only_mat_peptides`. |
 | `-p, --use_mat_peptides`   | Downloads gbk files for each taxon's accession(s) and uses the mat_peptide features instead of CDS features if at least one mat_peptide is found. |
 | `-q, --use_only_mat_peptides`   | Same as --use_mat_peptides, except that if no mat_peptide feature is found, it does not download CDS features and simply skips that taxon. |
 | `-T, --threads`   | Number of threads to use for OmaStandalone and the first step of read2tree. |

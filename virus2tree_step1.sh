@@ -108,7 +108,7 @@ skip_taxa() {
     #echo "This is the filtered_input_file: ${filtered_input_file}"
     # Create list of downloaded taxa
     downloaded_taxa=$(
-        printf '%s\n' db/*_cds_from_genomic.fna | awk -F '/' '{print $2}' | 
+        find db -maxdepth 1 -type f -name "*_cds_from_genomic.fna" -size +0c -exec basename {} \; | #size is greater than zero
         awk -F '_cds_' '{print $1}' | tr '\n' '|' | sed 's/|$//'
     )
     {
@@ -665,7 +665,7 @@ if [[ "$RES_DOWN_VOID" == false && "$NCBI_DOWNLOAD_COUNT" -eq 0 && "$RES_DOWN" =
   RES_DOWN_VOID=true
 fi
 
-if [ "$RES_DOWN_VOID" == true ] && [ -d "DB" ] && [ -f "dna_ref.fa" ]; then
+if [ "$RES_DOWN_VOID" == true ] && [ -d "DB" ] && [ -s "dna_ref.fa" ]; then
     log_info "========== Skipping Step 1.4 : All files were already downloaded from NCBI and 'DB' folder and 'dna_ref.fa' file already exist =========="
 else
   log_info "========== Step 1.4: Preparing format of coding sequences for OMA and read2tree =========="
