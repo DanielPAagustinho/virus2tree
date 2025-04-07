@@ -264,6 +264,13 @@ fetch_data() {
       log_error "Command efetch failed to fetch accession(s) for taxon ${strain}: ${accessions_list}"
       return 1
     }
+
+  if [ ! -s "db/${strain}_cds_from_genomic.fna" ]; then
+    log_error "Command efetch failed: file is empty for taxon ${strain}: ${accessions_list}"
+    return 1
+  fi
+
+
   ((NCBI_DOWNLOAD_COUNT++))
 
   #write to the file only if fetching was successful
@@ -661,7 +668,7 @@ if [[ "$RES_DOWN_VOID" == false ]]; then
   log_info "Nucleotide sequences retrieval completed successfully.\n"
 fi
 
-if [[ "$RES_DOWN_VOID" == false && "$NCBI_DOWNLOAD_COUNT" -eq 0 && "$RES_DOWN" == true && "$ONLY_MAT_PEPTIDES" == true ]]; then
+if [[ "$RES_DOWN_VOID" == false && "$NCBI_DOWNLOAD_COUNT" -eq 0 && "$RES_DOWN" == true ]]; then
   RES_DOWN_VOID=true
 fi
 
