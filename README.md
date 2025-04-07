@@ -14,7 +14,8 @@ Below are two general ways to install all the required dependencies. For more de
 
 ```bash
 conda create -n my_env python=3.10.8 -y 
-conda activate my_env && conda install -c bioconda rasusa read2tree sra-tools entrez-direct -y
+conda activate my_env 
+conda install -c bioconda rasusa read2tree sra-tools entrez-direct -y
 ```
 
 **Notes:** 
@@ -29,13 +30,16 @@ If you prefer to install the tools manually from their source code, use the foll
 
 ```bash
 ## Download your own version, in this case is 2.6.0
-wget -O oma.tgz https://omabrowser.org/standalone/OMA.2.6.0.tgz && tar xvzf oma.tgz && cd OMA.2.6.0
+wget -O oma.tgz https://omabrowser.org/standalone/OMA.2.6.0.tgz 
+tar xvzf oma.tgz 
+cd OMA.2.6.0
 
 ## Below choose your install path, if not OMA will be installed in /usr/local/OMA (you might need to use sudo in this case)
 ./install.sh /your/install/path
 
 ## After installation, make sure the bin folder of OMA is in your PATH variable. For that, edit your shell configuration file (`~/.bashrc`, `~/.zshrc`, etc.)
-echo 'export PATH=$PATH:/your/install/path/OMA/bin' >> ~/.bashrc && source ~/.bashrc
+echo 'export PATH=$PATH:/your/install/path/OMA/bin' >> ~/.bashrc 
+source ~/.bashrc
 ```
 
 **Rasusa**
@@ -50,17 +54,21 @@ curl -sSL rasusa.mbh.sh | sh
 Take into account that `czid-dedup` requires [rust/cargo](https://www.rust-lang.org/tools/install) for compilation
 
 ```bash
-git clone https://github.com/chanzuckerberg/czid-dedup.git && cd czid-dedup && cargo build --release 
+git clone https://github.com/chanzuckerberg/czid-dedup.git 
+cd czid-dedup 
+cargo build --release 
 
 #As with OMA, make sure that the executable is in your PATH variable
-echo 'export PATH=$PATH:your/install/path/czid-dedup/target/release/czid-dedup' >> ~/.bashrc && source ~/.bashrc
+echo 'export PATH=$PATH:your/install/path/czid-dedup/target/release/czid-dedup' >> ~/.bashrc 
+source ~/.bashrc
 ```
 
 **Read2Tree**
 
 ```bash
 ## Create conda env
-conda create -n r2t python=3.10.8 -y && conda activate r2t
+conda create -n r2t python=3.10.8 -y 
+conda activate r2t
 
 ## Get required python packages
 conda install -c conda-forge biopython numpy Cython ete3 lxml tqdm scipy pyparsing requests natsort pyyaml filelock -y
@@ -70,17 +78,21 @@ conda install -c bioconda dendropy pysam -y
 conda install -c bioconda mafft iqtree minimap2 samtools -y
 
 ## Clone minimap2 branch of read2tree
-git clone --branch minimap2 https://github.com/DessimozLab/read2tree.git && cd read2tree && python setup.py install
+git clone --branch minimap2 https://github.com/DessimozLab/read2tree.git 
+cd read2tree 
+python setup.py install
 ## read2tree will be placed in the default bin folder of your Conda installation
 ```
 
 **SRA Toolkit**
 
 ```bash
-wget https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubuntu64.tar.gz && tar -xvzf sratoolkit.current-ubuntu64.tar.gz
+wget https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubuntu64.tar.gz 
+tar -xvzf sratoolkit.current-ubuntu64.tar.gz
 
 ## Add executable to your path (using your own version, in this case is 3.2.0)
-echo 'export PATH="$PATH:/your/install/path/sratoolkit.3.2.0-ubuntu64/bin' >> ~/.bashrc && source ~/.bashrc
+echo 'export PATH="$PATH:/your/install/path/sratoolkit.3.2.0-ubuntu64/bin' >> ~/.bashrc 
+source ~/.bashrc
 ```
 
 **Entrez direct**
@@ -95,7 +107,12 @@ sh -c "$(wget -q https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/install-edirec
 To verify that all tools are correctly installed and available in your Conda environment or `PATH`, run the following command:
 
 ```bash
-oma -h && rasusa --help && czid-dedup-Linux --help && read2tree --help && fasterq-dump --help && esearch -h
+oma -h
+rasusa --help
+czid-dedup-Linux --help
+read2tree --help
+fasterq-dump --help
+esearch -h
 ```
 
 ## Running step 1: Creating the reference database
