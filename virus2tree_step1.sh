@@ -20,6 +20,8 @@ RES_DOWN_VOID=false
 NCBI_DOWNLOAD_COUNT=0
 P_FLAG=false
 Q_FLAG=false
+SKIP_STEP4=false
+
 if [ -t 1 ]; then
   RED="\033[1;31m"
   GREEN="\033[1;32m"
@@ -104,26 +106,42 @@ skip_taxa() {
     local CLEAN_FILE="$1"
     local filtered_input_file="${CLEAN_FILE%.*}_filtered.csv"
     local taxon_list=""
-    local downloaded_taxa
     #echo "This is the filtered_input_file: ${filtered_input_file}"
-    # Create list of downloaded taxa
-    downloaded_taxa=$(
-        find db -maxdepth 1 -type f -name "*_cds_from_genomic.fna" -size +0c -exec basename {} \; | #size is greater than zero
-        awk -F '_cds_' '{print $1}' | tr '\n' '|' | sed 's/|$//'
-    )
+    # Create an associative array of downloaded taxa already in db dir
+    declare -A downloaded_taxa_map
+    while IFS= read -r file; do
+        taxon=$(basename "$file" | awk -F '_cds_' '{print $1}' | tr -cd '[:alnum:]')
+        downloaded_taxa_map["$taxon"]=1
+    done < <(find db -maxdepth 1 -type f -name "*_cds_from_genomic.fna")
     {
-        head -n1 "$CLEAN_FILE"
+        head -n1 "$CLEAN_FILE" #iterate over each taxon to see if it was already downloaded (if it matches at least one name from db folder)
         while IFS= read -r line || [[ -n "$line" ]]; do
             # Clean taxa
             raw_taxon=$(cut -d',' -f1 <<<"$line" | tr -cd '[:alnum:]')
-            if [[ "$raw_taxon" =~ $downloaded_taxa ]]; then
+            if [[ -n "${downloaded_taxa_map[$raw_taxon]:-}" ]]; then
+              if [ -s "db/${raw_taxon}_cds_from_genomic.fna" ]; then
                 taxon_list+="${raw_taxon}_cds_from_genomic.fna, "
-            else
-                # If not in list, keep in the filtered
+              else
+                rm -f "db/${raw_taxon}_cds_from_genomic.fna"
+                log_warn "Removed invalid file: ${raw_taxon}_cds_from_genomic.fna. Will re-download" >&2
                 echo "$line"
+              fi
+              unset 'downloaded_taxa_map["$raw_taxon"]'
+            else
+              #if it wasnt found, then the line is conserved in the filtered file
+              echo "$line"
             fi
         done < <(tail -n +2 "$CLEAN_FILE")
     } > "$filtered_input_file"
+
+    if [ ${#downloaded_taxa_map[@]} -gt 0 ]; then
+        local extra_files=()
+        for taxon in "${!downloaded_taxa_map[@]}"; do
+            extra_files+=( "${taxon}_cds_from_genomic.fna" )
+        done
+        log_error "Found file(s) in the 'db/' folder that are not present in the accession file: ${extra_files[*]}. Please delete them"
+        return 1
+    fi
 
     if awk 'NR >=2 && NF {found=1; exit} END {exit !found}' "$filtered_input_file"; then #The NF verifies if there are fields, if so, found=1, and the exit will give 0, which is success
         log_info "Skipping the download of the following detected input files: ${taxon_list%, }"
@@ -238,13 +256,19 @@ fetch_data() {
     
     efetch -db nucleotide -id "$accessions_list" -format gbwithparts > "${TEMP_DIR}/gbk_dir/${strain}.gbk"
     if python "${SCRIPTS_DIR}/write_mat_peptides.py" "${TEMP_DIR}/gbk_dir/${strain}.gbk" "db/${strain}_cds_from_genomic.fna"; then
-      if [[ -f "db/${strain}_cds_from_genomic.fna" ]] && [[ -s "db/${strain}_cds_from_genomic.fna" ]]; then
-        if $HAS_CODE_COLUMN; then
-          log_info "Writing 5-letter code for taxon ${strain} to ${FIVE_LETTER_FILE}"
-          echo -e "${strain}\t${code}" >> "${FIVE_LETTER_FILE}"
+      if [[ -f "db/${strain}_cds_from_genomic.fna" ]]; then
+        if [[ -s "db/${strain}_cds_from_genomic.fna" ]]; then
+          if $HAS_CODE_COLUMN; then
+            log_info "Writing 5-letter code for taxon ${strain} to ${FIVE_LETTER_FILE}"
+            echo -e "${strain}\t${code}" >> "${FIVE_LETTER_FILE}"
+          fi
+          ((NCBI_DOWNLOAD_COUNT++))
+          return 0
+        else
+          log_error "Writing of mat_peptide features to db/${strain}_cds_from_genomic.fna failed: file is empty for taxon ${strain}: ${accessions_list}"
+          return 1
         fi
-        ((NCBI_DOWNLOAD_COUNT++))
-        return 0
+
       elif [[ $ONLY_MAT_PEPTIDES == true ]]; then
 	      log_info "Skipping taxon ${strain}..."
 	      return 0
@@ -673,54 +697,80 @@ if [[ "$RES_DOWN_VOID" == false && "$NCBI_DOWNLOAD_COUNT" -eq 0 && "$RES_DOWN" =
 fi
 
 if [ "$RES_DOWN_VOID" == true ] && [ -d "DB" ] && [ -s "dna_ref.fa" ]; then
-    log_info "========== Skipping Step 1.4 : All files were already downloaded from NCBI and 'DB' folder and 'dna_ref.fa' file already exist =========="
+  SKIP_STEP4=true
+  for DB_file in DB/*.fa; do
+      base_name=$(basename "$DB_file" .fa)
+      target_file="db/${base_name}_cds_from_genomic.fna"
+      if [ ! -s "$target_file" ]; then
+          log_error "The file ${DB_file} doesn't have a corresponding ${target_file} in the db/ directory Please check your process."
+          exit 1
+      fi
+  done
+  # Now check sequence count of dna ref to be the same in all the seq on db
+  if $SKIP_STEP4; then
+      log_info "All the files in the DB folder have a corresponding one in the db folder"
+      dna_ref_count=$(grep -c '^>' "dna_ref.fa" 2>/dev/null || echo 0)
+      db_total_count=$(grep -ch '^>' db/*_cds_from_genomic.fna | awk '{sum += $1} END {print sum}')
+      if [ "$dna_ref_count" -ne "$db_total_count" ] || [ "$dna_ref_count" -eq 0 ]; then
+          SKIP_STEP4=false
+          log_info "Sequences in dna_ref.fa ($dna_ref_count) do not match with those in the db folder ($db_total_count)"
+      else
+        log_info "The dna_ref.fa file has the same number of sequences as the db folder"
+      fi
+  fi
+fi
+
+if $SKIP_STEP4; then
+  log_info "========== Skipping Step 1.4 : All files were already downloaded from NCBI and 'DB' folder and 'dna_ref.fa' file already exist =========="
 else
   log_info "========== Step 1.4: Preparing format of coding sequences for OMA and read2tree =========="
   #Adding 5 letter code and cleaning for r2t
   if $HAS_CODE_COLUMN; then
-    # If the user gave a CODE column, we pass db_codes.tsv as second argument
+    # If the user gave a CODE column, we pass db_codes.tsv as an argument
     python "${SCRIPTS_DIR}/clean_fasta_cdna_cds.py" db "$RES_DOWN" "$FIVE_LETTER_FILE" 
   else
     # If no code was provided, the Python script generates codes on its own
     python "${SCRIPTS_DIR}/clean_fasta_cdna_cds.py" db "$RES_DOWN"
   fi
 fi
-if [ "$RES_DOWN_VOID" = true ] && [ -f "parameters.drw" ]; then
-    log_info "========== Skipping Step 1.5: parameters.drw file already exists =========="
-else
-  log_info "========== Step 1.5: Editing parameters.drw file for running OMA =========="
 
-  outgroup_codes=()
-  if [ -n "$OUTGROUP_FILE" ]; then
-      log_info "Reading outgroup taxon(s) from $OUTGROUP_FILE..."
-      while IFS= read -r species || [[ -n "$species" ]]; do
-          species=$(clean_line "${species}")
-          if grep -q "^${species}[[:space:]]" "$FIVE_LETTER_FILE"; then
-              code=$(awk -v sp="$species" '$1 == sp {print $1}' "$FIVE_LETTER_FILE")
-              outgroup_codes+=("$code")
-          else
-              log_error "Outgroup taxon '$species' not found in $FIVE_LETTER_FILE."
-              exit 1
-          fi
-      done < "$OUTGROUP_FILE"
-  fi
+log_info "========== Step 1.5: Editing parameters.drw file for running OMA =========="
 
-  #Verify codes and edit the parameters file
-  if [ ${#outgroup_codes[@]} -gt 0 ]; then
-      outgroup_list=$(IFS=,; echo "${outgroup_codes[*]}")
-      OUTGROUPS="OutgroupSpecies := [${outgroup_list}];"
-      log_info "Creating the parameters.drw file for OMA"
-      oma -p 
-      sed -i '/#WriteOutput_\(Phy\|Par\|H\)/ s/^#//' parameters.drw
-      log_info "Using the following 5-letter code outgroup(s) to edit the parameters file: ${outgroup_list//,/ }"
-  else
-      log_warn "No valid outgroup taxon provided. Using default 'none'."
-      OUTGROUPS="OutgroupSpecies := 'none';"
-  fi
-  #map initial file with the new 5 letter code given by the clean...py
-  grep -q "^OutgroupSpecies" "$PARAMETERS_FILE" && \
-      sed -i "s/^OutgroupSpecies.*/$OUTGROUPS/" "$PARAMETERS_FILE"
+outgroup_codes=()
+if [ -n "$OUTGROUP_FILE" ]; then
+    log_info "Reading outgroup taxon(s) from $OUTGROUP_FILE..."
+    while IFS= read -r species || [[ -n "$species" ]]; do
+        species=$(clean_line "${species}")
+        if grep -q "^${species}[[:space:]]" "$FIVE_LETTER_FILE"; then
+            code=$(awk -v sp="$species" '$1 == sp {print $1}' "$FIVE_LETTER_FILE")
+            outgroup_codes+=("$code")
+        else
+            log_error "Outgroup taxon '$species' not found in $FIVE_LETTER_FILE."
+            exit 1
+        fi
+    done < "$OUTGROUP_FILE"
 fi
+
+#Verify codes and edit the parameters file
+if [ ${#outgroup_codes[@]} -gt 0 ]; then
+    outgroup_list=$(IFS=,; echo "${outgroup_codes[*]}")
+    OUTGROUPS="OutgroupSpecies := [${outgroup_list}];"
+    if [ -f "parameters.drw" ]; then
+      rm -f parameters.drw
+      log_info "Existing parameters.drw file removed"
+    fi
+    log_info "Creating the parameters.drw file for OMA"
+    oma -p 
+    sed -i '/#WriteOutput_\(Phy\|Par\|H\)/ s/^#//' parameters.drw
+    log_info "Using the following 5-letter code outgroup(s) to edit the parameters file: ${outgroup_list//,/ }"
+else
+    log_warn "No valid outgroup taxon provided. Using default 'none'."
+    OUTGROUPS="OutgroupSpecies := 'none';"
+fi
+#map initial file with the new 5 letter code given by the clean...py
+grep -q "^OutgroupSpecies" "$PARAMETERS_FILE" && \
+    sed -i "s/^OutgroupSpecies.*/$OUTGROUPS/" "$PARAMETERS_FILE"
+
 log_info "========== Step 1.6: Running OMA =========="
 
 oma -n "${THREADS}"

@@ -23,21 +23,25 @@ def log_warn(message):
 def log_error(message):
     print(f"{RED}[{datetime.now():%Y-%m-%d %H:%M:%S}] [ERROR]{NC} {message}", file=sys.stderr)
 
-def read_fasta_files(input_folder, format_input="fna"):
+def read_fasta_files(input_folder):
     files = listdir(input_folder)
     records_all = []
     file_names = [] 
+    suffix = "_cds_from_genomic.fna"
     for file in files:
-        if file.split(".")[-1] == format_input:
+        if file.endswith(suffix):
             file_names.append(file)
             records = list(SeqIO.parse(input_folder + file, "fasta"))
             records_all.append(records)        
         else:
-            log_info("Skipping file: " + str(input_folder + file) + " (not ." + format_input + ")")
+            log_info("Skipping file: " + str(input_folder + file) + " (not " + suffix + ")")
     if records_all:
-        log_info(f"Found {len(file_names)} '{format_input}' files. First file has {len(records_all[0])} sequences.")
+        total_sequences = sum(len(r) for r in records_all)
+        log_info(f"Found {len(file_names)} '{suffix}' files.")
+        log_info(f"Total sequences: {total_sequences}")
+        log_info(f"First file ({file_names[0]}) has {len(records_all[0])} sequences")
     else:
-        log_info(f"No '{format_input}' files found in {input_folder}.")
+        log_info(f"No '{suffix}' files found in {input_folder}.")
     return file_names, records_all
 
 def load_provided_codes(tsv_file):
@@ -99,7 +103,7 @@ if __name__ == '__main__':
     resuming_download = sys.argv[2].lower() == "true" if len(sys.argv) > 2 else False    # Read input FASTA files
     strain_code_tsv = sys.argv[3] if len(sys.argv) > 3 else None
     
-    file_names, records_all = read_fasta_files(input_folder_fna, "fna")
+    file_names, records_all = read_fasta_files(input_folder_fna)
 
     # Determine whether to use provided codes or generate them
     if strain_code_tsv and os.path.exists(strain_code_tsv):
