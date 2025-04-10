@@ -751,17 +751,18 @@ if [ -n "$OUTGROUP_FILE" ]; then
     done < "$OUTGROUP_FILE"
 fi
 
+if [ -f "parameters.drw" ]; then
+  rm -f parameters.drw
+  log_info "Existing parameters.drw file removed"
+fi
+log_info "Creating the parameters.drw file for OMA"
+oma -p 
+sed -i '/#WriteOutput_\(Phy\|Par\|H\)/ s/^#//' parameters.drw
+
 #Verify codes and edit the parameters file
 if [ ${#outgroup_codes[@]} -gt 0 ]; then
     outgroup_list=$(IFS=,; echo "${outgroup_codes[*]}")
     OUTGROUPS="OutgroupSpecies := [${outgroup_list}];"
-    if [ -f "parameters.drw" ]; then
-      rm -f parameters.drw
-      log_info "Existing parameters.drw file removed"
-    fi
-    log_info "Creating the parameters.drw file for OMA"
-    oma -p 
-    sed -i '/#WriteOutput_\(Phy\|Par\|H\)/ s/^#//' parameters.drw
     log_info "Using the following 5-letter code outgroup(s) to edit the parameters file: ${outgroup_list//,/ }"
 else
     log_warn "No valid outgroup taxon provided. Using default 'none'."
