@@ -61,7 +61,7 @@ check_dependencies() {
 }
 
 # For species dir name: allow only alnum and replace spaces with underscores
-anitize_name() {
+sanitize_name() {
 	  shopt -s extglob 
 	  local input="$1"
 	  # Quitar espacios al inicio y final
@@ -273,10 +273,10 @@ for line in "${lines[@]}"; do
     while IFS= read -r chunk_line; do
       # chunk_line might be "ACC1 ACC2"
       IFS=' ' read -ra chunk_accs <<< "$chunk_line"
-      # Build "acc1 OR acc2" ...
-      query_str="$(echo "${chunk_accs[*]}" | sed 's/ / OR /g')"
-
-
+      # Build "acc1 OR acc2" ... #replacen spaces with parameter expansion. use printf instead of sed
+      printf -v query_str '%s OR ' "${chunk_accs[@]}"  # Join elements with " OR "
+      query_str="${query_str% OR }"
+  
       log_info "  [CHUNK] Acc: ${chunk_accs[*]}"
       esearch -db sra -query "$query_str" < /dev/null \
         | efetch -format runinfo >> "$tmp_runinfo" 2>> "${species_outdir}/error_runinfo.log"
