@@ -118,7 +118,7 @@ esearch -h
 ## Running step 1: Creating the reference database
 
 ```bash
-virus2tree_step1.sh -i rsv_accessions.csv -g rsv_outgroups -T 25 --out_dir read2tree --temp_dir temp --debug &> def_rsv_long.log &
+virus2tree_step1.sh -i rsv_accessions.csv -g rsv_outgroups -T 25 --out_dir read2tree --temp_dir temp --debug &> def_rsv_long.log
 ```
 To create the reference database, two key input files are required:
 
