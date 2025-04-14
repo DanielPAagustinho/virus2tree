@@ -633,14 +633,42 @@ if [[ "${#HEADER_COLS[@]}" -eq 3 ]]; then
     # If has exactly 3 columns, check if the second column is CODE
     if [[ "${LOWER_HEADER[1]}" =~ ^code(s)?$ ]]; then
       HAS_CODE_COLUMN=true
-      line_number=1
-      while IFS= read -r line || [[ -n "$line" ]]; do
-        ((line_number+=1)) #How do I sum from
-        if ! [[ "$line" =~ ^[[:alnum:]]{5}$ ]]; then
-          log_error "Invalid 5-letter code on line $line_number:'$line'. The code must have 5 alphanumeric characters."
+      set +e
+      awk_output=$(awk -F ',' '
+      NR == 1 { next } 
+      {
+          codigo_col1 = $1
+          original_col1 = codigo_col1  
+          gsub(/[^[:alnum:]]/, "", codigo_col1)  
+
+          codigo_col2 = $2
+          gsub(/[[:blank:]]/, "", codigo_col2)
+
+          if (codigo_col1 in visto_col1) {
+              printf "Duplicated taxon in column 1: \047%s\047 (line %d). First occurrence: line %d.\nNote: Comparison is based on alphanumeric characters (ignoring symbols and spaces).\n",
+                    original_col1, NR, visto_col1[codigo_col1]
+              exit 1 
+          }
+          visto_col1[codigo_col1] = NR
+
+          if (length(codigo_col2) != 5 || codigo_col2 !~ /^[[:alnum:]]+$/) {
+              printf "Invalid 5-letter code on line %d: \047%s\047. The code must have 5 alphanumeric characters.\n",
+                    NR, codigo_col2
+              exit 1  
+          }
+
+          if (codigo_col2 in visto_col2) {
+              printf "Duplicated 5-letter code on line %d: \047%s\047. First occurrence: line %d.\nNote: Comparison is based on alphanumeric characters (ignoring symbols and spaces).\n",
+                    NR, codigo_col2, visto_col2[codigo_col2]
+              exit 1  
+          }
+          visto_col2[codigo_col2] = NR
+      }' "$CLEAN_FILE" 2>&1)
+      if [[ -n "$awk_output" ]]; then
+          log_error "$awk_output"
           exit 1
-        fi
-      done <<< "$(tail -n +2 "$CLEAN_FILE" |cut -d',' -f2|tr -d '[:blank:]')"
+      fi
+      set -e
       #first I deleted complete void lines, so if -z works, it is detecting a row that has its second field void
       log_info "The code column has been detected and validated."
       if [[ "$RES_DOWN" == true ]]; then
@@ -658,6 +686,29 @@ elif [[ "${#HEADER_COLS[@]}" -eq 2 ]]; then
   # If has exactly 2 columns, check if they are valid (STRAIN/SPECIES and ACCESSIONS)
   if [[ "${LOWER_HEADER[0]}" =~ ^(taxon|taxa|strain(s)?|species)$ ]] && [[ "${LOWER_HEADER[1]}" =~ ^accession(s)?$ ]]; then
     log_info "Detected only taxon and accession columns in the header. No code column found. Unique codes for each taxon in the format 'sXXXX' will be automatically generated."
+    # Validate duplicates in column 1
+    set +e
+    awk_output=$(awk -F ',' '
+    NR == 1 { next }  
+    {
+        taxon = $1
+        original_taxon = taxon  # keep original for the log message
+        gsub(/[^[:alnum:]]/, "", taxon)  # only alnum characters are compared
+
+        # check for duplicatres
+        if (taxon in visto) {
+            printf "Duplicated taxon: \047%s\047 (line %d). First occurrence: line %d.\nNote: Comparison is based on alphanumeric characters (ignoring symbols and spaces).\n",
+                   original_taxon, NR, visto[taxon]
+            exit 1  
+        }
+        visto[taxon] = NR
+    }' "$CLEAN_FILE" 2>&1)
+    # Manejar errores
+    if [[ -n "$awk_output" ]]; then
+        log_error "$awk_output"
+        exit 1
+    fi
+    set -e
     if [[ "$RES_DOWN" == true ]]; then
       skip_taxa "$CLEAN_FILE"
     fi

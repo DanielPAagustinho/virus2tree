@@ -147,7 +147,7 @@ The accession file must be a comma-separated values (CSV) text file, with the fi
 
 #### **Columns:**
 1. **First column (mandatory):** Taxon/species/strain name. Header: taxon (or taxa),species or strain(s).
-2. **Second column (optional):** Five-letter code (must be exactly 5 alphanumeric characters). Header: code(s). If not provided, a random five-letter code for each taxon will be generated and saved in the file five_letter_taxon.tsv
+2. **Second column (optional):** Five-letter code. Must be exactly 5 alphanumeric characters. Header: code(s). If not provided, a random five-letter code for each taxon will be generated and saved in the file five_letter_taxon.tsv
 3. **Third and onward (mandatory):** One or more accession numbers (comma-separated) to obtain coding sequences. Accepts NCBI Nucleotide database accessions and assembly identifiers (GCF_/GCA_). Header: accession(s).
 
 Commented lines starting with # are ignored.
@@ -176,6 +176,7 @@ Norovirus GII,NC_044932.1
 Norovirus GIII,NC_029645.1
 Norovirus GV, NC_008311.1
 ```
+> ⚠️ **Important**: Only the alphanumeric characters in the taxon column are considered for downstream processing. Taxon names and codes must be unique; duplicates are not allowed.
 
 ### **Outgroup File Format**
 
