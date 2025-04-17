@@ -153,7 +153,7 @@ skip_taxa() {
     fi
 
     cp "$filtered_input_file" "$CLEAN_FILE"
-    rm "$filtered_input_file"
+    rm -f "$filtered_input_file"
 }
 
 fetch_data() {
@@ -285,13 +285,14 @@ fetch_data() {
   efetch -db nucleotide -id "$accessions_list" -format fasta_cds_na \
     > "db/${strain}_cds_from_genomic.fna" \
     || {
-      log_error "Command efetch failed to fetch accession(s) for taxon ${strain}: ${accessions_list}"
-      return 1
+      log_warn "Command efetch failed while fetching accession(s) for taxon ${strain}: ${accessions_list}"
+      return 0
     }
 
   if [ ! -s "db/${strain}_cds_from_genomic.fna" ]; then
-    log_error "Command efetch failed: file is empty for taxon ${strain}: ${accessions_list}"
-    return 1
+	  log_warn "Command efetch failed to fetch accession(s) for taxon ${strain}: ${accessions_list}"
+	  rm -f "db/${strain}_cds_from_genomic.fna"
+    return 0
   fi
 
 
