@@ -286,6 +286,7 @@ fetch_data() {
     > "db/${strain}_cds_from_genomic.fna" \
     || {
       log_warn "Command efetch failed while fetching accession(s) for taxon ${strain}: ${accessions_list}"
+      rm -f "db/${strain}_cds_from_genomic.fna" #Ensures this file won't exist
       return 0
     }
 
