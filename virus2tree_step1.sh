@@ -547,8 +547,10 @@ if [[ "$RES_DOWN" == true ]]; then
         exit 1
     fi
     if [[ -d "$TEMP_DIR" ]]; then
-	      log_error "Temporary directory '$(realpath "$TEMP_DIR")' already exists. Please specify a novel directory to avoid conflicts when resuming the download."
-        exit 1
+        if [[ $(ls "$TEMP_DIR" 2>/dev/null) ]]; then
+            log_error "Temporary directory '$(realpath "$TEMP_DIR")' already exists and is not void. Please specify a novel directory to avoid conflicts when resuming the download."
+            exit 1
+        fi
     fi
 else
   if [[ -d "db" ]]; then
@@ -556,8 +558,10 @@ else
         exit 1
   fi
   if [[ -d "$TEMP_DIR" ]]; then
-    log_error "Temporary directory '$(realpath "$TEMP_DIR")' already exists. Please specify a novel directory to avoid conflicts with the new run."
-    exit 1
+        if [[ $(ls "$TEMP_DIR" 2>/dev/null) ]]; then
+            log_error "Temporary directory '$(realpath "$TEMP_DIR")' already exists and is not void. Please specify a novel directory to avoid conflicts with the new run."
+            exit 1
+        fi
   fi
     mkdir -p db
 fi
@@ -571,8 +575,10 @@ else
     mkdir -p "$TEMP_DIR"
     log_info "Using temp directory: '$(realpath "$TEMP_DIR")'"
   else 
-    log_error "Temporary directory '$(realpath "$TEMP_DIR")' already exists. Please specify a novel directory to avoid conflicts with the new run."
-    exit 1
+    if [[ $(ls "$TEMP_DIR" 2>/dev/null) ]]; then
+        log_error "Temporary directory '$(realpath "$TEMP_DIR")' already exists and is not void. Please specify a novel directory to avoid conflicts with the new run."
+        exit 1
+    fi
   fi
 fi
 
