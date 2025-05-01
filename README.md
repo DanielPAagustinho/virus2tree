@@ -91,7 +91,7 @@ wget https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubunt
 tar -xvzf sratoolkit.current-ubuntu64.tar.gz
 
 ## Add executable to your path (using your own version, in this case is 3.2.0)
-echo 'export PATH="$PATH:/your/install/path/sratoolkit.3.2.0-ubuntu64/bin' >> ~/.bashrc 
+echo 'export PATH="$PATH:/your/install/path/sratoolkit.3.2.0-ubuntu64/bin"' >> ~/.bashrc 
 source ~/.bashrc
 ```
 
@@ -100,6 +100,7 @@ source ~/.bashrc
 ```bash
 ## Get the scripts and download them in an "edirect folder" in the user's home directory
 sh -c "$(wget -q https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/install-edirect.sh -O -)"
+source ~/.bashrc
 ```
 
 ### 3. Verify Installation
