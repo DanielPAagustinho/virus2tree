@@ -596,7 +596,6 @@ else
 	  log_error "The read2tree output directory '$(realpath "$OUT_DIR")' already exists. Please provide a novel read2tree directory"
     exit 1
   fi
-  mkdir -p "$OUT_DIR"
   log_info "Using output directory: '$(realpath "$OUT_DIR")'"
 fi
 
