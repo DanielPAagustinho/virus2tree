@@ -554,7 +554,6 @@ else
 	  log_error "The read2tree output directory '$(realpath "$OUT_DIR")' already exists. Please provide a novel read2tree directory"
     exit 1
   fi
-  mkdir -p "$OUT_DIR"
   log_info "Using output directory: '$(realpath "$OUT_DIR")'"
 fi
 
@@ -602,21 +601,6 @@ else
         exit 1
     fi
   fi
-fi
-
-if [[ -z "$OUT_DIR" ]]; then
-  OUT_DIR=read2tree_output
-  log_info "No name for the read2tree directory was specified, using '$(realpath "$OUT_DIR")'"
-  if [[ -d "$OUT_DIR" ]]; then
-	  log_error "The read2tree output directory '$(realpath "$OUT_DIR")' already exists. Please provide a novel read2tree directory"
-    exit 1
-  fi
-else
-  if [[ -d "$OUT_DIR" ]]; then
-	  log_error "The read2tree output directory '$(realpath "$OUT_DIR")' already exists. Please provide a novel read2tree directory"
-    exit 1
-  fi
-  log_info "Using output directory: '$(realpath "$OUT_DIR")'"
 fi
 
 if [[ "$MAT_PEPTIDES" == true ]]; then
