@@ -542,6 +542,22 @@ if [ "$P_FLAG" = true ] && [ "$Q_FLAG" = true ]; then
     exit 1
 fi
 
+if [[ -z "$OUT_DIR" ]]; then
+  OUT_DIR=read2tree_output
+  log_info "No name for the read2tree directory was specified, using '$(realpath "$OUT_DIR")'"
+  if [[ -d "$OUT_DIR" ]]; then
+	  log_error "The read2tree output directory '$(realpath "$OUT_DIR")' already exists. Please provide a novel read2tree directory"
+    exit 1
+  fi
+else
+  if [[ -d "$OUT_DIR" ]]; then
+	  log_error "The read2tree output directory '$(realpath "$OUT_DIR")' already exists. Please provide a novel read2tree directory"
+    exit 1
+  fi
+  mkdir -p "$OUT_DIR"
+  log_info "Using output directory: '$(realpath "$OUT_DIR")'"
+fi
+
 if [[ "$RES_DOWN" == true ]]; then
     #This should be done at the very beggining
     if [[ ! -d "db" ]]; then
@@ -559,13 +575,17 @@ else
         log_error "Directory $(realpath "db/")' already exists, please remove it"
         exit 1
   fi
+  if [[ -d "DB" ]]; then
+        log_error "Directory $(realpath "DB/")' already exists, please remove it"
+        exit 1
+  fi
   if [[ -d "$TEMP_DIR" ]]; then
         if [[ $(ls "$TEMP_DIR" 2>/dev/null) ]]; then
             log_error "Temporary directory '$(realpath "$TEMP_DIR")' already exists and is not void. Please specify a novel directory to avoid conflicts with the new run."
             exit 1
         fi
   fi
-    mkdir -p db
+  mkdir -p db
 fi
 
 if [[ -z "$TEMP_DIR" ]]; then
