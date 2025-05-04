@@ -839,7 +839,7 @@ log_info "========== Step 1.6: Running OMA =========="
 oma -n "${THREADS}"
 #oma-status
 #echo "End status"
-if oma-status; then
+if oma-status && ls Output/OrthologousGroupsFasta/*.fa >/dev/null 2>&1; then
     log_info "OMA finished successfully! OMA did great!"
 else
     log_error "OMA has failed."
@@ -848,17 +848,12 @@ fi
 
 log_info "========== Step 1.7: Gathering OG-Gene statistics =========="
 #Now it does not make sense to check if Output/Orth...*.fa exists
-if ls Output/OrthologousGroupsFasta/*.fa >/dev/null 2>&1; then
-    log_info "Generating summary OG-gene TSV file"
-    ###Create tsv
-    generate_og_gene_tsv db Output/OrthologousGroupsFasta OG_genes.tsv
-    mkdir -p marker_genes
-    #####cat Output/OrthologousGroupsFasta/*.fa > dna_ref.fa
-    mv Output/OrthologousGroupsFasta/*.fa marker_genes
-else
-    log_error "No files found in '$(realpath Output/OrthologousGroupsFasta)'"
-    exit 1
-fi
+log_info "Generating summary OG-gene TSV file"
+###Create tsv
+generate_og_gene_tsv db Output/OrthologousGroupsFasta OG_genes.tsv
+mkdir -p marker_genes
+#####cat Output/OrthologousGroupsFasta/*.fa > dna_ref.fa
+mv Output/OrthologousGroupsFasta/*.fa marker_genes
 log_info "========== Step 1.8: Running Read2tree (step 1 marker) =========="
 log_info "Using ${THREADS} threads..."
 #read2tree --standalone_path ./marker_genes --output_path read2tree_output --dna_reference dna_ref.fa
