@@ -58,8 +58,8 @@ git clone https://github.com/chanzuckerberg/czid-dedup.git
 cd czid-dedup 
 cargo build --release 
 
-#As with OMA, make sure that the executable is in your PATH variable
-echo 'export PATH=$PATH:your/install/path/czid-dedup/target/release/czid-dedup' >> ~/.bashrc 
+#As with OMA, make sure that the release directory is in your PATH variable
+echo 'export PATH=$PATH:your/install/path/czid-dedup/target/release' >> ~/.bashrc 
 source ~/.bashrc
 ```
 
