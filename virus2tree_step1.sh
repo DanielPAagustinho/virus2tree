@@ -4,6 +4,7 @@ set -euo pipefail
 PROGNAME="$(basename "$0")"
 MAIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SCRIPTS_DIR="${MAIN_DIR}"
+WORK_DIR=""
 #OMA="${MAIN_DIR}/../oma/bin"
 PARAMETERS_FILE="parameters.drw"
 FIVE_LETTER_FILE="five_letter_taxon.tsv"
@@ -85,6 +86,7 @@ Optional:
   -q, --use_only_mat_peptides                  Downloads the gbk file for each taxon's accession(s). If at least one mature peptide feature is detected, these features are used as the coding sequences; if none are detected, that taxon is skipped.
   -T, --threads <int>                          Number of threads [default: 12]
   --temp_dir <dir>                             Specify temporary directory (otherwise mktemp -d is used)
+  --root_dir <dir>                             Specify root directory where all the outputs will be saved [default: current directory]
   --out_dir <dir>                              Specify output directory for read2tree step1 [default: read2tree_output]
   --resume_download                            Skips taxa whose coding sequences have already been downloaded from NCBI to the db folder                                
   --debug                                      Keeps temporary directory
@@ -500,6 +502,7 @@ while [[ "$#" -gt 0 ]]; do
         -q|--use_only_mat_peptides) MAT_PEPTIDES=true; ONLY_MAT_PEPTIDES=true; Q_FLAG=true;;
         -T|--threads) THREADS="$2"; shift ;;
         --temp_dir) TEMP_DIR="${2%/}"; shift ;;
+        --root_dir) WORK_DIR="${2%/}"; shift ;;   # NUEVO
         --out_dir) OUT_DIR="${2%/}"; shift ;;
         --debug) DEBUG=true;;
         --resume_download) RES_DOWN=true;;
@@ -540,6 +543,16 @@ fi
 if [ "$P_FLAG" = true ] && [ "$Q_FLAG" = true ]; then
     log_error "Options -p and -q cannot be used together"
     exit 1
+fi
+
+if [[ -n "$WORK_DIR" ]]; then
+    mkdir -p "$WORK_DIR"
+    cd "$WORK_DIR"
+    log_info "Using work directory: '$(pwd)'"
+else
+    # por defecto: cwd del usuario al ejecutar el script
+    WORK_DIR="$(pwd)"
+    log_info "No --work_dir specified. Outputs will be written in '$(pwd)'"
 fi
 
 if [[ -z "$OUT_DIR" ]]; then
@@ -839,7 +852,7 @@ log_info "========== Step 1.6: Running OMA =========="
 oma -n "${THREADS}"
 #oma-status
 #echo "End status"
-if oma-status && ls Output/OrthologousGroupsFasta/*.fa >/dev/null 2>&1; then
+if oma status && ls Output/OrthologousGroupsFasta/*.fa >/dev/null 2>&1; then
     log_info "OMA finished successfully! OMA did great!"
 else
     log_error "OMA has failed."
