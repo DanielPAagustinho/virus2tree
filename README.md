@@ -29,7 +29,7 @@ If you prefer to install the tools manually from their source code, use the foll
 **OMA Standalone**
 
 ```bash
-## Download your own version, in this case is 2.6.0
+## Download the last version, in this example is 2.6.0
 wget -O oma.tgz https://omabrowser.org/standalone/OMA.2.6.0.tgz 
 tar xvzf oma.tgz 
 cd OMA.2.6.0
@@ -58,7 +58,7 @@ git clone https://github.com/chanzuckerberg/czid-dedup.git
 cd czid-dedup 
 cargo build --release 
 
-#As with OMA, make sure that the release directory is in your PATH variable
+#Make sure that the release directory is in your PATH variable
 echo 'export PATH=$PATH:your/install/path/czid-dedup/target/release' >> ~/.bashrc 
 source ~/.bashrc
 ```
@@ -110,7 +110,7 @@ To verify that all tools are correctly installed and available in your Conda env
 ```bash
 oma -h
 rasusa --help
-czid-dedup-Linux --help
+czid-dedup --help
 read2tree --help
 fasterq-dump --help
 esearch -h

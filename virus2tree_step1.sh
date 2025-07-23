@@ -91,7 +91,7 @@ Optional:
   -h, --help                                   Show this help message
 
 Example:
-  $0 -i accessions.txt -g outgroups.txt
+  $PROGNAME -i accessions.txt -g outgroups.txt
 
 EOF
 exit 0
@@ -484,7 +484,7 @@ generate_og_gene_tsv() {
 
 if [[ $# -eq 0 ]]; then
   usage
-  log_info "Try '$0 --help' for more information."
+  log_info "Try '$PROGNAME --help' for more information."
   exit 1
 fi
 
@@ -504,7 +504,7 @@ while [[ "$#" -gt 0 ]]; do
         --debug) DEBUG=true;;
         --resume_download) RES_DOWN=true;;
         -h|--help) show_help;;
-        *) log_error "Unknown parameter passed: $1"; usage; echo "Try '$0 --help' for more information."; exit 1 ;;
+        *) log_error "Unknown parameter passed: $1"; usage; log_info "Try '$PROGNAME --help' for more information."; exit 1 ;;
     esac
     shift
 done

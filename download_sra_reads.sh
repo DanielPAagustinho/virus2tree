@@ -24,6 +24,8 @@ else
   NC=""
 fi
 
+PROGNAME="$(basename "$0")"
+
 log_info() {
   echo -e "${GREEN}[$(date '+%Y-%m-%d %H:%M:%S')] [INFO]${NC} $*"
 }
@@ -125,7 +127,7 @@ Optional:
   -h, --help          Show help
 
 Example:
-  $(basename "$0") -i species_accessions.txt -o results --chunk-size 100 --sleep-secs 2
+  $PROGNAME -i species_accessions.txt -o results --chunk-size 100 --sleep-secs 2
 
 EOF
 }
@@ -145,7 +147,7 @@ USER_LAYOUT=""    # If the user determines SINGLE or PAIRED
 
 if [[ $# -eq 0 ]]; then
   usage
-  log_info "Try '$0 --help' for more information."
+  log_info "Try '$PROGNAME --help' for more information."
   exit 1
 fi
 
@@ -178,6 +180,7 @@ while [[ $# -gt 0 ]]; do
     *)
       log_error "Unknown argument: $1"
       usage
+      log_info "Try '$PROGNAME --help' for more information."
       exit 1
       ;;
   esac

@@ -101,8 +101,8 @@ $(usage)
     -h, --help               Show this help
 
 Examples:
-  $0 -t se_short -r sample.fastq.gz --dedup --downsample --num_reads 10000
-  $0 --read_type pe_short --reads R1.fastq R2.fastq --coverage 30 --genome_size 5000000
+  $PROGNAME -t se_short -r sample.fastq.gz --dedup --downsample --num_reads 10000
+  $PROGNAME --read_type pe_short --reads R1.fastq R2.fastq --coverage 30 --genome_size 5000000
 
 EOF
   exit 0
@@ -153,7 +153,7 @@ analyze_fastq() {
 
 if [[ $# -eq 0 ]]; then
   usage
-  log_info "Try '$0 --help' for more information."
+  log_info "Try '$PROGNAME --help' for more information."
   exit 1
 fi
 
@@ -229,7 +229,7 @@ while [[ $# -gt 0 ]]; do
     *)
       log_error "Unknown parameter passed: $1"
       usage
-      echo "Try '$0 --help' for more information."
+      log_info "Try '$PROGNAME --help' for more information."
       exit 1
       ;;
   esac
