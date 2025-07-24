@@ -85,9 +85,9 @@ Optional:
   -p, --use_mat_peptides                       Downloads the gbk file for each taxon's accession(s). If at least one mature peptide feature is detected, these features are used as the coding sequences; otherwise, the standard CDS features are downloaded.
   -q, --use_only_mat_peptides                  Downloads the gbk file for each taxon's accession(s). If at least one mature peptide feature is detected, these features are used as the coding sequences; if none are detected, that taxon is skipped.
   -T, --threads <int>                          Number of threads [default: 12]
-  --temp_dir <dir>                             Specify temporary directory (otherwise mktemp -d is used)
   --root_dir <dir>                             Specify root directory where all the outputs will be saved [default: current directory]
-  --out_dir <dir>                              Specify output directory for read2tree step1 [default: read2tree_output]
+  --temp_dir <dir>                             Specify temporary directory (otherwise mktemp -d is used). If relative, it will be relative to the root_dir.
+  --out_dir <dir>                              Specify output directory for read2tree step1 [default: read2tree_output]. If relative, it will be relative to the root_dir.
   --resume_download                            Skips taxa whose coding sequences have already been downloaded from NCBI to the db folder                                
   --debug                                      Keeps temporary directory
   -h, --help                                   Show this help message
@@ -852,7 +852,7 @@ log_info "========== Step 1.6: Running OMA =========="
 oma -n "${THREADS}"
 #oma-status
 #echo "End status"
-if oma status && ls Output/OrthologousGroupsFasta/*.fa >/dev/null 2>&1; then
+if oma-status && ls Output/OrthologousGroupsFasta/*.fa >/dev/null 2>&1; then
     log_info "OMA finished successfully! OMA did great!"
 else
     log_error "OMA has failed."
