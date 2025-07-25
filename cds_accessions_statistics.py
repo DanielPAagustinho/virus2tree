@@ -68,10 +68,9 @@ def main():
 
     # Frequency tables
     freq_table = data.value_counts().sort_index()
-    freq_table.to_csv(out_dir / f"{args.prefix}_frequency.tsv", sep="\t", header=["n_genomes"])
-    (freq_table / freq_table.sum() * 100).round(2).to_csv(
-        out_dir / f"{args.prefix}_frequency_percent.tsv", sep="\t", header=["percent"]
-    )
+    freq_df = freq_table.to_frame(name="n_assemblies")
+    freq_df["percent"] = (freq_df["n_assemblies"] / freq_df["n_assemblies"].sum() * 100).round(2)
+    freq_df.to_csv(out_dir / f"{args.prefix}_frequency.tsv", sep="\t", header=True)
 
 if __name__ == "__main__":
     main()
