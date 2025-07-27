@@ -115,7 +115,7 @@ Required:
   -i, --input         Input file containing SRA IDs with one taxon per line:
                       <species_name>,SRA_ID1,SRA_ID2,SRA_ID3,...
                       <species_name2>,SRA_ID4,SRA_ID5,SRA_ID6,...
-                      Where <species_name> is the taxon name, and SRA_IDs must be either all SRA RUNs (SRR, ERR, DRR) 
+                      Where <species_name> is the taxon name, and SRA_IDs for each taxon must be either all SRA RUNs (SRR, ERR, DRR) 
                       or all SRA EXPERIMENTs (SRX, ERX, DRX) per line.
 
 Optional:
@@ -124,7 +124,9 @@ Optional:
                       esearch and efetch (default: 350)
   -w, --sleep-secs    Seconds to sleep between chunks (default: 1)
   -l, --layout        Force layout (SINGLE or PAIRED) for all runs, if SRA IDs correspond to RUNS, it skips metadata fetching
+  -d, --debug         Avoid removing of species temporary directory (default: off)
   -h, --help          Show help
+
 
 Example:
   $PROGNAME -i species_accessions.txt -o results --chunk-size 100 --sleep-secs 2
@@ -140,7 +142,10 @@ OUTPUT_DIR="$(pwd)"
 CHUNK_SIZE=350
 SLEEP_SECS=1
 USER_LAYOUT=""    # If the user determines SINGLE or PAIRED
-
+DEBUG=false
+global_ok_runs=()      # todas las runs/experimentos exitosos
+global_fail_runs=()    # todas las runs/experimentos fallidos
+species_reports=()     # textos con el resumen de cada especie
 ########################################
 # Parse arguments
 ########################################
@@ -172,6 +177,10 @@ while [[ $# -gt 0 ]]; do
     -l|--layout)
       USER_LAYOUT="$2"
       shift 2
+      ;;
+    -d|--debug)
+      DEBUG=true
+      shift
       ;;
     -h|--help)
       show_help
@@ -209,8 +218,14 @@ if [[ -n "$USER_LAYOUT" ]]; then
   USER_LAYOUT="$LAYOUT_UPPER"
 fi
 
+if [[ "$DEBUG" == true ]]; then
+  log_info "Debug mode enabled, keeping species temporary directory"
+fi
+
 OUTPUT_DIR="${OUTPUT_DIR%/}"
 mkdir -p "$OUTPUT_DIR"
+SUMMARY_FILE="${OUTPUT_DIR}/summary_download"
+: > "$SUMMARY_FILE"   # truncar/crear archivo de resúmenes
 
 
 ########################################
@@ -220,6 +235,10 @@ mkdir -p "$OUTPUT_DIR"
 mapfile -t lines < "$INPUT_FILE"
 
 for line in "${lines[@]}"; do
+
+  success_runs=()  fail_runs=()
+  success_exp=()   fail_exp=()
+  declare -A fail_by_exp=()
   # Skip empty or commented lines
   [[ -z "$line" || "$line" =~ ^# ]] && continue
   # Parse the line by commas, first part is the taxon names, and from the second on are the accessions
@@ -325,10 +344,11 @@ for line in "${lines[@]}"; do
 
       # Download with prefetch
       log_info "   Downloading .sra with prefetch..."
-      prefetch --output-directory "${species_outdir}" "$acc" </dev/null || {
-        log_warn "   Prefetch failed for $acc. Skipping..."
+      if ! prefetch --output-directory "${species_outdir}" "$acc" </dev/null; then
+        log_warn "   Prefetch failed for $acc"
+        fail_runs+=("$acc")
         continue
-      }
+      fi
 
       # Look for the .sra
       SRA_PATH="${species_outdir}/${acc}"
@@ -337,20 +357,34 @@ for line in "${lines[@]}"; do
         continue
       fi
 
-      # Convert to FASTQ
+            # Convert to FASTQ
       log_info "   Converting to FASTQ..."
-      if [[ "$layout" == "PAIRED" ]]; then
-        fasterq-dump --split-files "$SRA_PATH" -O "$species_outdir" </dev/null
-        mv "${species_outdir}/${acc}_1.fastq" \
-           "${OUTPUT_DIR}/${species_dir}_${acc}_1.fastq" 2>/dev/null || true
-        mv "${species_outdir}/${acc}_2.fastq" \
-           "${OUTPUT_DIR}/${species_dir}_${acc}_2.fastq" 2>/dev/null || true
+      cmd=(fasterq-dump)
+      [[ "$layout" == "PAIRED" ]] && cmd+=(--split-files)
+      if "${cmd[@]}" "$SRA_PATH" -O "$species_outdir" </dev/null; then
+        moved=0
+        shopt -s nullglob
+        for ext in fastq fastq.gz fq fq.gz; do
+            for f in "${species_outdir}/${acc}"*.${ext}; do
+              if mv -n "$f" "${OUTPUT_DIR}/${species_dir}_$(basename "$f")"; then
+                moved+=1
+              else
+                log_warn "$f could not be moved to output directory."
+              fi
+            done
+        done
+        shopt -u nullglob
+        if [[ $moved -eq 0 ]]; then
+          log_warn "No FASTQ files found for ${acc}. Not moving to output directory."
+        fi
+     
+        success_runs+=("$acc")
+        log_info "   [OK] Finished $acc"
       else
-        fasterq-dump "$SRA_PATH" -O "$species_outdir" </dev/null
-        mv "${species_outdir}/${acc}.fastq" \
-           "${OUTPUT_DIR}/${species_dir}_${acc}.fastq" 2>/dev/null || true
+        fail_runs+=("$acc")
+        log_warn "   Conversion failed for $acc"
       fi
-      log_info "   [OK] Finished $acc"
+
     done
 
   else
@@ -395,11 +429,12 @@ for line in "${lines[@]}"; do
 
         # Download with prefetch
         log_info "   Downloading .sra with prefetch..."
-        prefetch --output-directory "${species_outdir}" "$run_id" </dev/null || {
-          log_warn "      Prefetch failed for $run_id. Skipping..."
+        if ! prefetch --output-directory "${species_outdir}" "$run_id" </dev/null; then
+          log_warn "      Prefetch failed for $run_id"
+          fail_exp+=("$exp_id")
+          fail_by_exp["$exp_id"]+="$run_id "
           continue
-        }
-
+        fi
         # Locate .sra
         SRA_PATH="${species_outdir}/${run_id}"
         if [[ ! -d "$SRA_PATH" ]]; then
@@ -408,27 +443,74 @@ for line in "${lines[@]}"; do
         fi
 
         log_info "      Converting .sra to FASTQ..."
-        if [[ "$layout" == "PAIRED" ]]; then
-          fasterq-dump --split-files "$SRA_PATH" -O "$species_outdir" </dev/null
-          mv "${species_outdir}/${run_id}_1.fastq" \
-             "${OUTPUT_DIR}/${species_dir}_${exp_id}_${run_id}_1.fastq" 2>/dev/null || true
-          mv "${species_outdir}/${run_id}_2.fastq" \
-             "${OUTPUT_DIR}/${species_dir}_${exp_id}_${run_id}_2.fastq" 2>/dev/null || true
+        cmd=(fasterq-dump)
+        [[ "$layout" == "PAIRED" ]] && cmd+=(--split-files)
+        if "${cmd[@]}" "$SRA_PATH" -O "$species_outdir" </dev/null; then
+          moved=0
+          shopt -s nullglob
+          for ext in fastq fastq.gz fq fq.gz; do
+              for f in "${species_outdir}/${run_id}"*.${ext}; do
+                if mv -f "$f" "${OUTPUT_DIR}/${species_dir}_$(basename "$f")"; then
+                  moved+=1
+                else
+                  log_warn "$f could not be moved to output directory."
+                fi
+              done
+          done
+          shopt -u nullglob
+          if [[ $moved -eq 0 ]]; then
+            log_warn "No FASTQ files found for ${run_id}. Not moving to output directory."
+          fi
+          success_exp+=("$exp_id")
+          success_runs+=("$run_id")   # <- para unificar métricas por RUN
+          log_info "      Finished run $run_id for experiment $exp_id"
         else
-          fasterq-dump "$SRA_PATH" -O "$species_outdir" </dev/null
-          mv "${species_outdir}/${run_id}.fastq" \
-             "${OUTPUT_DIR}/${species_dir}_${exp_id}_${run_id}.fastq" 2>/dev/null || true
+          fail_exp+=("$exp_id")
+          fail_runs+=("$run_id")      # <- para unificar métricas por RUN
+          fail_by_exp["$exp_id"]+="$run_id "
+          log_warn "      FASTQ conversion failed for $run_id"
         fi
 
-        log_info "      Finished run $run_id for experiment $exp_id"
       done <<< "$matched_lines"
     done
   fi
 
   log_info "Done with $local_name"
-  log_info "Removing intermediate taxon directory: $species_outdir"
-  rm -r ./"${species_outdir}"
-  #echo
+  if [[ "$DEBUG" == false ]]; then
+    log_info "Removing intermediate taxon directory: $species_outdir"
+    rm -rf -- "$species_outdir"
+  fi
+  log_info "### Summary for $local_name ###"
+  log_info "successful RUNs:     ${#success_runs[@]}  -> ${success_runs[*]}"
+  log_info "failed RUNs: ${#fail_runs[@]}      -> ${fail_runs[*]}"
+  if [[ "$experiment_flag" == "true" ]]; then
+    for eid in "${!fail_by_exp[@]}"; do
+      log_warn "Exp $eid failed in RUNs: ${fail_by_exp[$eid]}"
+    done
+  fi
+  species_report="### Summary for $local_name ###
+  RUNs OK:     ${#success_runs[@]} -> ${success_runs[*]:-none}
+  RUNs failed: ${#fail_runs[@]} -> ${fail_runs[*]:-none}"
+  if [[ "$experiment_flag" == "true" && ${#fail_by_exp[@]} -gt 0 ]]; then
+    for eid in "${!fail_by_exp[@]}"; do
+      species_report+="
+  Exp $eid failed in RUNs: ${fail_by_exp[$eid]}"
+    done
+  fi
+  species_reports+=("$species_report")
+  global_ok_runs+=( "${success_runs[@]}" )
+  global_fail_runs+=( "${fail_runs[@]}" )
+  {
+  printf 'SRA IDs: %s\n' "${accessions[*]}"
+  printf '%b\n\n' "$species_report"
+  } >> "$SUMMARY_FILE"
 done
 
+log_info "### Global Summary ###"
+log_info "Total RUNs OK:     $(( ${#global_ok_runs[@]} ))"
+log_info "Total RUNs failed: $(( ${#global_fail_runs[@]} ))"
 log_info "Processing complete. Outputs are in '$OUTPUT_DIR'."
+###
+
+log_info "Summaries saved to '$SUMMARY_FILE'. Processing complete. Outputs are in '$OUTPUT_DIR'."
+

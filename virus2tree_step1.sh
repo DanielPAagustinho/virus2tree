@@ -326,19 +326,28 @@ generate_og_gene_tsv() {
     # process_genes ~/oma/test3_illumina/db ~/oma/test3_illumina/marker_genes output_table.tsv
     # process_genes ~/oma/test3_illumina/db ~/oma/test3_illumina/marker_genes output_table.tsv
     tmp_file="$TEMP_DIR/OG_genes_unsorted.tsv"
-    output_file2="$TEMP_DIR/${output_file}.tmp"
-    unique_output_file2="$TEMP_DIR/${unique_output_file}.tmp"
+    output_file2="$TEMP_DIR/$(basename "$output_file").tmp" 
+    unique_output_file2="$TEMP_DIR/$(basename "$unique_output_file").tmp"
     log_info "Processing gene features from coding sequences files in directory: $fna_dir"
+
+    declare -A TOTAL_HEADERS_BY_SPECIES
+    declare -A MISSING_PID_BY_SPECIES
+    declare -A NO_OG_BY_SPECIES
+    declare -A MATCHED_BY_SPECIES
     while IFS=: read -r file line; do
         #Example of the complete input line: db/rsv_11_cds_from_genomic.fna:>lcl|MG813984.1_cds_AZQ19553.1_6 [gene=SH] [protein=small hydrophobic protein] [protein_id=AZQ19553.1] [location=4251..4445] [gbkey=CDS]
         local protein_id="NA"
+        local species=$(basename "$file" | awk -F '_cds_' '{print $1}')
+        TOTAL_HEADERS_BY_SPECIES["$species"]=$(( ${TOTAL_HEADERS_BY_SPECIES["$species"]:-0} + 1 ))
+
         # protein_id
         if [[ "$line" =~ \[protein_id=([^]]+)\] ]]; then
           protein_id="${BASH_REMATCH[1]}"
         fi
         if [[ -z "$protein_id" ]] || [[ "$protein_id" == "NA" ]]; then
-          log_error "Error: Missing or invalid protein_id in file: $file, line: $line"
-          return 1
+          MISSING_PID_BY_SPECIES["$species"]=$(( ${MISSING_PID_BY_SPECIES["$species"]:-0} + 1 ))
+          log_warn "Missing or invalid protein_id in file: $file, line: $line -> Skipping this CDS..."
+          continue
         fi
 
         local compressed_id="$(clean_line "$protein_id")"
@@ -348,8 +357,6 @@ generate_og_gene_tsv() {
         if og_matches=$(grep -l "$compressed_id" "$fa_dir"/*.fa 2>/dev/null | xargs -I {} basename {} .fa); then
               log_info "Success: Match found for protein ID $protein_id in OG $og_matches"
               # Iterate over the OGs found and write to temporary file
-              #This loop assumes a gene could be present in more than one OG, is that actually the case? don't think so
-              local species=$(basename "$file" | awk -F '_cds_' '{print $1}')
               local code="${SPECIES_TO_CODE[$species]}"
               local accession="$(awk -F '_cds_' '{print $1}' <<< "${line#*|}")"
               local gene="NA"
@@ -393,14 +400,17 @@ generate_og_gene_tsv() {
               [[ "$location" == "NA" ]]  && log_info "Missing location for protein ID $protein_id in $file"
               [[ "$locus_tag" == "NA" ]]  && log_info "Missing locus_tag for protein ID $protein_id in $file"
               [[ "$db_xref" == "NA" ]]  && log_info "Missing db_xref for protein ID $protein_id in $file"
+              MATCHED_BY_SPECIES["$species"]=$(( ${MATCHED_BY_SPECIES["$species"]:-0} + 1 ))
 
               for og in $og_matches; do
                   echo -e "${og}\t${gene}\t${protein}\t${protein_id}\t${location}\t${accession}\t${species}\t${code}\t${locus_tag}\t${db_xref}" >> "$tmp_file"
               done
         else #Should this be really a warn?, it just means that that gene is not in the OG from OMA
+            NO_OG_BY_SPECIES["$species"]=$(( ${NO_OG_BY_SPECIES["$species"]:-0} + 1 ))
+            
             log_info "No match found for protein ID '$protein_id' in OGs directory. This sequence is not part of any OG from OMA."
         fi
-    done < <(grep '^>' "$fna_dir"/*.fna)
+    done < <(grep -H '^>' "$fna_dir"/*.fna) # -H parameter enforces the output to include the filename in the results, so we can know which file is being processed
     log_info "Finished processing all coding sequences files in directory: $fna_dir"
     #-V option in sort from GNU coreutils
     sort -k1,1 -V -k2,2 "$tmp_file" > "$output_file2"
@@ -434,9 +444,12 @@ generate_og_gene_tsv() {
           }
       }'
     } > "$unique_output_file2"
-
+    # assure stats is there
+    dest_dir="$(dirname "$output_file")"
+    mkdir -p "$dest_dir" 
     for file in "$output_file2" "$unique_output_file2"; do
-      final_file_base="${file##*/}"; final_file="${final_file_base%.*}"
+      
+      final_name="$(basename "${file%.tmp}")"
       awk 'BEGIN { FS = OFS = "\t" }
       NR==1 {
           n = NF
@@ -473,9 +486,23 @@ generate_og_gene_tsv() {
              sub(OFS "$", "", out_line)
              print out_line
           }
-      }' "$file" > "$final_file"
+      }' "$file" > "${dest_dir}/${final_name}"
     done
     log_info "OG-Gene TSV generation complete: $output_file"
+        summary_og="${dest_dir}/OG_genes_summary"
+    : > "$summary_og"
+    printf "Species\tTotal_CDS\tMissing_protein_id\tNo_OG_match\tOG_matched\n" >> "$summary_og"
+
+    # Unir claves vistas (por si alguna especie solo aparece en uno de los mapas)
+    for sp in "${!TOTAL_HEADERS_BY_SPECIES[@]}" "${!MISSING_PID_BY_SPECIES[@]}" "${!NO_OG_BY_SPECIES[@]}" "${!MATCHED_BY_SPECIES[@]}"; do
+      [[ -z "$sp" ]] && continue
+      t=${TOTAL_HEADERS_BY_SPECIES["$sp"]:-0}
+      m=${MISSING_PID_BY_SPECIES["$sp"]:-0}
+      n=${NO_OG_BY_SPECIES["$sp"]:-0}
+      ok=${MATCHED_BY_SPECIES["$sp"]:-0}
+      printf "%s\t%d\t%d\t%d\t%d\n" "$sp" "$t" "$m" "$n" "$ok" >> "$summary_og"
+    done
+
 }
 
 ####################################################
@@ -604,7 +631,7 @@ if [[ -z "$TEMP_DIR" ]]; then
   TEMP_DIR="$(mktemp -d)"
   log_info "Created temp directory at '$TEMP_DIR'"
 else
-  # Validate if it is a directory
+  #if the variable is set and the directory does not exist yet, create it
   if [[ ! -d "$TEMP_DIR" ]]; then
     mkdir -p "$TEMP_DIR"
     log_info "Using temp directory: '$(realpath "$TEMP_DIR")'"
@@ -621,7 +648,7 @@ if [[ "$MAT_PEPTIDES" == true ]]; then
 fi
 
 if [[ "$DEBUG" == false ]]; then
-  trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "./$TEMP_DIR"' EXIT
+  trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "$TEMP_DIR"' EXIT
 else
   log_info "Debug mode enabled, keeping temporary directory: '$(realpath "$TEMP_DIR")'"
 fi
@@ -765,6 +792,13 @@ if [[ "$RES_DOWN_VOID" == false ]]; then
   log_info "Processed $count lines from the accession file"
   log_info "Downloaded accession(s) from $NCBI_DOWNLOAD_COUNT taxa" 
   log_info "Nucleotide sequences retrieval completed successfully.\n"
+
+  if [[ "$NCBI_DOWNLOAD_COUNT" -gt 0 ]]; then
+    log_info "Generating CDS counts table and histogram..."
+    python "${SCRIPTS_DIR}/cds_accessions_statistics.py" --db-dir "${WORK_DIR}/db" --out-dir stats --prefix cds_count_per_accession
+  else
+    log_info "No new downloads -> skipping CDS counts/histogram."
+  fi
 fi
 
 if [[ "$RES_DOWN_VOID" == false && "$NCBI_DOWNLOAD_COUNT" -eq 0 && "$RES_DOWN" == true ]]; then
@@ -853,7 +887,7 @@ oma -n "${THREADS}"
 #oma-status
 #echo "End status"
 if oma-status && ls Output/OrthologousGroupsFasta/*.fa >/dev/null 2>&1; then
-    log_info "OMA finished successfully! OMA did great!"
+    log_info "OMA finished successfully! OMA did great!\n\n\n"
 else
     log_error "OMA has failed."
     exit 1
@@ -861,9 +895,9 @@ fi
 
 log_info "========== Step 1.7: Gathering OG-Gene statistics =========="
 #Now it does not make sense to check if Output/Orth...*.fa exists
-log_info "Generating summary OG-gene TSV file"
-###Create tsv
-generate_og_gene_tsv db Output/OrthologousGroupsFasta OG_genes.tsv
+log_info "========== Generating summary OG-gene TSV files =========="
+###Create tsv, added dir stats
+generate_og_gene_tsv db Output/OrthologousGroupsFasta stats/OG_genes.tsv
 mkdir -p marker_genes
 #####cat Output/OrthologousGroupsFasta/*.fa > dna_ref.fa
 mv Output/OrthologousGroupsFasta/*.fa marker_genes

@@ -315,7 +315,7 @@ SpeciesD,ERX222333,ERX222334
 
 ### **Output Files**
 
-At the end of processing, all the generated fastq files are saved in the output directory:
+At the end of processing, all generated fastq files are saved in the output directory:
 
 For RUN mode (e.g., SRR123456 from Species A) it generates:
 * SpeciesA_SRR123456_1.fastq and SpeciesA_SRR123456_2.fastq (if layout is PAIRED), or
