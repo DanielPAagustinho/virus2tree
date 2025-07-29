@@ -21,6 +21,8 @@ NUM_READS=0
 THREADS=4        # you can adjust a default or parse it
 DEBUG=false
 STATS_FILE=""
+ROOT_DIR=""
+STATS_DIR=""
 
 ############################################
 # Functions
@@ -51,25 +53,23 @@ log_error() {
 
 check_dependencies() {
   #Initialize array to map tools to messages
-  local missing=0
-  declare -A tools=(
-    ["read2tree"]="read2tree"
-    ["oma"]="OMA standalone"
-    ["efetch"]="Entrez Direct utilities"
-    ["rasusa"]="rasusa"
-    ["czid-dedup-Linux"]="czid-dedup"
-  )
-
-  #log_info "Checking system dependencies..."
-  #Looping through the array to test for commands and detect possible missing tools  
-  for cmd in "${!tools[@]}"; do
-    if ! command -v "$cmd" &>/dev/null; then
-      log_error "Missing requirement: ${tools[$cmd]}"
-      ((missing++))
-    #else
-      #log_info "Found: ${tools[$cmd]}"
+  if ! command -v read2tree &>/dev/null; then
+    log_error "Missing requirement: read2tree"
+    exit 1
+  fi
+  if [[ "$DEDUP" == true ]]; then
+    if ! command -v czid-dedup &>/dev/null; then
+      log_error "Missing requirement: czid-dedup"
+      exit 1
     fi
-  done
+  fi
+  if [[ "$DOWNSAMPLE" == true ]]; then
+    if ! command -v rasusa &>/dev/null; then
+      log_error "Missing requirement: rasusa (because --downsample was requested)"
+      exit 1
+    fi
+  fi
+
 }
 
 usage() {
@@ -86,10 +86,11 @@ $(usage)
     -t, --read_type <se_short|pe_short|pacbio|ont>    Type of reads
 
   Optional:
-    -T, --threads <int>      Threads to use (default 4)
+    -T, --threads <int>      Threads to use [default: 4]
     --temp_dir <dir>         Specify temp directory (otherwise mktemp -d is used)
-    --out_dir <dir>          Specify output dir for read2tree results
-    --stats_file <file>      Specify the path to the read statistics file
+    --root_dir <dir>         Specify root directory containing step 1 result; all the outputs will be saved here [default: current directory]
+    --out_dir <dir>          Specify relative path of read2tree step 1 output directory with respect to the root directory or absolute path [default: root_directory/read2tree_output]
+    --stats_file <file>      Specify the path to the read statistics file [default: root_directory/stats/reads_statistics.tsv]
     --dedup                  Run czid-dedup
     --dedup_l <int>          Provide '-l <int>' to czid-dedup (requires --dedup)
     --downsample             Run rasusa
@@ -97,7 +98,7 @@ $(usage)
     --genome_size <size>     Genome size to calculate coverage with respect to. E.g., 4.3kb, 7Tb, 9000, 4.1MB (requires --coverage and --downsample)
     --num_bases <int>        Target number of bases (requires --downsample)
     --num_reads <int>        Target number of reads (requires --downsample)
-    --debug                  Keep temporary directory  
+    --debug                  Keep temporary directory with intermediate read preprocessing files
     -h, --help               Show this help
 
 Examples:
@@ -183,6 +184,10 @@ while [[ $# -gt 0 ]]; do
       TEMP_DIR="${2%/}"
       shift 2
       ;;
+    --root_dir)
+      ROOT_DIR="${2%/}"
+      shift 2
+      ;;
     --out_dir)
       OUT_DIR="${2%/}"
       shift 2
@@ -260,6 +265,10 @@ else
   done
 fi
 
+for i in "${!READS[@]}"; do
+  READS[$i]="$(realpath "${READS[$i]}")"
+done
+
 case "$READ_TYPE" in
 #test with Pe_Short
   se_short|pe_short|pacbio|ont) ;;
@@ -318,6 +327,22 @@ else
 fi
 
 ############################################
+# Establish root directory
+############################################
+
+if [[ -n "$ROOT_DIR" ]]; then
+  if [[ ! -d "$ROOT_DIR" ]]; then
+      mkdir -p "$ROOT_DIR"
+    exit 1
+  fi
+  cd "$ROOT_DIR"
+  log_info "Using root directory: $(pwd)"
+else
+  ROOT_DIR="$(pwd)"
+  log_info "No --root_dir provided. Using current directory as root: $ROOT_DIR"
+fi
+
+############################################
 # Create or verify temp directory
 ############################################
 if [[ -z "$TEMP_DIR" ]]; then
@@ -332,25 +357,31 @@ else
 fi
 
 if [[ -z "$OUT_DIR" ]]; then
-  OUT_DIR=read2tree_output
-  log_info "No name for the read2tree directory was specified, assuming it is $OUT_DIR"
+  OUT_DIR="$ROOT_DIR/read2tree_output"
+  log_info "No --out_dir specified; assuming $OUT_DIR"
 else
-  # Validate if it is a directory
-  if [[ ! -d "$OUT_DIR" ]]; then
-    log_error "Please provide a read2tree directory that exists and where step1 has been executed"
-    exit 1
-  fi
-  log_info "Using read2tree directory: $OUT_DIR"
+  [[ "$OUT_DIR" = /* ]] || OUT_DIR="$ROOT_DIR/$OUT_DIR"
 fi
+
+if [[ ! -d "$OUT_DIR" ]]; then
+  log_error "read2tree output directory not found: $OUT_DIR. Please run step 1 first."
+  exit 1
+fi
+log_info "Using read2tree directory: $OUT_DIR"
+
 
 # Set default stats file if not provided (using an absolute path)
 if [[ -z "$STATS_FILE" ]]; then
-  STATS_FILE="$(realpath "$OUT_DIR/..")/reads_statistics.tsv"
-  log_info "No --stats_file specified, using $STATS_FILE"
+  STATS_DIR="$ROOT_DIR/stats"
+  mkdir -p "$STATS_DIR"
+  STATS_FILE="$STATS_DIR/reads_statistics.tsv"
+  log_info "No --stats_file specified; using $STATS_FILE"
 else
-  # Make sure the stats file path is absolute
+  STATS_DIR="$(dirname "$STATS_FILE")"
+  mkdir -p "$STATS_DIR"
   STATS_FILE="$(realpath "$STATS_FILE")"
 fi
+
 
 # Create the stats file header if it does not exist or is empty
 if [[ ! -s "$STATS_FILE" ]]; then
@@ -360,12 +391,10 @@ if [[ ! -s "$STATS_FILE" ]]; then
 fi
 
 if [[ "$DEBUG" == false ]]; then
-  trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "./$TEMP_DIR"' EXIT
+  trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "$TEMP_DIR"' EXIT
 else
   log_info "Debug mode enabled, keeping temporary directory: $TEMP_DIR"
 fi
-
-
 
 ############################################
 # Decompression and Concatenation if necessary
@@ -425,7 +454,7 @@ if [[ "$DEDUP" == true ]]; then
     filename_2=$(basename "$input_file_2")
     output_file_1="$TEMP_DIR/${filename_1%.fastq}_dedup.fastq"
     output_file_2="$TEMP_DIR/${filename_2%.fastq}_dedup.fastq"
-    DEDUP_CMD=(czid-dedup-Linux -i "$input_file_1" -i "$input_file_2" -o "$output_file_1" -o "$output_file_2")
+    DEDUP_CMD=(czid-dedup -i "$input_file_1" -i "$input_file_2" -o "$output_file_1" -o "$output_file_2")
     if [[ -n "$DEDUP_L" ]]; then
       DEDUP_CMD+=(-l "$DEDUP_L")
     fi
@@ -438,7 +467,7 @@ if [[ "$DEDUP" == true ]]; then
     input_file="${FINAL_READS[0]}"
     filename=$(basename "$input_file")
     output_file="$TEMP_DIR/${filename%.fastq}_dedup.fastq"
-    DEDUP_CMD=(czid-dedup-Linux -i "$input_file" -o "$output_file")
+    DEDUP_CMD=(czid-dedup -i "$input_file" -o "$output_file")
     if [[ -n "$DEDUP_L" ]]; then
       DEDUP_CMD+=(-l "$DEDUP_L")
     fi
@@ -605,7 +634,7 @@ log_info "Executing read2tree command: ${READ2TREE_CMD[*]}"
 "${READ2TREE_CMD[@]}"
 
 log_info "read2tree step 2 map completed successfully."
-rm -f "./${STATS_FILE}.lock"
+rm -f "${STATS_FILE}.lock"
 
 
 # Optionally do step 3combine

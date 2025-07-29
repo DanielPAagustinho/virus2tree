@@ -49,7 +49,6 @@ log_error() {
 
 check_dependencies() {
   #Initialize array to map tools to messages
-  local missing=0
   declare -A tools=(
     ["read2tree"]="read2tree"
     ["oma"]="OMA standalone"
@@ -61,7 +60,7 @@ check_dependencies() {
   for cmd in "${!tools[@]}"; do
     if ! command -v "$cmd" &>/dev/null; then
       log_error "Missing requirement: ${tools[$cmd]}"
-      ((missing++))
+      exit 1
     #else
       #log_info "Found: ${tools[$cmd]}"
     fi

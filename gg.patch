@@ -1,0 +1,508 @@
+diff --git a/README.md b/README.md
+index a4b0f75..c218492 100644
+--- a/README.md
++++ b/README.md
+@@ -315,7 +315,7 @@ SpeciesD,ERX222333,ERX222334
+ 
+ ### **Output Files**
+ 
+-At the end of processing, all the generated fastq files are saved in the output directory:
++At the end of processing, all generated fastq files are saved in the output directory:
+ 
+ For RUN mode (e.g., SRR123456 from Species A) it generates:
+ * SpeciesA_SRR123456_1.fastq and SpeciesA_SRR123456_2.fastq (if layout is PAIRED), or
+diff --git a/cds_accessions_statistics.py b/cds_accessions_statistics.py
+new file mode 100644
+index 0000000..8adc342
+--- /dev/null
++++ b/cds_accessions_statistics.py
+@@ -0,0 +1,77 @@
++#!/usr/bin/env python
++import argparse
++from pathlib import Path
++import pandas as pd, numpy as np
++import matplotlib
++matplotlib.use("Agg")
++import matplotlib.pyplot as plt
++from matplotlib.ticker import MaxNLocator
++
++def main():
++    p = argparse.ArgumentParser(
++        description="Generates TSV and plot of number of CDS per assembly."
++    )
++    p.add_argument("--db-dir", required=True,
++                   help="Directory that contains the *_cds_from_genomic.fna")
++    p.add_argument("--out-dir", default=".",
++                   help="Output directory")
++    p.add_argument("--prefix", default="cds_count_per_accession",
++                   help="Prefix for the output files (without extension)")
++    args = p.parse_args()
++
++    db_dir = Path(args.db_dir)
++    out_dir = Path(args.out_dir)
++    out_dir.mkdir(parents=True, exist_ok=True)
++
++    files = sorted(db_dir.glob("*_cds_from_genomic.fna"))
++    if not files:
++        raise SystemExit(f"No FASTA files found in {db_dir}")
++
++    rows = []
++    for f in files:
++        # Counts FASTA headers
++        with f.open() as fh:
++            c = sum(1 for line in fh if line.startswith(">"))
++        accession = f.name.replace("_cds_from_genomic.fna", "")
++        rows.append((c, accession))
++
++    df = pd.DataFrame(rows, columns=["cds_count", "accession"])
++    tsv_path = out_dir / f"{args.prefix}.tsv"
++    df.sort_values("cds_count").to_csv(tsv_path, sep="\t", header=False, index=False)
++
++    data = df["cds_count"]
++    UNIQUE_THRESHOLD = 10
++    MAX_BINS = 30
++
++    unique_counts = np.sort(data.unique())
++    n_unique = len(unique_counts)
++
++    fig, ax = plt.subplots(figsize=(10, 6))
++
++    if n_unique <= UNIQUE_THRESHOLD:
++        freq = data.value_counts().sort_index()
++        ax.bar(freq.index, freq.values)
++        ax.set_xticks(freq.index)
++    else:
++        bin_edges = np.histogram_bin_edges(data, bins='auto')
++        if len(bin_edges) - 1 > MAX_BINS:
++            bin_edges = np.linspace(data.min(), data.max(), MAX_BINS + 1)
++        ax.hist(data, bins=bin_edges)
++        ax.xaxis.set_major_locator(MaxNLocator(integer=True, nbins=15))
++
++    ax.set_xlabel("Number of CDS")
++    ax.set_ylabel("Number of NCBI assemblies")
++    ax.set_title("Distribution of CDS Counts per NCBI Assembly")
++    ax.grid(axis='y', alpha=0.3)
++    fig.tight_layout()
++    fig.savefig(out_dir / f"{args.prefix}_distribution.png", dpi=300)
++
++    # Frequency tables
++    freq_table = data.value_counts().sort_index()
++    freq_df = freq_table.to_frame(name="n_assemblies")
++    freq_df["percent"] = (freq_df["n_assemblies"] / freq_df["n_assemblies"].sum() * 100).round(2)
++    freq_df.index.name = "cds_count"
++    freq_df.to_csv(out_dir / f"{args.prefix}_frequency.tsv", sep="\t", header=True)
++
++if __name__ == "__main__":
++    main()
+diff --git a/download_sra_reads.sh b/download_sra_reads.sh
+index 45199af..beb272f 100755
+--- a/download_sra_reads.sh
++++ b/download_sra_reads.sh
+@@ -115,7 +115,7 @@ Required:
+   -i, --input         Input file containing SRA IDs with one taxon per line:
+                       <species_name>,SRA_ID1,SRA_ID2,SRA_ID3,...
+                       <species_name2>,SRA_ID4,SRA_ID5,SRA_ID6,...
+-                      Where <species_name> is the taxon name, and SRA_IDs must be either all SRA RUNs (SRR, ERR, DRR) 
++                      Where <species_name> is the taxon name, and SRA_IDs for each taxon must be either all SRA RUNs (SRR, ERR, DRR) 
+                       or all SRA EXPERIMENTs (SRX, ERX, DRX) per line.
+ 
+ Optional:
+@@ -124,8 +124,10 @@ Optional:
+                       esearch and efetch (default: 350)
+   -w, --sleep-secs    Seconds to sleep between chunks (default: 1)
+   -l, --layout        Force layout (SINGLE or PAIRED) for all runs, if SRA IDs correspond to RUNS, it skips metadata fetching
++  -d, --debug         Avoid removing of species temporary directory (default: off)
+   -h, --help          Show help
+ 
++
+ Example:
+   $PROGNAME -i species_accessions.txt -o results --chunk-size 100 --sleep-secs 2
+ 
+@@ -140,7 +142,10 @@ OUTPUT_DIR="$(pwd)"
+ CHUNK_SIZE=350
+ SLEEP_SECS=1
+ USER_LAYOUT=""    # If the user determines SINGLE or PAIRED
+-
++DEBUG=false
++global_ok_runs=()      # todas las runs/experimentos exitosos
++global_fail_runs=()    # todas las runs/experimentos fallidos
++species_reports=()     # textos con el resumen de cada especie
+ ########################################
+ # Parse arguments
+ ########################################
+@@ -173,6 +178,10 @@ while [[ $# -gt 0 ]]; do
+       USER_LAYOUT="$2"
+       shift 2
+       ;;
++    -d|--debug)
++      DEBUG=true
++      shift
++      ;;
+     -h|--help)
+       show_help
+       exit 0
+@@ -209,8 +218,14 @@ if [[ -n "$USER_LAYOUT" ]]; then
+   USER_LAYOUT="$LAYOUT_UPPER"
+ fi
+ 
++if [[ "$DEBUG" == true ]]; then
++  log_info "Debug mode enabled, keeping species temporary directory"
++fi
++
+ OUTPUT_DIR="${OUTPUT_DIR%/}"
+ mkdir -p "$OUTPUT_DIR"
++SUMMARY_FILE="${OUTPUT_DIR}/summary_download"
++: > "$SUMMARY_FILE"   # truncar/crear archivo de resúmenes
+ 
+ 
+ ########################################
+@@ -220,6 +235,10 @@ mkdir -p "$OUTPUT_DIR"
+ mapfile -t lines < "$INPUT_FILE"
+ 
+ for line in "${lines[@]}"; do
++
++  success_runs=()  fail_runs=()
++  success_exp=()   fail_exp=()
++  declare -A fail_by_exp=()
+   # Skip empty or commented lines
+   [[ -z "$line" || "$line" =~ ^# ]] && continue
+   # Parse the line by commas, first part is the taxon names, and from the second on are the accessions
+@@ -325,10 +344,11 @@ for line in "${lines[@]}"; do
+ 
+       # Download with prefetch
+       log_info "   Downloading .sra with prefetch..."
+-      prefetch --output-directory "${species_outdir}" "$acc" </dev/null || {
+-        log_warn "   Prefetch failed for $acc. Skipping..."
++      if ! prefetch --output-directory "${species_outdir}" "$acc" </dev/null; then
++        log_warn "   Prefetch failed for $acc"
++        fail_runs+=("$acc")
+         continue
+-      }
++      fi
+ 
+       # Look for the .sra
+       SRA_PATH="${species_outdir}/${acc}"
+@@ -337,20 +357,34 @@ for line in "${lines[@]}"; do
+         continue
+       fi
+ 
+-      # Convert to FASTQ
++            # Convert to FASTQ
+       log_info "   Converting to FASTQ..."
+-      if [[ "$layout" == "PAIRED" ]]; then
+-        fasterq-dump --split-files "$SRA_PATH" -O "$species_outdir" </dev/null
+-        mv "${species_outdir}/${acc}_1.fastq" \
+-           "${OUTPUT_DIR}/${species_dir}_${acc}_1.fastq" 2>/dev/null || true
+-        mv "${species_outdir}/${acc}_2.fastq" \
+-           "${OUTPUT_DIR}/${species_dir}_${acc}_2.fastq" 2>/dev/null || true
++      cmd=(fasterq-dump)
++      [[ "$layout" == "PAIRED" ]] && cmd+=(--split-files)
++      if "${cmd[@]}" "$SRA_PATH" -O "$species_outdir" </dev/null; then
++        moved=0
++        shopt -s nullglob
++        for ext in fastq fastq.gz fq fq.gz; do
++            for f in "${species_outdir}/${acc}"*.${ext}; do
++              if mv -n "$f" "${OUTPUT_DIR}/${species_dir}_$(basename "$f")"; then
++                moved+=1
++              else
++                log_warn "$f could not be moved to output directory."
++              fi
++            done
++        done
++        shopt -u nullglob
++        if [[ $moved -eq 0 ]]; then
++          log_warn "No FASTQ files found for ${acc}. Not moving to output directory."
++        fi
++     
++        success_runs+=("$acc")
++        log_info "   [OK] Finished $acc"
+       else
+-        fasterq-dump "$SRA_PATH" -O "$species_outdir" </dev/null
+-        mv "${species_outdir}/${acc}.fastq" \
+-           "${OUTPUT_DIR}/${species_dir}_${acc}.fastq" 2>/dev/null || true
++        fail_runs+=("$acc")
++        log_warn "   Conversion failed for $acc"
+       fi
+-      log_info "   [OK] Finished $acc"
++
+     done
+ 
+   else
+@@ -395,11 +429,12 @@ for line in "${lines[@]}"; do
+ 
+         # Download with prefetch
+         log_info "   Downloading .sra with prefetch..."
+-        prefetch --output-directory "${species_outdir}" "$run_id" </dev/null || {
+-          log_warn "      Prefetch failed for $run_id. Skipping..."
++        if ! prefetch --output-directory "${species_outdir}" "$run_id" </dev/null; then
++          log_warn "      Prefetch failed for $run_id"
++          fail_exp+=("$exp_id")
++          fail_by_exp["$exp_id"]+="$run_id "
+           continue
+-        }
+-
++        fi
+         # Locate .sra
+         SRA_PATH="${species_outdir}/${run_id}"
+         if [[ ! -d "$SRA_PATH" ]]; then
+@@ -408,27 +443,74 @@ for line in "${lines[@]}"; do
+         fi
+ 
+         log_info "      Converting .sra to FASTQ..."
+-        if [[ "$layout" == "PAIRED" ]]; then
+-          fasterq-dump --split-files "$SRA_PATH" -O "$species_outdir" </dev/null
+-          mv "${species_outdir}/${run_id}_1.fastq" \
+-             "${OUTPUT_DIR}/${species_dir}_${exp_id}_${run_id}_1.fastq" 2>/dev/null || true
+-          mv "${species_outdir}/${run_id}_2.fastq" \
+-             "${OUTPUT_DIR}/${species_dir}_${exp_id}_${run_id}_2.fastq" 2>/dev/null || true
++        cmd=(fasterq-dump)
++        [[ "$layout" == "PAIRED" ]] && cmd+=(--split-files)
++        if "${cmd[@]}" "$SRA_PATH" -O "$species_outdir" </dev/null; then
++          moved=0
++          shopt -s nullglob
++          for ext in fastq fastq.gz fq fq.gz; do
++              for f in "${species_outdir}/${run_id}"*.${ext}; do
++                if mv -f "$f" "${OUTPUT_DIR}/${species_dir}_$(basename "$f")"; then
++                  moved+=1
++                else
++                  log_warn "$f could not be moved to output directory."
++                fi
++              done
++          done
++          shopt -u nullglob
++          if [[ $moved -eq 0 ]]; then
++            log_warn "No FASTQ files found for ${run_id}. Not moving to output directory."
++          fi
++          success_exp+=("$exp_id")
++          success_runs+=("$run_id")   # <- para unificar métricas por RUN
++          log_info "      Finished run $run_id for experiment $exp_id"
+         else
+-          fasterq-dump "$SRA_PATH" -O "$species_outdir" </dev/null
+-          mv "${species_outdir}/${run_id}.fastq" \
+-             "${OUTPUT_DIR}/${species_dir}_${exp_id}_${run_id}.fastq" 2>/dev/null || true
++          fail_exp+=("$exp_id")
++          fail_runs+=("$run_id")      # <- para unificar métricas por RUN
++          fail_by_exp["$exp_id"]+="$run_id "
++          log_warn "      FASTQ conversion failed for $run_id"
+         fi
+ 
+-        log_info "      Finished run $run_id for experiment $exp_id"
+       done <<< "$matched_lines"
+     done
+   fi
+ 
+   log_info "Done with $local_name"
+-  log_info "Removing intermediate taxon directory: $species_outdir"
+-  rm -r ./"${species_outdir}"
+-  #echo
++  if [[ "$DEBUG" == false ]]; then
++    log_info "Removing intermediate taxon directory: $species_outdir"
++    rm -rf -- "$species_outdir"
++  fi
++  log_info "### Summary for $local_name ###"
++  log_info "successful RUNs:     ${#success_runs[@]}  -> ${success_runs[*]}"
++  log_info "failed RUNs: ${#fail_runs[@]}      -> ${fail_runs[*]}"
++  if [[ "$experiment_flag" == "true" ]]; then
++    for eid in "${!fail_by_exp[@]}"; do
++      log_warn "Exp $eid failed in RUNs: ${fail_by_exp[$eid]}"
++    done
++  fi
++  species_report="### Summary for $local_name ###
++  RUNs OK:     ${#success_runs[@]} -> ${success_runs[*]:-none}
++  RUNs failed: ${#fail_runs[@]} -> ${fail_runs[*]:-none}"
++  if [[ "$experiment_flag" == "true" && ${#fail_by_exp[@]} -gt 0 ]]; then
++    for eid in "${!fail_by_exp[@]}"; do
++      species_report+="
++  Exp $eid failed in RUNs: ${fail_by_exp[$eid]}"
++    done
++  fi
++  species_reports+=("$species_report")
++  global_ok_runs+=( "${success_runs[@]}" )
++  global_fail_runs+=( "${fail_runs[@]}" )
++  {
++  printf 'SRA IDs: %s\n' "${accessions[*]}"
++  printf '%b\n\n' "$species_report"
++  } >> "$SUMMARY_FILE"
+ done
+ 
++log_info "### Global Summary ###"
++log_info "Total RUNs OK:     $(( ${#global_ok_runs[@]} ))"
++log_info "Total RUNs failed: $(( ${#global_fail_runs[@]} ))"
+ log_info "Processing complete. Outputs are in '$OUTPUT_DIR'."
++###
++
++log_info "Summaries saved to '$SUMMARY_FILE'. Processing complete. Outputs are in '$OUTPUT_DIR'."
++
+diff --git a/virus2tree_step1.sh b/virus2tree_step1.sh
+index 2e2e062..ee8ef86 100755
+--- a/virus2tree_step1.sh
++++ b/virus2tree_step1.sh
+@@ -85,9 +85,9 @@ Optional:
+   -p, --use_mat_peptides                       Downloads the gbk file for each taxon's accession(s). If at least one mature peptide feature is detected, these features are used as the coding sequences; otherwise, the standard CDS features are downloaded.
+   -q, --use_only_mat_peptides                  Downloads the gbk file for each taxon's accession(s). If at least one mature peptide feature is detected, these features are used as the coding sequences; if none are detected, that taxon is skipped.
+   -T, --threads <int>                          Number of threads [default: 12]
+-  --temp_dir <dir>                             Specify temporary directory (otherwise mktemp -d is used)
+   --root_dir <dir>                             Specify root directory where all the outputs will be saved [default: current directory]
+-  --out_dir <dir>                              Specify output directory for read2tree step1 [default: read2tree_output]
++  --temp_dir <dir>                             Specify temporary directory (otherwise mktemp -d is used). If relative, it will be relative to the root_dir.
++  --out_dir <dir>                              Specify output directory for read2tree step1 [default: read2tree_output]. If relative, it will be relative to the root_dir.
+   --resume_download                            Skips taxa whose coding sequences have already been downloaded from NCBI to the db folder                                
+   --debug                                      Keeps temporary directory
+   -h, --help                                   Show this help message
+@@ -326,19 +326,28 @@ generate_og_gene_tsv() {
+     # process_genes ~/oma/test3_illumina/db ~/oma/test3_illumina/marker_genes output_table.tsv
+     # process_genes ~/oma/test3_illumina/db ~/oma/test3_illumina/marker_genes output_table.tsv
+     tmp_file="$TEMP_DIR/OG_genes_unsorted.tsv"
+-    output_file2="$TEMP_DIR/${output_file}.tmp"
+-    unique_output_file2="$TEMP_DIR/${unique_output_file}.tmp"
++    output_file2="$TEMP_DIR/$(basename "$output_file").tmp" 
++    unique_output_file2="$TEMP_DIR/$(basename "$unique_output_file").tmp"
+     log_info "Processing gene features from coding sequences files in directory: $fna_dir"
++
++    declare -A TOTAL_HEADERS_BY_SPECIES
++    declare -A MISSING_PID_BY_SPECIES
++    declare -A NO_OG_BY_SPECIES
++    declare -A MATCHED_BY_SPECIES
+     while IFS=: read -r file line; do
+         #Example of the complete input line: db/rsv_11_cds_from_genomic.fna:>lcl|MG813984.1_cds_AZQ19553.1_6 [gene=SH] [protein=small hydrophobic protein] [protein_id=AZQ19553.1] [location=4251..4445] [gbkey=CDS]
+         local protein_id="NA"
++        local species=$(basename "$file" | awk -F '_cds_' '{print $1}')
++        TOTAL_HEADERS_BY_SPECIES["$species"]=$(( ${TOTAL_HEADERS_BY_SPECIES["$species"]:-0} + 1 ))
++
+         # protein_id
+         if [[ "$line" =~ \[protein_id=([^]]+)\] ]]; then
+           protein_id="${BASH_REMATCH[1]}"
+         fi
+         if [[ -z "$protein_id" ]] || [[ "$protein_id" == "NA" ]]; then
+-          log_error "Error: Missing or invalid protein_id in file: $file, line: $line"
+-          return 1
++          MISSING_PID_BY_SPECIES["$species"]=$(( ${MISSING_PID_BY_SPECIES["$species"]:-0} + 1 ))
++          log_warn "Missing or invalid protein_id in file: $file, line: $line -> Skipping this CDS..."
++          continue
+         fi
+ 
+         local compressed_id="$(clean_line "$protein_id")"
+@@ -348,8 +357,6 @@ generate_og_gene_tsv() {
+         if og_matches=$(grep -l "$compressed_id" "$fa_dir"/*.fa 2>/dev/null | xargs -I {} basename {} .fa); then
+               log_info "Success: Match found for protein ID $protein_id in OG $og_matches"
+               # Iterate over the OGs found and write to temporary file
+-              #This loop assumes a gene could be present in more than one OG, is that actually the case? don't think so
+-              local species=$(basename "$file" | awk -F '_cds_' '{print $1}')
+               local code="${SPECIES_TO_CODE[$species]}"
+               local accession="$(awk -F '_cds_' '{print $1}' <<< "${line#*|}")"
+               local gene="NA"
+@@ -393,14 +400,17 @@ generate_og_gene_tsv() {
+               [[ "$location" == "NA" ]]  && log_info "Missing location for protein ID $protein_id in $file"
+               [[ "$locus_tag" == "NA" ]]  && log_info "Missing locus_tag for protein ID $protein_id in $file"
+               [[ "$db_xref" == "NA" ]]  && log_info "Missing db_xref for protein ID $protein_id in $file"
++              MATCHED_BY_SPECIES["$species"]=$(( ${MATCHED_BY_SPECIES["$species"]:-0} + 1 ))
+ 
+               for og in $og_matches; do
+                   echo -e "${og}\t${gene}\t${protein}\t${protein_id}\t${location}\t${accession}\t${species}\t${code}\t${locus_tag}\t${db_xref}" >> "$tmp_file"
+               done
+         else #Should this be really a warn?, it just means that that gene is not in the OG from OMA
++            NO_OG_BY_SPECIES["$species"]=$(( ${NO_OG_BY_SPECIES["$species"]:-0} + 1 ))
++            
+             log_info "No match found for protein ID '$protein_id' in OGs directory. This sequence is not part of any OG from OMA."
+         fi
+-    done < <(grep '^>' "$fna_dir"/*.fna)
++    done < <(grep -H '^>' "$fna_dir"/*.fna) # -H parameter enforces the output to include the filename in the results, so we can know which file is being processed
+     log_info "Finished processing all coding sequences files in directory: $fna_dir"
+     #-V option in sort from GNU coreutils
+     sort -k1,1 -V -k2,2 "$tmp_file" > "$output_file2"
+@@ -434,9 +444,12 @@ generate_og_gene_tsv() {
+           }
+       }'
+     } > "$unique_output_file2"
+-
++    # assure stats is there
++    dest_dir="$(dirname "$output_file")"
++    mkdir -p "$dest_dir" 
+     for file in "$output_file2" "$unique_output_file2"; do
+-      final_file_base="${file##*/}"; final_file="${final_file_base%.*}"
++      
++      final_name="$(basename "${file%.tmp}")"
+       awk 'BEGIN { FS = OFS = "\t" }
+       NR==1 {
+           n = NF
+@@ -473,9 +486,23 @@ generate_og_gene_tsv() {
+              sub(OFS "$", "", out_line)
+              print out_line
+           }
+-      }' "$file" > "$final_file"
++      }' "$file" > "${dest_dir}/${final_name}"
+     done
+     log_info "OG-Gene TSV generation complete: $output_file"
++        summary_og="${dest_dir}/OG_genes_summary"
++    : > "$summary_og"
++    printf "Species\tTotal_CDS\tMissing_protein_id\tNo_OG_match\tOG_matched\n" >> "$summary_og"
++
++    # Unir claves vistas (por si alguna especie solo aparece en uno de los mapas)
++    for sp in "${!TOTAL_HEADERS_BY_SPECIES[@]}" "${!MISSING_PID_BY_SPECIES[@]}" "${!NO_OG_BY_SPECIES[@]}" "${!MATCHED_BY_SPECIES[@]}"; do
++      [[ -z "$sp" ]] && continue
++      t=${TOTAL_HEADERS_BY_SPECIES["$sp"]:-0}
++      m=${MISSING_PID_BY_SPECIES["$sp"]:-0}
++      n=${NO_OG_BY_SPECIES["$sp"]:-0}
++      ok=${MATCHED_BY_SPECIES["$sp"]:-0}
++      printf "%s\t%d\t%d\t%d\t%d\n" "$sp" "$t" "$m" "$n" "$ok" >> "$summary_og"
++    done
++
+ }
+ 
+ ####################################################
+@@ -604,7 +631,7 @@ if [[ -z "$TEMP_DIR" ]]; then
+   TEMP_DIR="$(mktemp -d)"
+   log_info "Created temp directory at '$TEMP_DIR'"
+ else
+-  # Validate if it is a directory
++  #if the variable is set and the directory does not exist yet, create it
+   if [[ ! -d "$TEMP_DIR" ]]; then
+     mkdir -p "$TEMP_DIR"
+     log_info "Using temp directory: '$(realpath "$TEMP_DIR")'"
+@@ -621,7 +648,7 @@ if [[ "$MAT_PEPTIDES" == true ]]; then
+ fi
+ 
+ if [[ "$DEBUG" == false ]]; then
+-  trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "./$TEMP_DIR"' EXIT
++  trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "$TEMP_DIR"' EXIT
+ else
+   log_info "Debug mode enabled, keeping temporary directory: '$(realpath "$TEMP_DIR")'"
+ fi
+@@ -765,6 +792,13 @@ if [[ "$RES_DOWN_VOID" == false ]]; then
+   log_info "Processed $count lines from the accession file"
+   log_info "Downloaded accession(s) from $NCBI_DOWNLOAD_COUNT taxa" 
+   log_info "Nucleotide sequences retrieval completed successfully.\n"
++
++  if [[ "$NCBI_DOWNLOAD_COUNT" -gt 0 ]]; then
++    log_info "Generating CDS counts table and histogram..."
++    python "${SCRIPTS_DIR}/cds_accessions_statistics.py" --db-dir "${WORK_DIR}/db" --out-dir stats --prefix cds_count_per_accession
++  else
++    log_info "No new downloads -> skipping CDS counts/histogram."
++  fi
+ fi
+ 
+ if [[ "$RES_DOWN_VOID" == false && "$NCBI_DOWNLOAD_COUNT" -eq 0 && "$RES_DOWN" == true ]]; then
+@@ -852,8 +886,8 @@ log_info "========== Step 1.6: Running OMA =========="
+ oma -n "${THREADS}"
+ #oma-status
+ #echo "End status"
+-if oma status && ls Output/OrthologousGroupsFasta/*.fa >/dev/null 2>&1; then
+-    log_info "OMA finished successfully! OMA did great!"
++if oma-status && ls Output/OrthologousGroupsFasta/*.fa >/dev/null 2>&1; then
++    log_info "OMA finished successfully! OMA did great!\n\n\n"
+ else
+     log_error "OMA has failed."
+     exit 1
+@@ -861,9 +895,9 @@ fi
+ 
+ log_info "========== Step 1.7: Gathering OG-Gene statistics =========="
+ #Now it does not make sense to check if Output/Orth...*.fa exists
+-log_info "Generating summary OG-gene TSV file"
+-###Create tsv
+-generate_og_gene_tsv db Output/OrthologousGroupsFasta OG_genes.tsv
++log_info "========== Generating summary OG-gene TSV files =========="
++###Create tsv, added dir stats
++generate_og_gene_tsv db Output/OrthologousGroupsFasta stats/OG_genes.tsv
+ mkdir -p marker_genes
+ #####cat Output/OrthologousGroupsFasta/*.fa > dna_ref.fa
+ mv Output/OrthologousGroupsFasta/*.fa marker_genes
