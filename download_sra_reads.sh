@@ -367,7 +367,7 @@ for line in "${lines[@]}"; do
         for ext in fastq fastq.gz fq fq.gz; do
             for f in "${species_outdir}/${acc}"*.${ext}; do
               if mv -n "$f" "${OUTPUT_DIR}/${species_dir}_$(basename "$f")"; then
-                moved+=1
+                (( moved+=1 ))
               else
                 log_warn "$f could not be moved to output directory."
               fi
@@ -451,7 +451,7 @@ for line in "${lines[@]}"; do
           for ext in fastq fastq.gz fq fq.gz; do
               for f in "${species_outdir}/${run_id}"*.${ext}; do
                 if mv -f "$f" "${OUTPUT_DIR}/${species_dir}_$(basename "$f")"; then
-                  moved+=1
+                  (( moved+=1 ))
                 else
                   log_warn "$f could not be moved to output directory."
                 fi

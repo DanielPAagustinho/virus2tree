@@ -12,6 +12,7 @@ INPUT_FILE=""
 OUTGROUP_FILE=""
 THREADS=12
 TEMP_DIR=""
+OG_MIN_FRAC=""
 OUT_DIR=""
 DEBUG=false
 MAT_PEPTIDES=false
@@ -81,13 +82,14 @@ Required:
 
 Optional:
   -g, --outgroup <file>                        Path to the outgroup taxon/species/strain file
-  -p, --use_mat_peptides                       Downloads the gbk file for each taxon's accession(s). If at least one mature peptide feature is detected, these features are used as the coding sequences; otherwise, the standard CDS features are downloaded.
-  -q, --use_only_mat_peptides                  Downloads the gbk file for each taxon's accession(s). If at least one mature peptide feature is detected, these features are used as the coding sequences; if none are detected, that taxon is skipped.
-  -T, --threads <int>                          Number of threads [default: 12]
   --root_dir <dir>                             Specify root directory where all the outputs will be saved [default: current directory]
   --temp_dir <dir>                             Specify temporary directory (otherwise mktemp -d is used). If relative, it will be relative to the root_dir.
   --out_dir <dir>                              Specify output directory for read2tree step1 [default: read2tree_output]. If relative, it will be relative to the root_dir.
   --resume_download                            Skips taxa whose coding sequences have already been downloaded from NCBI to the db folder                                
+  --og_min_fraction <float>                    Keep only OGs present in at least this fraction of species (0–1). If omitted, all OGs are kept.
+  -p, --use_mat_peptides                       Downloads the gbk file for each taxon's accession(s). If at least one mature peptide feature is detected, these features are used as the coding sequences; otherwise, the standard CDS features are downloaded.
+  -q, --use_only_mat_peptides                  Downloads the gbk file for each taxon's accession(s). If at least one mature peptide feature is detected, these features are used as the coding sequences; if none are detected, that taxon is skipped.
+  -T, --threads <int>                          Number of threads [default: 12]  
   --debug                                      Keeps temporary directory
   -h, --help                                   Show this help message
 
@@ -504,6 +506,78 @@ generate_og_gene_tsv() {
 
 }
 
+select_marker_genes_by_fraction() {
+    local frac="$1"                     # e.g., 0.8
+    local unique="stats/OG_genes-unique.tsv"
+    local oma_dir="Output/OrthologousGroupsFasta"
+    local out_dir="marker_genes"
+
+    if [[ ! -s "$unique" ]]; then
+        log_error "Unique OG file not found or empty: '$unique'"
+        exit 1
+    fi
+    if [[ ! -d "$oma_dir" ]]; then
+        log_error "OMA OG fasta directory not found: '$oma_dir'"
+        exit 1
+    fi
+
+    # total number of species is the number of rows in FIVE_LETTER_FILE
+    local total_species
+    total_species=$(awk 'NF>0{c++} END{print c+0}' "$FIVE_LETTER_FILE")
+    if [[ "$total_species" -eq 0 ]]; then
+        log_error "No species found in '$FIVE_LETTER_FILE'."
+        exit 1
+    fi
+
+    local og_taxa="$TEMP_DIR/og_taxa.tsv"
+    local og_counts="$TEMP_DIR/og_counts.tsv"
+    local og_fraction="stats/og_fraction.tsv"
+
+    # Build paires  OG \t taxon based on the last column (list ;-separated)
+    tail -n +2 "$unique" \
+      | awk -F'\t' '{ og=$1; n=split($NF,a,/;/); for(i=1;i<=n;i++) if(a[i]!="") print og"\t"a[i] }' \
+      | sort -u > "$og_taxa"
+
+    # Count number of taxon per OG
+    awk -F'\t' '{c[$1]++} END{ for(og in c) print og"\t"c[og] }' "$og_taxa" \
+      | sort -V > "$og_counts"
+
+    # Write table 
+    {
+      echo -e "OG\tSpeciesPresent\tSpeciesTotal\tFraction\tKept"
+      awk -v total="$total_species" -v thr="$frac" -F'\t' 'BEGIN{OFS="\t"}{
+          og=$1; sp=$2; frac=(total>0 ? sp/total : 0);
+          kept=(frac+1e-9 >= thr ? "YES" : "NO");
+          print og, sp, total, frac, kept
+      }' "$og_counts"
+    } > "$og_fraction"
+    echo "HERE1"
+    # Copy to marker genes only selected OG
+    local kept=0
+    while read -r og; do
+        [[ -z "$og" ]] && continue
+        if [[ -s "$oma_dir/${og}.fa" ]]; then
+            cp "$oma_dir/${og}.fa" "$out_dir/"
+            ((kept+=1))
+            echo "$kept"
+        fi
+    done < <(awk -F'\t' 'NR>1 && $5=="YES"{print $1}' "$og_fraction")
+    echo "HERE 2"
+    if ! ls "$out_dir"/*.fa >/dev/null 2>&1; then
+        echo "HERE 3"
+        log_error "No OG passed the fraction threshold (thr=$frac). 'marker_genes' is empty."
+        exit 1
+    fi
+
+    # Construir referencia de ADN para read2tree
+    log_info "Kept $kept OG(s) with fraction >= $frac. Wrote $og_fraction summary table for species present in OGs."
+}
+
+ ####################################################
+ 
+ #MAIN
+
+
 ####################################################
 
 #MAIN
@@ -531,6 +605,7 @@ while [[ "$#" -gt 0 ]]; do
         --root_dir) WORK_DIR="${2%/}"; shift ;;   # NUEVO
         --out_dir) OUT_DIR="${2%/}"; shift ;;
         --debug) DEBUG=true;;
+        --og_min_fraction) OG_MIN_FRAC="$2"; shift ;;
         --resume_download) RES_DOWN=true;;
         -h|--help) show_help;;
         *) log_error "Unknown parameter passed: $1"; usage; log_info "Try '$PROGNAME --help' for more information."; exit 1 ;;
@@ -650,6 +725,14 @@ if [[ "$DEBUG" == false ]]; then
   trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "$TEMP_DIR"' EXIT
 else
   log_info "Debug mode enabled, keeping temporary directory: '$(realpath "$TEMP_DIR")'"
+fi
+
+# Validate OG_MIN_FRAC if provided
+if [[ -n "$OG_MIN_FRAC" ]]; then
+  if ! [[ "$OG_MIN_FRAC" =~ ^0(\.[0-9]+)?$|^1(\.0+)?$ ]]; then
+    log_error "--og_min_fraction must be a float between 0 and 1 (e.g., 0.8). Got: '$OG_MIN_FRAC'"
+    exit 1
+  fi
 fi
 
 log_info "========== Step 1.2: Validating input file =========="
@@ -899,7 +982,14 @@ log_info "========== Generating summary OG-gene TSV files =========="
 generate_og_gene_tsv db Output/OrthologousGroupsFasta stats/OG_genes.tsv
 mkdir -p marker_genes
 #####cat Output/OrthologousGroupsFasta/*.fa > dna_ref.fa
-mv Output/OrthologousGroupsFasta/*.fa marker_genes
+if [[ -n "$OG_MIN_FRAC" ]]; then
+  log_info "Filtering OGs by species fraction threshold: $OG_MIN_FRAC"
+  select_marker_genes_by_fraction "$OG_MIN_FRAC"
+else
+  log_info "No --og_min_fraction provided; considering all OGs"
+  cp Output/OrthologousGroupsFasta/*.fa marker_genes/
+fi
+
 log_info "========== Step 1.8: Running Read2tree (step 1 marker) =========="
 log_info "Using ${THREADS} threads..."
 #read2tree --standalone_path ./marker_genes --output_path read2tree_output --dna_reference dna_ref.fa
