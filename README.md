@@ -123,33 +123,36 @@ virus2tree_step1.sh -i rsv_accessions.csv -g rsv_outgroups -T 25 --out_dir read2
 ```
 To create the reference database, two key input files are required:
 
-`-i`, `--input` (mandatory): A file containing the NCBI accessions to be used for reference (`rsv_accessions.csv`).
+`-i`, `--input` (Required): A file containing the NCBI accessions to be used for reference (`rsv_accessions.csv`).
 
-`-g`, `--outgroup` (optional but recommended): A file containing taxon(s) to be used as outgroups by OMA Standalone during orthologous group detection (`rsv_outgroups`).  
+`-g`, `--outgroup` (optional but recommended): A file containing taxon(s) to be used as outgroups by OMA Standalone during orthologous group prediction (`rsv_outgroups`).  
 If this file is not specified, OMA Standalone will use midpoint rooting, which is likely incorrect and will significantly affect hierarchical orthologous groups (HOGs) inferred by OMA.
 
 ### **Command Parameters**
 
 | **Parameter**       | **Description** |
 |--------------------|-----------------------------|
-| `-i`, `--input`    | **Mandatory.** Input file with NCBI accessions (CSV format). |
-| `-g`, `--outgroup` | **Optional** but highly recommended. File with taxon names used as outgroups. |
-| `--out_dir`        | Path to place the output of read2tree. **Default:** `read2tree_output`. |
-| `--temp_dir`       | Directory for intermediate temporary files. **Default:** `/tmp`|
-| `--resume_download`       |Resumes by skipping taxa already downloaded from NCBI into the `db` folder. If all taxa had already been downloaded, it continues from Step 1.4. Additionally, if the required files are already present, Step 1.4 is bypassed and the script practically resumes from the OMA Standalone run (Step 1.6). This parameter can be specified in conjunction with either `--use_mat_peptides` or `--use_only_mat_peptides`. |
-| `-p, --use_mat_peptides`   | Downloads gbk files for each taxon's accession(s) and uses the mat_peptide features instead of CDS features if at least one mat_peptide is found. |
-| `-q, --use_only_mat_peptides`   | Same as --use_mat_peptides, except that if no mat_peptide feature is found, it does not download CDS features and simply skips that taxon. |
-| `-T, --threads`   | Number of threads to use for OmaStandalone and the first step of read2tree. |
-| `--debug`         | Prevents the removal of the temporary directory upon script termination. |
+| `-i`, `--input`    | **Required.** CSV file with NCBI accessions. |
+| `-g`, `--outgroup` | **Optional (recommended)** File with outgroup taxa used by OMA. |
+| `--root_dir`       |Root directory where all outputs are written. **Default:** current directory|
+| `--out_dir`        | read2tree step 1 output directory (relative to `--root_dir` or absolute). **Default:** `read2tree_output`. |
+| `--temp_dir`       | Temporary directory. If relative, it’s resolved under `--root_dir`. **Default:** `/tmp`|
+| `--resume_download`       |Skip taxa already downloaded from NCBI into the `db` folder. If all taxa were already downloaded, it resumes from Step 1.4. Additionally, if the required files are already present, Step 1.4 is bypassed and the script practically resumes from the OMA Standalone run (Step 1.6). |
+|`--og_min_fraction`| Keep only OGs present in at least this fraction of species (0–1). If omitted, all OGs are kept. |
+| `-p, --use_mat_peptides`       | Download GBK files for each taxon's accession(s) and uses the mat_peptide features instead of CDS features if at least one mat_peptide is found. |
+| `-q, --use_mat_peptides_only`       | Same as --use_mat_peptides, except that if no mat_peptide feature is found, it does not download CDS features and simply skips that taxon. |
+| `-T, --threads`   | Number of threads to use for Oma Standalone and the first step of read2tree. |
+| `--debug`         | Keeps temp directory with intermediate files. |
+| `-h, --help`         | Show help. |
 
 ### **Accession File Format**
 
 The accession file must be a comma-separated values (CSV) text file, with the first line as the header. Each line represents a taxon/species/strain with associated accessions. The format varies depending on whether a five-letter code is included.
 
 #### **Columns:**
-1. **First column (mandatory):** Taxon/species/strain name. Header: taxon (or taxa),species or strain(s).
+1. **First column (required):** Taxon/species/strain name. Header: taxon (or taxa),species or strain(s).
 2. **Second column (optional):** Five-letter code. Must be exactly 5 alphanumeric characters. Header: code(s). If not provided, a random five-letter code for each taxon will be generated and saved in the file five_letter_taxon.tsv
-3. **Third and onward (mandatory):** One or more accession numbers (comma-separated) to obtain coding sequences. Accepts NCBI Nucleotide database accessions and assembly identifiers (GCF_/GCA_). Header: accession(s).
+3. **Third and onward (required):** One or more accession numbers (comma-separated) to obtain coding sequences. Accepts NCBI Nucleotide database accessions and assembly identifiers (GCF_/GCA_). Header: accession(s).
 
 Commented lines starting with # are ignored.
 
@@ -194,15 +197,18 @@ Influenza A Hong Kong
 
 | **File**                      | **Description** |
 |--------------------------------|------------------------------------------------------------------|
-| `db/{taxon}_cds_from_genomic.fna` | Nucleotide FASTA files for each taxon with coding sequences retrieved from NCBI. |
+| `db/{taxon}_cds_from_genomic.fna` | Nucleotide FASTA files for each taxon with CDS (or mature peptides if selected) retrieved from NCBI. |
 | `DB/{taxon}.fa`               | Amino acid FASTA files for each taxon, prepared for running with OMA Standalone and read2tree. |
-| `dna_ref.fa`                  | Reference FASTA file with all nucleotide coding sequences for all taxa, prepared to be used as input for read2tree. |
+| `dna_ref.fa`                  | Reference FASTA file with all nucleotide CDS from all taxa, prepared to be used as input for read2tree. |
 | `five_letter_taxon.tsv`        | Table linking taxa with five-letter codes. |
-| `parameters.drw`              | Parameter file for the OMA run, modified according to the input outgroup file and with the last 4 steps of OMA Standalone deactivated. |
-| `Output/`                     | Folder containing the direct output from OMA Standalone. |
-| `marker_genes/`               | Folder containing orthologous groups generated by OMA Standalone (contents of `Output/OrthologousGroupsFasta`). |
-| `OG_genes.tsv`                | Summary file with all the features of each gene from each orthologous group identified by OMA. |
-| `OG_genes-unique.tsv`         | Summary file listing each OG alongside its associated gene, protein, and the taxa in which it is found. |
+| `parameters.drw`              | Parameter file for the OMA run, modified according to the outgroup file and with the last 4 steps of OMA Standalone deactivated. |
+| `Output/`                     | Folder containing the output from OMA Standalone. |
+| `marker_genes/`               | Folder required by read2tree with the orthologous groups (OGs) generated by OMA Standalone (contents of `Output/OrthologousGroupsFasta`). |
+| `stats/cds_count_per_accession*`                | Per-assembly CDS counts and their distribution across all downloaded assemblies: `cds_count_per_accession.tsv`, `cds_count_per_accession_frequency.tsv` and `cds_count_per_accession.png` |
+| `stats/OG_genes.tsv`                | Table with all features for each CDS from the OGs identified by OMA. |
+| `stats/OG_genes-unique.tsv`         | Summary table listing the OGs alongside its associated gene, protein, and the taxa in which it is found. |
+|`stats/taxon_OG.tsv`| Table containing per-taxon summary: total CDS, missing protein_id, no-OG matches, and matched counts. |
+|`stats/OG_taxa.tsv	`|Summary of species coverage per OG and whether it is kept (only when --og_min_fraction is used)|
 | `read2tree_output`     | Named according to the `--out_dir` parameter, this folder contains the output of step 1 of read2tree. |
 
 ## Running step 2: Processing sample reads and adding them to the read2tree folder
@@ -226,20 +232,22 @@ parallel -j 4 virus2tree_step2.sh \
 
 | **Parameter**      | **Description** |
 |--------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| `-r, --reads`     | **Mandatory.** Input reads file(s) in `fastq` or `fastq.gz` format. If multiple files are provided and `--read_type` is not `pe_short`, they will be concatenated, assuming they belong to the same sample. |
-| `-t, --read_type` | **Mandatory.** Read type: `se_short` (short single-end), `pe_short` (short paired-end), `pacbio`, `ont`. If `pe_short`, two input files are required in `--reads`. |
-| `-T, --threads`   | Number of cores to use during step 2 of read2tree. |
-| `--temp_dir`      | Directory for temporary files. |
-| `--stats_file`   | Name of the summary read statistics file |    
-| `--debug`        | Prevents the removal of the temporary directory upon script termination. |
+| `-r, --reads`     | **Required.** Input reads file(s) in `fastq` or `fastq.gz` format. If multiple files are provided and `--read_type` is not `pe_short`, they will be concatenated, assuming they belong to the same sample. |
+| `-t, --read_type` | **Required.** Read type: `se_short` (short single-end), `pe_short` (short paired-end), `pacbio`, `ont`. If `pe_short`, two input files are required in `--reads`. |
+|`--root_dir`       | Root directory that contains step 1 results; all outputs are written under it. **Default:** current directory.|
+| `--out_dir`      | Path to step-1 read2tree output (relative to --root_dir or absolute). **Default:** `read2tree_output`. |
+| `--temp_dir`      | Temporary directory. If relative, it’s resolved under `--root_dir`. **Default:** `/tmp`. |
+| `--stats_file`   | Name of the summary read statistics file. **Default:** `reads_statistics.tsv` | 
 | `--dedup`        | Enables `czid-dedup` to remove duplicate reads. |
 | `--dedup_l`      | Prefix length used for deduplication (requires `--dedup`). |
 | `--downsample`   | Enables `rasusa` for read subsampling. It is required for all subsampling parameters |
 | `--coverage`     | Minimum coverage for subsampling (integer or float: e.g., `250`, `0.1`). Requires `--genome_size`. |
 | `--genome_size`  | Genome size for subsampling (integer or with a metric suffix: e.g., `15kb`, `4.1MB`). See [rasusa manual](https://github.com/mbhall88/rasusa?tab=readme-ov-file#genome-size) for more details. Requires `--coverage`. |
-| `--num_bases`    | Target number of bases for subsampling (integer). Does not require `--genome_size` and `--coverage`. |
-| `--num_reads`    | Target number of reads for subsampling (integer). Does not require `--genome_size` and `--coverage`. |
-| `--out_dir`      | Directory containing read2tree step 1 output. **Default:** `read2tree_output`. |
+| `--num_bases`    | Target number of bases for subsampling (integer). Cannot to be used together with `--genome_size` and `--coverage`. |
+| `--num_reads`    | Target number of reads for subsampling (integer). Cannot to be used together with `--genome_size` and `--coverage`. |
+| `-T, --threads`   | Threads to use during step 2 of read2tree. **Default:** 4. |
+| `--debug`        | Keeps temp directory with intermediate files. |
+| `-h, --help`         | Show help. |
 
 ### **Output Files**
 
@@ -268,7 +276,7 @@ Depending on the IDs type, the script proceeds differently:
 * RUN mode: The script downloads each RUN individually and converts it to FASTQ.
 * EXPERIMENT mode: The script first identifies which RUNs are associated with each EXPERIMENT, and then downloads each resulting RUN.
 
-By default, the script retrieves metadata from the SRA database using `esearch` and `efetch`, then checks column 16 of runinfo to automatically determine whether each RUN is SINGLE or PAIRED.. However, if you specify `-l` or `--layout` to force one layout (SINGLE or PAIRED), the script will skip the metadata-based check and apply the specified layout to all downloaded RUNs. Please note that if your inputs are EXPERIMENT IDs, the script will still need to retrieve runinfo in order to map each experiment to its associated RUNs, even if a forced layout is specified.
+By default, the script retrieves metadata from the SRA database using `esearch` and `efetch`, then checks column 16 of runinfo to automatically determine whether each RUN is SINGLE or PAIRED. However, if you specify `-l` or `--layout` to force one layout (SINGLE or PAIRED), the script will skip the metadata-based check and apply the specified layout to all downloaded RUNs. However, if your inputs are EXPERIMENT IDs, the script will still need to retrieve runinfo in order to map each experiment to its associated RUNs, even if a forced layout is specified.
 
 The output consists of FASTQ files corresponding to each RUN, renamed to include the species name and, in the case of EXPERIMENTs, also the experiment accession.
 
@@ -276,17 +284,18 @@ The output consists of FASTQ files corresponding to each RUN, renamed to include
 
 | **Parameter**      | **Description** |
 |--------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| `-i, --input`     | **Mandatory.** Input file containing SRA IDs with one taxon per line. The format should be `<species_name>,SRA_ID1,SRA_ID2,...`. |
-| `-o, --outdir` | Directory where downloaded files will be saved.	Default: current directory (`pwd`). |
+| `-i, --input`     | **Required.** Input file containing SRA IDs with one taxon per line. The format should be `<species_name>,SRA_ID1,SRA_ID2,...`. |
+| `-o, --outdir` | Directory where downloaded read files will be saved.	Default: current directory (`pwd`). |
 | `-c, --chunk-size`   | Number of SRA IDs per chunk when fetching metadata using esearch and efetch. Default: `350`. |
 | `-w, --sleep-secs`      | Number of seconds to sleep between chunked metadata requests to avoid overloading the NCBI server. Default: `1`. |
-| `-l, --layout`   | Force sequencing layout (`SINGLE` or `PAIRED`) for all runs. When specified, skips metadata fetching. |    
+| `-l, --layout`   | Force sequencing layout (`SINGLE` or `PAIRED`) for all runs. When specified, skips metadata fetching. | 
+|`-d, --debug`	| Keep per-species temporary directories and intermediate files. |   
 | `-h, --help`        | Displays help information and exits. |
 
 #### **Example Command**
 
 ```bash
-./sra_download.sh -i sra_runs_rsv.csv --chunk-size 3 --sleep-secs 2 --outdir rsv_reads
+./download_sra_reads.sh -i sra_runs_rsv.csv --chunk-size 3 --sleep-secs 2 --outdir rsv_reads
 ```
 
 It means to analyze the input file `sra_runs_rsv.csv`, extract the SRA IDs, fetch metadata in chunks of 3 SRA IDs at a time with a 2-second pause between chunks to avoid server overload, and download the resulting reads into the specified output directory `rsv_reads`.
@@ -318,14 +327,16 @@ SpeciesD,ERX222333,ERX222334
 At the end of processing, all generated fastq files are saved in the output directory:
 
 For RUN mode (e.g., SRR123456 from Species A) it generates:
-* SpeciesA_SRR123456_1.fastq and SpeciesA_SRR123456_2.fastq (if layout is PAIRED), or
-* SpeciesA_SRR123456.fastq (if layout is SINGLE).
+* `SpeciesA_SRR123456_1.fastq` and `SpeciesA_SRR123456_2.fastq` (if layout is PAIRED), or
+* `SpeciesA_SRR123456.fastq` (if layout is SINGLE).
 
 > **Note**: If the species name contains spaces (e.g., My Species), they will be deleted.
 
 For EXPERIMENT mode (e.g., SRX000111 with RUN SRR000999 from Species A) it generates:
-* SpeciesA_SRX000111_SRR000999_1.fastq and SpeciesA_SRX000111_SRR000999_2.fastq (if layout is PAIRED), or
-* SpeciesA_SRX000111_SRR000999.fastq (if layout is SINGLE).
+* `SpeciesA_SRX000111_SRR000999_1.fastq` and `SpeciesA_SRX000111_SRR000999_2.fastq` (if layout is PAIRED), or
+* `SpeciesA_SRX000111_SRR000999.fastq` (if layout is SINGLE).
 
-At the end of execution, the script removes the directories containing the .sra and metadata files, leaving only the final FASTQ files in the specified output directory.
+Also, a summary file with details about the SRA IDs downloaded is available:`{outdir}/summary_download.txt` (appends a per-species report + global totals).
+
+At the end of execution, the script removes the directories containing the .sra and metadata files, leaving only the final FASTQ files and the summary file in the specified output directory.
 

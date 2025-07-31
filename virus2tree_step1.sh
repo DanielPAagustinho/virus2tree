@@ -88,7 +88,7 @@ Optional:
   --resume_download                            Skips taxa whose coding sequences have already been downloaded from NCBI to the db folder                                
   --og_min_fraction <float>                    Keep only OGs present in at least this fraction of species (0–1). If omitted, all OGs are kept.
   -p, --use_mat_peptides                       Downloads the gbk file for each taxon's accession(s). If at least one mature peptide feature is detected, these features are used as the coding sequences; otherwise, the standard CDS features are downloaded.
-  -q, --use_only_mat_peptides                  Downloads the gbk file for each taxon's accession(s). If at least one mature peptide feature is detected, these features are used as the coding sequences; if none are detected, that taxon is skipped.
+  -q, --use_mat_peptides_only                  Downloads the gbk file for each taxon's accession(s). If at least one mature peptide feature is detected, these features are used as the coding sequences; if none are detected, that taxon is skipped.
   -T, --threads <int>                          Number of threads [default: 12]  
   --debug                                      Keeps temporary directory
   -h, --help                                   Show this help message
@@ -490,7 +490,7 @@ generate_og_gene_tsv() {
       }' "$file" > "${dest_dir}/${final_name}"
     done
     log_info "OG-Gene TSV generation complete: $output_file"
-        summary_og="${dest_dir}/OG_genes_summary"
+        summary_og="${dest_dir}/taxon_OG.tsv"
     : > "$summary_og"
     printf "Species\tTotal_CDS\tMissing_protein_id\tNo_OG_match\tOG_matched\n" >> "$summary_og"
 
@@ -531,7 +531,7 @@ select_marker_genes_by_fraction() {
 
     local og_taxa="$TEMP_DIR/og_taxa.tsv"
     local og_counts="$TEMP_DIR/og_counts.tsv"
-    local og_fraction="stats/og_fraction.tsv"
+    local og_fraction="stats/OG_taxa.tsv"
 
     # Build paires  OG \t taxon based on the last column (list ;-separated)
     tail -n +2 "$unique" \
@@ -599,7 +599,7 @@ while [[ "$#" -gt 0 ]]; do
         -i|--input) INPUT_FILE="$2"; shift ;;
         -g|--outgroup) OUTGROUP_FILE="$2"; shift ;;
         -p|--use_mat_peptides) MAT_PEPTIDES=true; P_FLAG=true;;
-        -q|--use_only_mat_peptides) MAT_PEPTIDES=true; ONLY_MAT_PEPTIDES=true; Q_FLAG=true;;
+        -q|--use_mat_peptides_only) MAT_PEPTIDES=true; ONLY_MAT_PEPTIDES=true; Q_FLAG=true;;
         -T|--threads) THREADS="$2"; shift ;;
         --temp_dir) TEMP_DIR="${2%/}"; shift ;;
         --root_dir) WORK_DIR="${2%/}"; shift ;;   # NUEVO

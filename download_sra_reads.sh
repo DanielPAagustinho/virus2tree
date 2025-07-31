@@ -224,7 +224,7 @@ fi
 
 OUTPUT_DIR="${OUTPUT_DIR%/}"
 mkdir -p "$OUTPUT_DIR"
-SUMMARY_FILE="${OUTPUT_DIR}/summary_download"
+SUMMARY_FILE="${OUTPUT_DIR}/summary_download.txt"
 : > "$SUMMARY_FILE"   # truncar/crear archivo de resúmenes
 
 
