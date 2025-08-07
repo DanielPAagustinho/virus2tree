@@ -47,7 +47,9 @@ check_dependencies() {
   local missing=0
   declare -A tools=(
     ["prefetch"]="SRA Toolkit"
-    ["efetch"]="Entrez Direct utilities"
+    ["efetch"]="Entrez Direct utilities - efetch"
+    ["esearch"]="Entrez Direct utilities - esearch"
+
   )
 
   #log_info "Checking system dependencies..."

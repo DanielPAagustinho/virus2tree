@@ -2,8 +2,15 @@
 set -euo pipefail
 #set -x
 PROGNAME="$(basename "$0")"
-MAIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SCRIPTS_DIR="${MAIN_DIR}"
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do
+  DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+MAIN_DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)" # .../repo/scripts
+REPO_ROOT="$(cd "$MAIN_DIR/.." && pwd)"               # .../repo
+SCRIPTS_DIR="$REPO_ROOT/utils"                     # .../repo/utils
 WORK_DIR=""
 #OMA="${MAIN_DIR}/../oma/bin"
 PARAMETERS_FILE="parameters.drw"
@@ -53,7 +60,11 @@ check_dependencies() {
   declare -A tools=(
     ["read2tree"]="read2tree"
     ["oma"]="OMA standalone"
-    ["efetch"]="Entrez Direct utilities"
+    ["efetch"]="Entrez Direct utilities - efetch"
+    ["esearch"]="Entrez Direct utilities - esearch"
+    ["elink"]="Entrez Direct utilities - elink"
+    ["awk"]="AWK"
+
   )
 
   #log_info "Checking system dependencies..."
