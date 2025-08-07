@@ -1,7 +1,7 @@
 
-# r2t 2025
+# Welcome to virus2tree!!
 
-This new version of read2tree enables the creation of a reference database via OMA Standalone using coding sequences from NCBI. The final tree combines the presence of assemblies (input as the reference) and the read samples. It also supports read deduplication with czid-dedup and downsampling with rasusa.
+This new version of read2tree enables the creation of a reference database via OMA Standalone using as input coding sequences from NCBI assemblies. The final tree combines the presence of assemblies (that is, the reference) and the read samples. It also supports read deduplication with czid-dedup and downsampling with rasusa, among other functionalities.
 
 ## Installation of dependencies
 
@@ -116,10 +116,51 @@ fasterq-dump --help
 esearch -h
 ```
 
+## Installation
+
+You can set up virus2tree with:
+
+```bash
+git clone https://github.com/DanielPAagustinho/virus2tree.git
+cd virus2tree
+./install.sh /your/install/path
+```
+
+The installation script creates symlinks to the shell entry points
+
+Remember that if you do not choose an installation path the symlinks will be placed by default in `/usr/local/bin`, which may require sudo
+
+Finally, check your installation with:
+
+```bash
+which v2t-step1 && v2t-step1 --help
+which v2t-step2 && v2t-step2 --help
+which v2t-sra   && v2t-sra   --help
+```
+
+## Quick start
+
+Minimal example (adjust paths to your data):
+
+```bash
+# Create reference OMA database for r2t with NCBI accessions from RSV
+virus2tree_step1.sh -i rsv_accessions.csv -g rsv_outgroups.txt -T 25 --root_dir virus2tree_rsv --out_dir read2tree &> rsv_long_step1.log
+
+# Map long nanopore RSV reads to the reference
+parallel -j 4 virus2tree_step2.sh \
+  -r {1} -t ont --dedup --downsample --coverage 250 --genome_size 15kb --root_dir virus2tree_rsv --out_dir read2tree -T 20 ::: \
+  $(ls reads/*fastq* | sort) &>> "rsv_long_step2.log" &
+
+# Create the tree
+read2tree --step 3combine --standalone_path marker_genes --dna_reference dna_ref.fa --output_path read2tree --tree --debug
+```
+
+
+
 ## Running step 1: Creating the reference database
 
 ```bash
-virus2tree_step1.sh -i rsv_accessions.csv -g rsv_outgroups -T 25 --out_dir read2tree --temp_dir temp --debug &> def_rsv_long.log
+virus2tree_step1.sh -i rsv_accessions.csv -g rsv_outgroups.txt -T 25 --out_dir read2tree --temp_dir temp --debug &> def_rsv_long.log
 ```
 To create the reference database, two key input files are required:
 
