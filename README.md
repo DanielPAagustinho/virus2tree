@@ -126,9 +126,9 @@ cd virus2tree
 ./install.sh /your/install/path
 ```
 
-The installation script creates symlinks to the shell entry points
+The installation script creates symlinks to the shell entry points.
 
-Remember that if you do not choose an installation path the symlinks will be placed by default in `/usr/local/bin`, which may require sudo
+Remember that if you do not choose an installation path the symlinks will be placed by default in `/usr/local/bin`, which may require sudo.
 
 Finally, check your installation with:
 
@@ -143,19 +143,17 @@ which v2t-sra   && v2t-sra   --help
 Minimal example (adjust paths to your data):
 
 ```bash
-# Create reference OMA database for r2t with NCBI accessions from RSV
+# Step 1: Create reference OMA database for r2t with NCBI accessions from RSV
 virus2tree_step1.sh -i rsv_accessions.csv -g rsv_outgroups.txt -T 25 --root_dir virus2tree_rsv --out_dir read2tree &> rsv_long_step1.log
 
-# Map long nanopore RSV reads to the reference
+# Step 2: Map long nanopore RSV reads to the reference
 parallel -j 4 virus2tree_step2.sh \
   -r {1} -t ont --dedup --downsample --coverage 250 --genome_size 15kb --root_dir virus2tree_rsv --out_dir read2tree -T 20 ::: \
   $(ls reads/*fastq* | sort) &>> "rsv_long_step2.log" &
 
-# Create the tree
-read2tree --step 3combine --standalone_path marker_genes --dna_reference dna_ref.fa --output_path read2tree --tree --debug
+# Step 3: Create the tree
+read2tree --step 3combine --standalone_path marker_genes --dna_reference dna_ref.fa --output_path virus2tree_rsv/read2tree --tree --debug
 ```
-
-
 
 ## Running step 1: Creating the reference database
 
