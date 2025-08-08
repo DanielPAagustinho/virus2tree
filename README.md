@@ -276,8 +276,8 @@ parallel -j 4 v2t-step2 \
 | **Parameter**      | **Description** |
 |--------------------|--------------------------------------------------------------------------------------------------------------------------------|
 | `-r, --reads`     | **Required.** Input reads file(s) in `fastq` or `fastq.gz` format. If multiple files are provided and `--read_type` is not `paired`, they will be concatenated, assuming they belong to the same sample. |
-| `-t, --read_type` | Generic read type: `single` or `paired` . If `paired`, two input files are required in `--reads`. **Default:** `single`.|
-|`-map_op, --minimap2_options`| Options for minimap2 when mapping read set to the reference. Click [here] (docs/recommended_presets.md) for suggested values. **Default:** `-ax map-ont`|
+| `-t, --read_type` | Generic read type: `single` or `paired`. If `paired`, two input files are required in `--reads`. **Default:** `single`.|
+|`-map_op, --minimap2_options`| Options for minimap2 when mapping read set to the reference. Click [here](docs/recommended_presets.md) for suggested values. **Default:** `-ax map-ont`|
 |`--root_dir`       | Root directory that contains step 1 results; all outputs are written under it. **Default:** current directory.|
 | `--out_dir`      | Path to step-1 read2tree output (relative to --root_dir or absolute). **Default:** `read2tree_output`. |
 | `--temp_dir`      | Temporary directory. If relative, it’s resolved under `--root_dir`. **Default:** `/tmp`. |

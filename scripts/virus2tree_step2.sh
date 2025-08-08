@@ -178,8 +178,19 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     -map_op|--minimap2_options)
-      MINIMAP2_OPTIONS="$2"
-      shift 2
+      MINIMAP2_OPTS_ARR=()
+      shift
+      while [[ $# -gt 0 ]]; do
+        case "$1" in
+          -t|--read_type|-r|--reads|-T|--threads|--temp_dir|--root_dir|--out_dir|--stats_file|\
+          --dedup|--dedup_l|--downsample|--coverage|--genome_size|--num_bases|--num_reads|\
+          --debug|-h|--help|-map_op|--minimap2_options)
+            break;;
+          *)
+            MINIMAP2_OPTS_ARR+=("$1"); shift;;
+        esac
+      done
+      MINIMAP2_OPTIONS="${MINIMAP2_OPTS_ARR[*]}"
       ;;
     -r|--reads)
       shift
