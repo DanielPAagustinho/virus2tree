@@ -6,7 +6,8 @@ set -euo pipefail
 # Default values
 ############################################
 PROGNAME="$(basename "$0")"
-READ_TYPE=""
+READ_TYPE="single"
+MINIMAP2_OPTIONS="-ax map-ont"
 READS=()         # Array to store multiple input reads
 TEMP_DIR=""      # If empty, we will create a new one with mktemp
 OUT_DIR=""
@@ -69,11 +70,15 @@ check_dependencies() {
       exit 1
     fi
   fi
+  if ! command -v bc &>/dev/null; then
+  log_error "Missing requirement: bc command"
+  exit 1
+  fi
 
 }
 
 usage() {
-  log_info "Usage: ${PROGNAME} -r <read_file1> [read_file2...] -t <read_type> [options]\n"
+  log_info "Usage: ${PROGNAME} -r <read_file1> [read_file2...] -t <single|paired> [-map_op|--minimap2_options \"<opts>\"] [options]\n"
   #echo "Try '$0 --help' for more information."
 }
 
@@ -83,9 +88,12 @@ $(usage)
 
   Required:
     -r, --reads <file1> [file2 file3 ...]            Input fastq/fastq.gz
-    -t, --read_type <se_short|pe_short|pacbio|ont>    Type of reads
 
   Optional:
+    -t, --read_type <paired|single>    Generic type of reads [default: single]
+    -map_op, --minimap2_options <options>   Options for minimap2 when mapping read set to the reference [default: "-ax map-ont"]
+                                            Suggested: -ax map-sr (for short single or paired end short reads), 
+                                            -ax map-pb (for PacBio reads), -ax map-hifi (for HiFi reads)
     -T, --threads <int>      Threads to use [default: 4]
     --temp_dir <dir>         Specify temp directory (otherwise mktemp -d is used)
     --root_dir <dir>         Specify root directory containing step 1 result; all the outputs will be saved here [default: current directory]
@@ -102,8 +110,8 @@ $(usage)
     -h, --help               Show this help
 
 Examples:
-  $PROGNAME -t se_short -r sample.fastq.gz --dedup --downsample --num_reads 10000
-  $PROGNAME --read_type pe_short --reads R1.fastq R2.fastq --coverage 30 --genome_size 5000000
+  $PROGNAME -t single -r sample.fastq.gz --dedup --downsample --num_reads 10000 --minimap2_options "-ax map-ont"
+  $PROGNAME --read_type paired --reads R1.fastq R2.fastq --coverage 30 --genome_size 5MB --minimap2_options "-ax sr"
 
 EOF
   exit 0
@@ -167,6 +175,10 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     -t|--read_type)
       READ_TYPE="$2"
+      shift 2
+      ;;
+    -map_op|--minimap2_options)
+      MINIMAP2_OPTIONS="$2"
       shift 2
       ;;
     -r|--reads)
@@ -247,11 +259,7 @@ done
 check_dependencies
 log_info "Checked system dependencies"
 
-if [[ -z "$READ_TYPE" ]]; then
-  log_error "Please specify --read_type"
-  usage
-  exit 1
-fi
+
 if [[ ${#READS[@]} -eq 0 ]]; then
   log_error "Please specify at least one input file with --reads"
   usage
@@ -270,17 +278,15 @@ for i in "${!READS[@]}"; do
 done
 
 case "$READ_TYPE" in
-#test with Pe_Short
-  se_short|pe_short|pacbio|ont) ;;
+  single|paired) ;;
   *)
-    log_error "Invalid read_type: $READ_TYPE. Must be one of se_short, pe_short, pacbio, ont."
-    usage
+    log_error "Invalid --read_type: $READ_TYPE. Must be 'single' or 'paired'."
     exit 1
     ;;
 esac
 
-if [[ "$READ_TYPE" == "pe_short" && ${#READS[@]} -ne 2 ]]; then
-  log_error "Paired-end short reads requires exactly 2 files. You provided ${#READS[@]}"
+if [[ "$READ_TYPE" == "paired" && ${#READS[@]} -ne 2 ]]; then
+  log_error "Paired-end reads requires exactly 2 files. You provided ${#READS[@]}"
   usage
   exit 1
 fi
@@ -327,33 +333,18 @@ else
 fi
 
 ############################################
-# Establish root directory
+# Create or verify root, r2t and temp directories
 ############################################
 
 if [[ -n "$ROOT_DIR" ]]; then
   if [[ ! -d "$ROOT_DIR" ]]; then
-      mkdir -p "$ROOT_DIR"
-    exit 1
+    mkdir -p "$ROOT_DIR"
   fi
   cd "$ROOT_DIR"
   log_info "Using root directory: $(pwd)"
 else
   ROOT_DIR="$(pwd)"
   log_info "No --root_dir provided. Using current directory as root: $ROOT_DIR"
-fi
-
-############################################
-# Create or verify temp directory
-############################################
-if [[ -z "$TEMP_DIR" ]]; then
-  TEMP_DIR="$(mktemp -d)"
-  log_info "Created temp directory at $TEMP_DIR"
-else
-  # Validate if it is a directory
-  if [[ ! -d "$TEMP_DIR" ]]; then
-    mkdir -p "$TEMP_DIR"
-  fi
-  log_info "Using temp directory: $TEMP_DIR"
 fi
 
 if [[ -z "$OUT_DIR" ]]; then
@@ -369,6 +360,16 @@ if [[ ! -d "$OUT_DIR" ]]; then
 fi
 log_info "Using read2tree directory: $OUT_DIR"
 
+if [[ -z "$TEMP_DIR" ]]; then
+  TEMP_DIR="$(mktemp -d)"
+  log_info "Created temp directory at $TEMP_DIR"
+else
+  # Validate if it is a directory
+  if [[ ! -d "$TEMP_DIR" ]]; then
+    mkdir -p "$TEMP_DIR"
+  fi
+  log_info "Using temp directory: $TEMP_DIR"
+fi
 
 # Set default stats file if not provided (using an absolute path)
 if [[ -z "$STATS_FILE" ]]; then
@@ -404,7 +405,7 @@ log_info "========== Step 2.2: File decompression, concatenation and moving to t
 
 FINAL_READS=()
 if [[ ${#READS[@]} -gt 1 ]]; then
-  if [[ ${READ_TYPE} == "pe_short" ]]; then
+  if [[ ${READ_TYPE} == "paired" ]]; then
     for READ_SAMPLE in "${READS[@]}"; do
       filename=$(basename "$READ_SAMPLE")
       output_file=$TEMP_DIR/${filename%.gz}
@@ -443,11 +444,11 @@ fi
 # Deduplication with czid-dedup (optional) 
 ############################################
 
-log_info "========== Step 2.3: Deduplication with czid-dedup (optional) =========="
 
 if [[ "$DEDUP" == true ]]; then
+  log_info "========== Step 2.3: Deduplication with czid-dedup (optional) =========="
   log_info "Preparing input for czid-dedup..."
-  if [[ "$READ_TYPE" == "pe_short" ]]; then
+  if [[ "$READ_TYPE" == "paired" ]]; then
     input_file_1="${FINAL_READS[0]}"
     input_file_2="${FINAL_READS[1]}"
     filename_1=$(basename "$input_file_1")
@@ -475,6 +476,8 @@ if [[ "$DEDUP" == true ]]; then
     "${DEDUP_CMD[@]}"
     FINAL_READS=("$output_file")
   fi
+else
+  log_info "No deduplication requested. Skipping step 2.3."
 fi
 
 ############################################
@@ -482,13 +485,14 @@ fi
 ############################################
 # The user may specify coverage+genome_size, or num_bases, or num_reads
 
-log_info "========== Step 2.4: Downsampling with rasusa (optional) =========="
 
 if [[ "$DOWNSAMPLE" == true ]]; then
+  log_info "========== Step 2.4: Downsampling with rasusa (optional) =========="
+
   log_info "Preparing input for rasusa..."
 
   # We'll generate new file(s):
-  if [[ "$READ_TYPE" == "pe_short" ]]; then
+  if [[ "$READ_TYPE" == "paired" ]]; then
     # we have two files in FINAL_READS
     input_file_1="${FINAL_READS[0]}"
     input_file_2="${FINAL_READS[1]}"
@@ -498,7 +502,7 @@ if [[ "$DOWNSAMPLE" == true ]]; then
     output_file_2="$TEMP_DIR/${filename_2%.fastq}_ds.fastq"
     # Decide which rasusa flags to use:
     RASUSA_CMD=(rasusa reads)
-    if [[ $(echo "$COVERAGE > 0" | bc -l) -eq 1 && -n $GENOME_SIZE ]]; then
+    if [[ $(echo "$COVERAGE > 0" | bc -l) -eq 1 && -n "$GENOME_SIZE" ]]; then
       RASUSA_CMD+=(--coverage "$COVERAGE" --genome-size "$GENOME_SIZE")
     elif [[ $NUM_BASES -gt 0 ]]; then
       RASUSA_CMD+=(--bases "$NUM_BASES")
@@ -517,7 +521,7 @@ if [[ "$DOWNSAMPLE" == true ]]; then
     filename=$(basename "$input_file")
     output_file="$TEMP_DIR/${filename%.fastq}_ds.fastq"
     RASUSA_CMD=(rasusa reads)
-    if [[ $(echo "$COVERAGE > 0" | bc -l) -eq 1 && -n $GENOME_SIZE ]]; then
+    if [[ $(echo "$COVERAGE > 0" | bc -l) -eq 1 && -n "$GENOME_SIZE" ]]; then
       RASUSA_CMD+=(--coverage "$COVERAGE" --genome-size "$GENOME_SIZE")
     elif [[ $NUM_BASES -gt 0 ]]; then
       RASUSA_CMD+=(--bases "$NUM_BASES")
@@ -529,6 +533,8 @@ if [[ "$DOWNSAMPLE" == true ]]; then
     "${RASUSA_CMD[@]}"
     FINAL_READS=("$output_file")
   fi
+else
+  log_info "No downsampling requested. Skipping Step 2.4."
 fi
 
 ###########################################
@@ -544,7 +550,7 @@ input_file="${FINAL_READS[0]}"
 filename=$(basename "$input_file")
 sample_code=$(echo "${filename}" |sed -E 's/(_dedup|_ds|_dedup_ds)?\.fastq//')
 
-if [[ "$READ_TYPE" == "pe_short" ]]; then
+if [[ "$READ_TYPE" == "paired" ]]; then
     input_file2="${FINAL_READS[1]}"
     filename2=$(basename "$input_file2")
     sample_code2=$(echo "${filename2}" | sed -E 's/(_dedup|_ds|_dedup_ds)?\.fastq//')
@@ -597,9 +603,9 @@ log_info "Read statistics have been saved in file: $STATS_FILE"
 ############################################
 log_info "========== Step 2.6: Running Read2tree (step 2 map) =========="
 
-log_info "Running read2tree --step 2map with read_type=$READ_TYPE, threads=$THREADS"
+log_info "Running read2tree --step 2map with read_type=$READ_TYPE, minimap2_options='$MINIMAP2_OPTIONS', threads=$THREADS"
 
-# If we have pe_short => pass two files as arguments
+# If we have paired => pass two files as arguments
 # Otherwise pass single file
 READ2TREE_CMD=( read2tree --step 2map
                 --standalone_path marker_genes
@@ -608,27 +614,12 @@ READ2TREE_CMD=( read2tree --step 2map
                 --output_path "$OUT_DIR"
                 --debug )
 
-# For the read_type we might do:
-case "$READ_TYPE" in
-  pe_short)
-    READ2TREE_CMD+=(--read_type "short")  # forcing 'short' 
-    # add the two read arguments
-    READ2TREE_CMD+=(--reads "${FINAL_READS[0]}" "${FINAL_READS[1]}")
-    ;;
-  se_short)
-    READ2TREE_CMD+=(--read_type "short")
-    # just one file
-    READ2TREE_CMD+=(--reads "${FINAL_READS[0]}")
-    ;;
-  pacbio)
-    READ2TREE_CMD+=(--read_type "long-hifi") 
-    READ2TREE_CMD+=(--reads "${FINAL_READS[0]}")
-    ;;
-  ont)
-    READ2TREE_CMD+=(--read_type "long-ont")
-    READ2TREE_CMD+=(--reads "${FINAL_READS[0]}")
-    ;;
-esac
+READ2TREE_CMD+=( --read_type "$MINIMAP2_OPTIONS" )
+if [[ "$READ_TYPE" == "paired" ]]; then
+  READ2TREE_CMD+=( --reads "${FINAL_READS[0]}" "${FINAL_READS[1]}" )
+else
+  READ2TREE_CMD+=( --reads "${FINAL_READS[0]}" )
+fi
 
 log_info "Executing read2tree command: ${READ2TREE_CMD[*]}"
 "${READ2TREE_CMD[@]}"

@@ -144,15 +144,19 @@ Minimal example (adjust paths to your data):
 
 ```bash
 # Step 1: Create reference OMA database for r2t with NCBI accessions from RSV
-v2t-step1 -i rsv_accessions.csv -g rsv_outgroups.txt -T 25 --root_dir virus2tree_rsv --out_dir read2tree &> rsv_long_step1.log
+v2t-step1 -i rsv_accessions.csv -g rsv_outgroups.txt -T 25 --root_dir virus2tree_rsv &> rsv_long_step1.log
 
 # Step 2: Map long nanopore RSV reads to the reference
-parallel -j 4 v2t-step2 \
-  -r {1} -t ont --dedup --downsample --coverage 250 --genome_size 15kb --root_dir virus2tree_rsv --out_dir read2tree -T 20 ::: \
+parallel -j 4 v2t-step2 -r {1} --root_dir virus2tree_rsv -T 20 ::: \
   $(ls reads/*fastq* | sort) &>> "rsv_long_step2.log" &
 
+# Step 2: Map short paired end RSV reads to the reference
+  parallel -j 4 v2t-step2 \
+  -r {1} -t paired -map_op "-ax sr" --root_dir virus2tree_rsv -T 20 ::: \
+  $(ls reads/*_1.fastq* | sort) :::+ $(ls reads/*_2.fastq* | sort) &>> "rsv_short_step2.log" &
+
 # Step 3: Create the tree
-read2tree --step 3combine --standalone_path marker_genes --dna_reference dna_ref.fa --output_path virus2tree_rsv/read2tree --tree --debug
+read2tree --step 3combine --standalone_path marker_genes --dna_reference dna_ref.fa --output_path virus2tree_rsv/read2tree_output --tree --debug
 ```
 
 ## Running step 1: Creating the reference database
@@ -255,14 +259,14 @@ Influenza A Hong Kong
 After generating the reference database of orthologous groups, we proceed to add the sample reads.
 
 ```bash
-#For long nanopore reads
+#For long nanopore reads (Default for -t, --read_type is single and for --minimap2_options is "-ax mp-ont")
 parallel -j 4 v2t-step2 \
-  -r {1} -t ont --dedup --downsample --coverage 250 --genome_size 15kb --out_dir read2tree -T 20 ::: \
+  -r {1} --dedup --downsample --coverage 250 --genome_size 15kb --out_dir read2tree -T 20 ::: \
   $(ls reads/*fastq* | sort) &>> "rsv_long_step2.log" &
 
 #For paired end illumina reads
 parallel -j 4 v2t-step2 \
-  -r {1} {2} -t pe_short --dedup --downsample --coverage 250 --genome_size 15kb --out_dir read2tree -T 20 ::: \
+  -r {1} {2} -t paired --minimap2_options "-ax sr" --dedup --downsample --coverage 250 --genome_size 15kb --out_dir read2tree -T 20 ::: \
   $(ls reads/*_1.fastq* | sort) :::+ $(ls reads/*_2.fastq* | sort) &>> "rsv_short_step2.log" &
 
 ```
@@ -271,8 +275,9 @@ parallel -j 4 v2t-step2 \
 
 | **Parameter**      | **Description** |
 |--------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| `-r, --reads`     | **Required.** Input reads file(s) in `fastq` or `fastq.gz` format. If multiple files are provided and `--read_type` is not `pe_short`, they will be concatenated, assuming they belong to the same sample. |
-| `-t, --read_type` | **Required.** Read type: `se_short` (short single-end), `pe_short` (short paired-end), `pacbio`, `ont`. If `pe_short`, two input files are required in `--reads`. |
+| `-r, --reads`     | **Required.** Input reads file(s) in `fastq` or `fastq.gz` format. If multiple files are provided and `--read_type` is not `paired`, they will be concatenated, assuming they belong to the same sample. |
+| `-t, --read_type` | Generic read type: `single` or `paired` . If `paired`, two input files are required in `--reads`. **Default:** `single`.|
+|`-map_op, --minimap2_options`| Options for minimap2 when mapping read set to the reference. Click [here] (docs/recommended_presets.md) for suggested values. **Default:** `-ax map-ont`|
 |`--root_dir`       | Root directory that contains step 1 results; all outputs are written under it. **Default:** current directory.|
 | `--out_dir`      | Path to step-1 read2tree output (relative to --root_dir or absolute). **Default:** `read2tree_output`. |
 | `--temp_dir`      | Temporary directory. If relative, it’s resolved under `--root_dir`. **Default:** `/tmp`. |
@@ -294,7 +299,7 @@ parallel -j 4 v2t-step2 \
 |---------------------------------|------------------------------------------------------------------------------------------|
 | `read2tree_output`       | Named according to the `--out_dir` parameter. Contains the output of step 2 of read2tree. |
 | `reads_statistics.tsv`          | Summary of statistics for processed read samples, including initial state, deduplication, and downsampling. Reports the number of reads, average length, and total bases. |
-| `temp/{sample}.fastq`           | Original reads. Uncompressed if initially compressed and concatenated if multiple input files were provided without `pe_short` option. |
+| `temp/{sample}.fastq`           | Original reads. Uncompressed if initially compressed and concatenated if multiple input files were provided without `paired` option. |
 | `temp/{sample}_dedup.fastq`     | Deduplicated reads. |
 | `temp/{sample}_ds.fastq`        | Downsampled reads. |
 | `temp/{sample}_dedup_ds.fastq`  | Deduplicated and downsampled reads. |
