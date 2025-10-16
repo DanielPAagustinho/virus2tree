@@ -384,8 +384,9 @@ Also, a summary file with details about the SRA IDs downloaded is available:`{ou
 
 At the end of execution, the script removes the directories containing the .sra and metadata files, leaving only the final FASTQ files and the summary file in the specified output directory.
 
+# Shannon Entropy Analysis Pipeline for MSA Data
 <details>
-<summary># Shannon Entropy Analysis Pipeline for MSA Data</summary>
+<summary>Click to expand/collapse</summary>
   A modular three-script pipeline for calculating and visualizing Shannon entropy from Multiple Sequence Alignments (MSA). Works with both amino acid (AA) and nucleotide (DNA) sequences from Read2Tree output.
 
 ## Overview
