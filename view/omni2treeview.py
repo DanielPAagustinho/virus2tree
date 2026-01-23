@@ -397,6 +397,8 @@ if __name__ == "__main__":
     writer.writerow(final_header)   
     writer.writerow(final_col_type)
 
+    # print(meta_dict["header"])
+
     logging.info(f"> Generating merged CSV with metadata to {output_base}.meta.csv")
     for row in tree_csv["rows_final"]:
         node_name = row[3]
@@ -409,8 +411,9 @@ if __name__ == "__main__":
             # fill with NA
             meta_row = {key: 'NA' for key in meta_dict["header"]}
         # remve sample_id column
-        meta_values = [meta_row[key] for key in meta_dict["header"]]
-        final_row = row[:4] + meta_values
+        meta_values = [meta_row[key] for key in meta_dict["header"][1:]]
+        # print(row)
+        final_row = row + meta_values
         writer.writerow(final_row)
     out_fh.close()
 
