@@ -1,0 +1,1100 @@
+sample_id,source,geo_location,Host,Tissue_Specimen_Source,Collection_Date,year
+character,character,character,character,character,Date,numeric
+X17403,Reference,,,,,
+NC_001664,Reference,Uganda,Homo sapiens,,,
+NC_003521,Reference,USA,Pan troglodytes,,,
+AF480884,Reference,USA,Pan troglodytes,,,
+BK000394,Reference,USA,Homo sapiens,adenoid,1956,1956
+AY186194,Reference,,,,,
+AC146999,Reference,,,,,
+AY315197,Reference,,,,,
+AY446894,Reference,United Kingdom: Cardiff,,urine,1999,1999
+NC_006150,Reference,USA,Macaca mulatta,urine,,
+NC_006273,Reference,United Kingdom: Cardiff,,urine,1999,1999
+DQ120516,Reference,,Macaca mulatta,,,
+FJ527563,Reference,USA,Homo sapiens,adenoid,1956,1956
+FJ616285,Reference,USA,Homo sapiens,urine,1970,1970
+FJ483967,Reference,,Saimiri sciureus,salivary gland,,
+FJ483970,Reference,,Aotus trivirgatus,,,
+FJ483969,Reference,USA,Homo sapiens,brain,,
+FJ483968,Reference,USA,Chlorocebus aethiops,,,
+NC_012783,Reference,USA,Chlorocebus aethiops,,,
+GQ121041,Reference,USA,Homo sapiens,urine,1970,1970
+GQ221974,Reference,United Kingdom,,urine,2001,2001
+GQ221975,Reference,United Kingdom,,prostate,2001,2001
+GQ396663,Reference,Germany,Homo sapiens,lung,2007,2007
+GQ396662,Reference,Germany,Homo sapiens,lung,2007,2007
+GQ221973,Reference,Germany,Homo sapiens,lung,2007,2007
+GQ466044,Reference,United Kingdom,,urine,2001,2001
+GU179001,Reference,United Kingdom,,urine,1999,1999
+GU179289,Reference,Italy,Homo sapiens,cervix,1996,1996
+GU179290,Reference,United Kingdom,,urine,2003,2003
+GU179288,Reference,Italy,Homo sapiens,urine,2003,2003
+GU179291,Reference,Italy,Homo sapiens,amniotic fluid,2003,2003
+GU937742,Reference,USA,Homo sapiens,urine,1984,1984
+GU980198,Reference,USA,Homo sapiens,,2003,2003
+HQ380895,Reference,South Korea,Homo sapiens,blood,2003,2003
+JN227533,Reference,Canada,Macaca fascicularis,urine,9/23/2008,2008
+NC_016154,Reference,Canada,Macaca fascicularis,urine,9/23/2008,2008
+NC_016448,Reference,,Saimiri sciureus,salivary gland,,
+NC_016447,Reference,,Aotus trivirgatus,,,
+JQ795930,Reference,USA,Macaca mulatta,,,
+KF021605,Reference,USA,Homo sapiens,eye,1996,1996
+KF297339,Reference,Germany,Homo sapiens,oronasopharynx,1999,1999
+KF493876,Reference,USA,Homo sapiens,,7/1/2006,2006
+KF493877,Reference,USA,Homo sapiens,,7/1/2006,2006
+JX512198,Reference,USA,Homo sapiens,liver,1957,1957
+JX512197,Reference,United Kingdom,,urine,2001,2001
+JX512200,Reference,Germany,Homo sapiens,lung,2007,2007
+JX512202,Reference,Germany,Homo sapiens,lung,2007,2007
+JX512199,Reference,Germany,Homo sapiens,lung,2007,2007
+JX512204,Reference,Germany,Homo sapiens,urine,2007,2007
+JX512201,Reference,Germany,Homo sapiens,lung,2007,2007
+JX512208,Reference,Germany,Homo sapiens,lung,2007,2007
+JX512205,Reference,Germany,Homo sapiens,lung,2007,2007
+JX512203,Reference,Germany,Homo sapiens,lung,2007,2007
+JX512207,Reference,Germany,Homo sapiens,lung,2007,2007
+JX512206,Reference,Germany,Homo sapiens,lung,2007,2007
+KC519319,Reference,Belgium,Homo sapiens,urine,4/9/2010,2010
+KC519320,Reference,Belgium,Homo sapiens,urine,4/22/2010,2010
+KC519321,Reference,Belgium,Homo sapiens,urine,4/27/2010,2010
+KC519322,Reference,Belgium,Homo sapiens,urine,7/26/2010,2010
+KC519323,Reference,Belgium,Homo sapiens,urine,10/21/2010,2010
+KJ426589,Reference,China,Homo sapiens,,1/10/2007,2007
+KM192300,Reference,,Homo sapiens,,,
+KM192302,Reference,,Homo sapiens,,,
+KM192299,Reference,,Homo sapiens,,,
+KM192301,Reference,,Homo sapiens,,,
+KM192298,Reference,,Homo sapiens,,,
+KJ361971,Reference,United Kingdom,,urine,2012,2012
+KJ872540,Reference,Italy,Homo sapiens,amniotic fluid,2008,2008
+KJ872539,Reference,Italy,Homo sapiens,amniotic fluid,2009,2009
+KJ872542,Reference,Italy,Homo sapiens,amniotic fluid,2013,2013
+KJ872541,Reference,Italy,Homo sapiens,amniotic fluid,2013,2013
+KR351281,Reference,South Africa,Papio ursinus,,11/18/1996,1996
+NC_027016,Reference,South Africa,Papio ursinus,,11/18/1996,1996
+KR297253,Reference,Nigeria,Mandrillus leucophaeus,,3/18/1999,1999
+KP745677,Reference,Belgium,Homo sapiens,urine,1/18/2010,2010
+KP745717,Reference,Belgium,Homo sapiens,oronasopharynx,3/16/2010,2010
+KP745655,Reference,Belgium,Homo sapiens,urine,3/18/2010,2010
+KP745728,Reference,Belgium,Homo sapiens,urine,3/22/2010,2010
+KP745701,Reference,Belgium,Homo sapiens,urine,3/23/2010,2010
+KP745663,Reference,Belgium,Homo sapiens,urine,3/25/2010,2010
+KP745708,Reference,Belgium,Homo sapiens,urine,4/12/2010,2010
+KP745694,Reference,Belgium,Homo sapiens,urine,4/29/2010,2010
+KP745645,Reference,Belgium,Homo sapiens,urine,5/6/2010,2010
+KP745721,Reference,Belgium,Homo sapiens,oronasopharynx,5/11/2010,2010
+KP745638,Reference,Belgium,Homo sapiens,urine,5/31/2010,2010
+KP745716,Reference,Belgium,Homo sapiens,oronasopharynx,6/6/2010,2010
+KP745727,Reference,Belgium,Homo sapiens,urine,6/14/2010,2010
+KP745647,Reference,Belgium,Homo sapiens,urine,6/20/2010,2010
+KP745712,Reference,Belgium,Homo sapiens,urine,7/6/2010,2010
+KP745662,Reference,Belgium,Homo sapiens,urine,7/20/2010,2010
+KP745640,Reference,Belgium,Homo sapiens,urine,8/31/2010,2010
+KP745679,Reference,Belgium,Homo sapiens,urine,9/7/2010,2010
+KP745678,Reference,Belgium,Homo sapiens,urine,9/9/2010,2010
+KP745697,Reference,Belgium,Homo sapiens,urine,9/9/2010,2010
+KP745719,Reference,Belgium,Homo sapiens,urine,9/15/2010,2010
+KP745676,Reference,Belgium,Homo sapiens,urine,10/15/2010,2010
+KP745714,Reference,Belgium,Homo sapiens,urine,12/7/2010,2010
+KP745726,Reference,Belgium,Homo sapiens,urine,12/8/2010,2010
+KP745644,Reference,Belgium,Homo sapiens,urine,12/16/2010,2010
+KP745661,Reference,Belgium,Homo sapiens,oronasopharynx,12/27/2010,2010
+KP745634,Reference,Belgium,Homo sapiens,amniotic fluid,12/29/2010,2010
+KP745686,Reference,Belgium,Homo sapiens,oronasopharynx,1/1/2011,2011
+KP745722,Reference,Belgium,Homo sapiens,oronasopharynx,1/4/2011,2011
+KP745652,Reference,Belgium,Homo sapiens,urine,1/6/2011,2011
+KP745706,Reference,Belgium,Homo sapiens,lung,1/7/2011,2011
+KP745673,Reference,Belgium,Homo sapiens,oronasopharynx,1/9/2011,2011
+KP745659,Reference,Belgium,Homo sapiens,urine,1/14/2011,2011
+KP745650,Reference,Belgium,Homo sapiens,urine,1/14/2011,2011
+KP745681,Reference,Belgium,Homo sapiens,oronasopharynx,1/19/2011,2011
+KP745715,Reference,Belgium,Homo sapiens,oronasopharynx,1/27/2011,2011
+KP745633,Reference,Belgium,Homo sapiens,oronasopharynx,1/27/2011,2011
+KP745700,Reference,Belgium,Homo sapiens,urine,3/3/2011,2011
+KP745667,Reference,Belgium,Homo sapiens,urine,3/7/2011,2011
+KP745682,Reference,Belgium,Homo sapiens,oronasopharynx,3/7/2011,2011
+KP745660,Reference,Belgium,Homo sapiens,urine,3/10/2011,2011
+KP745636,Reference,Belgium,Homo sapiens,urine,3/17/2011,2011
+KP745709,Reference,Belgium,Homo sapiens,oronasopharynx,3/28/2011,2011
+KP745648,Reference,Belgium,Homo sapiens,urine,4/13/2011,2011
+KP745637,Reference,Belgium,Homo sapiens,urine,4/14/2011,2011
+KP745639,Reference,Belgium,Homo sapiens,urine,4/15/2011,2011
+KP745684,Reference,Belgium,Homo sapiens,urine,4/18/2011,2011
+KP745725,Reference,Belgium,Homo sapiens,oronasopharynx,4/26/2011,2011
+KP745683,Reference,Belgium,Homo sapiens,urine,5/9/2011,2011
+KP745657,Reference,Belgium,Homo sapiens,urine,5/10/2011,2011
+KP745671,Reference,Belgium,Homo sapiens,urine,5/12/2011,2011
+KP745720,Reference,Belgium,Homo sapiens,urine,5/13/2011,2011
+KP745718,Reference,Czech Republic,,urine,5/20/2011,2011
+KP745689,Reference,Belgium,Homo sapiens,urine,5/20/2011,2011
+KP745668,Reference,Belgium,Homo sapiens,urine,6/22/2011,2011
+KP745698,Reference,Belgium,Homo sapiens,urine,7/5/2011,2011
+KP745654,Reference,Belgium,Homo sapiens,urine,7/5/2011,2011
+KP745702,Reference,Belgium,Homo sapiens,urine,7/15/2011,2011
+KP745653,Reference,Belgium,Homo sapiens,urine,7/18/2011,2011
+KP745675,Reference,Belgium,Homo sapiens,oronasopharynx,7/19/2011,2011
+KP745711,Reference,Belgium,Homo sapiens,urine,8/4/2011,2011
+KP745703,Reference,Belgium,Homo sapiens,urine,8/23/2011,2011
+KP745696,Reference,Belgium,Homo sapiens,urine,9/13/2011,2011
+KP745669,Reference,Belgium,Homo sapiens,oronasopharynx,10/20/2011,2011
+KP745672,Reference,Belgium,Homo sapiens,urine,10/20/2011,2011
+KP745670,Reference,Belgium,Homo sapiens,urine,10/26/2011,2011
+KP745641,Reference,Belgium,Homo sapiens,urine,10/27/2011,2011
+KP745704,Reference,Belgium,Homo sapiens,urine,11/17/2011,2011
+KP745674,Reference,Belgium,Homo sapiens,urine,11/22/2011,2011
+KP745690,Reference,Belgium,Homo sapiens,urine,11/28/2011,2011
+KP745713,Reference,Belgium,Homo sapiens,urine,11/30/2011,2011
+KP745687,Reference,Belgium,Homo sapiens,urine,12/2/2011,2011
+KP745723,Reference,Belgium,Homo sapiens,oronasopharynx,12/5/2011,2011
+KP745705,Reference,Belgium,Homo sapiens,oronasopharynx,12/12/2011,2011
+KP745699,Reference,Belgium,Homo sapiens,urine,1/2/2012,2012
+KP745692,Reference,Belgium,Homo sapiens,urine,1/9/2012,2012
+KP745710,Reference,Belgium,Homo sapiens,urine,1/9/2012,2012
+KP745724,Reference,Belgium,Homo sapiens,urine,1/16/2012,2012
+KP745635,Reference,Belgium,Homo sapiens,urine,1/22/2012,2012
+KP745695,Reference,Belgium,Homo sapiens,urine,1/31/2012,2012
+KP745646,Reference,Belgium,Homo sapiens,urine,2/14/2012,2012
+KP745666,Reference,Belgium,Homo sapiens,urine,2/14/2012,2012
+KP745651,Reference,Belgium,Homo sapiens,urine,3/26/2012,2012
+KP745649,Reference,Belgium,Homo sapiens,urine,4/2/2012,2012
+KP745680,Reference,Belgium,Homo sapiens,urine,4/10/2012,2012
+KP745688,Reference,Belgium,Homo sapiens,oronasopharynx,4/21/2012,2012
+KP745707,Reference,Belgium,Homo sapiens,urine,4/23/2012,2012
+KP745658,Reference,Belgium,Homo sapiens,urine,5/14/2012,2012
+KP745642,Reference,Czech Republic,,urine,5/23/2012,2012
+KP745693,Reference,Belgium,Homo sapiens,urine,5/24/2012,2012
+KP745665,Reference,Belgium,Homo sapiens,urine,5/24/2012,2012
+KP745643,Reference,Czech Republic,,urine,10/15/2012,2012
+KP745685,Reference,Czech Republic,,urine,11/5/2012,2012
+KP745656,Reference,Belgium,Homo sapiens,urine,1/17/2013,2013
+KP745691,Reference,Czech Republic,,blood,2/22/2013,2013
+KP745664,Reference,Czech Republic,,blood,3/1/2013,2013
+KP796148,Reference,Canada,,,7/1/2009,2009
+KT634296,Reference,Australia,Homo sapiens,amniotic fluid,2013,2013
+KT959235,Reference,France,Homo sapiens,cervix,2009,2009
+KJ361959,Reference,Italy,Homo sapiens,amniotic fluid,2005,2005
+KJ361960,Reference,Italy,Homo sapiens,amniotic fluid,2006,2006
+KJ361953,Reference,Germany,Homo sapiens,lung,2006,2006
+KJ361961,Reference,Italy,Homo sapiens,amniotic fluid,2006,2006
+KJ361951,Reference,Germany,Homo sapiens,lung,2006,2006
+KJ361956,Reference,Germany,Homo sapiens,lung,2007,2007
+KJ361957,Reference,Germany,Homo sapiens,lung,2007,2007
+KJ361963,Reference,Italy,Homo sapiens,amniotic fluid,2007,2007
+KJ361950,Reference,Germany,Homo sapiens,lung,2007,2007
+KJ361962,Reference,Italy,Homo sapiens,amniotic fluid,2007,2007
+KJ361964,Reference,Italy,Homo sapiens,amniotic fluid,2007,2007
+KJ361954,Reference,Germany,Homo sapiens,lung,2007,2007
+KJ361955,Reference,Germany,Homo sapiens,lung,2007,2007
+KJ361958,Reference,Germany,Homo sapiens,lung,2007,2007
+KJ361952,Reference,Germany,Homo sapiens,lung,2007,2007
+KJ361946,Reference,Germany,Homo sapiens,lung,2009,2009
+KJ361947,Reference,Germany,Homo sapiens,lung,2009,2009
+KJ361968,Reference,Italy,Homo sapiens,amniotic fluid,2012,2012
+KJ361967,Reference,Italy,Homo sapiens,amniotic fluid,2012,2012
+KJ361969,Reference,Italy,Homo sapiens,amniotic fluid,2013,2013
+KJ361970,Reference,Italy,Homo sapiens,amniotic fluid,2013,2013
+KJ361966,Reference,Italy,Homo sapiens,amniotic fluid,,
+KJ361965,Reference,Italy,Homo sapiens,amniotic fluid,,
+KJ361948,Reference,Germany,Homo sapiens,lung,,
+KJ361949,Reference,Germany,Homo sapiens,lung,,
+KU221098,Reference,,Homo sapiens,,,
+KU221093,Reference,,Homo sapiens,,,
+KU221095,Reference,,Homo sapiens,,,
+KU221096,Reference,,Homo sapiens,,,
+KU221097,Reference,,Homo sapiens,,,
+KU221091,Reference,,Homo sapiens,,,
+KU221094,Reference,,Homo sapiens,,,
+KU221099,Reference,,Homo sapiens,,,
+KU221090,Reference,,Homo sapiens,,,
+KU221100,Reference,,Homo sapiens,,,
+KU221092,Reference,,Homo sapiens,,,
+KT726949,Reference,United Kingdom,,urine,10/18/2011,2011
+KT726950,Reference,United Kingdom,,urine,12/30/2011,2011
+KT726951,Reference,United Kingdom,,urine,2/21/2012,2012
+KT726945,Reference,Netherlands,,oronasopharynx,5/13/2012,2012
+KT726947,Reference,United Kingdom,,blood,5/13/2013,2013
+KU550087,Reference,France,Homo sapiens,amniotic fluid,2011,2011
+KU550088,Reference,France,Homo sapiens,amniotic fluid,2013,2013
+KU550090,Reference,France,Homo sapiens,urine,2013,2013
+KU550089,Reference,France,Homo sapiens,amniotic fluid,2013,2013
+KR534200,Reference,Israel,Homo sapiens,kidney,2/26/2002,2002
+KR534204,Reference,Israel,Homo sapiens,amniotic fluid,10/16/2005,2005
+KR534206,Reference,Israel,Homo sapiens,amniotic fluid,12/8/2005,2005
+KR534207,Reference,Israel,Homo sapiens,amniotic fluid,1/4/2009,2009
+KR534205,Reference,Israel,Homo sapiens,amniotic fluid,1/4/2009,2009
+KR534208,Reference,Israel,Homo sapiens,amniotic fluid,2/11/2009,2009
+KR534196,Reference,Israel,Homo sapiens,urine,11/12/2009,2009
+KR534197,Reference,Israel,Homo sapiens,urine,11/16/2009,2009
+KR534198,Reference,Israel,Homo sapiens,lung,12/1/2009,2009
+KR534199,Reference,Israel,Homo sapiens,amniotic fluid,3/28/2010,2010
+KR534201,Reference,Israel,Homo sapiens,amniotic fluid,3/24/2011,2011
+KR534203,Reference,Israel,Homo sapiens,amniotic fluid,7/4/2011,2011
+KR534202,Reference,Israel,Homo sapiens,amniotic fluid,1/22/2012,2012
+KR534209,Reference,Israel,Homo sapiens,amniotic fluid,8/1/2012,2012
+KR534210,Reference,Israel,Homo sapiens,amniotic fluid,9/12/2012,2012
+KR534211,Reference,Israel,Homo sapiens,amniotic fluid,9/23/2012,2012
+KR534213,Reference,Israel,Homo sapiens,amniotic fluid,10/21/2012,2012
+KR534212,Reference,Israel,Homo sapiens,amniotic fluid,12/10/2012,2012
+KX101022,Reference,USA,,,1996,1996
+KX101023,Reference,USA,,,1996,1996
+KX101021,Reference,USA,,,1996,1996
+KX101024,Reference,USA,,,1996,1996
+KP973641,Reference,,Homo sapiens,,,
+KP973624,Reference,,Homo sapiens,,,
+KP973642,Reference,,Homo sapiens,,,
+KP973629,Reference,,Homo sapiens,,,
+KP973628,Reference,,Homo sapiens,,,
+KP973625,Reference,,Homo sapiens,,,
+KP973630,Reference,,Homo sapiens,,,
+KP973623,Reference,,Homo sapiens,,,
+KP973638,Reference,,Homo sapiens,,,
+KP973627,Reference,,Homo sapiens,,,
+KP973639,Reference,,Homo sapiens,,,
+KP973636,Reference,,Homo sapiens,,,
+KP973637,Reference,,Homo sapiens,,,
+KP973631,Reference,,Homo sapiens,,,
+KP973626,Reference,,Homo sapiens,,,
+KP973634,Reference,,Homo sapiens,,,
+KP973635,Reference,,Homo sapiens,,,
+KP973632,Reference,,Homo sapiens,,,
+KP973633,Reference,,Homo sapiens,,,
+KP973640,Reference,,Homo sapiens,,,
+KX544841,Reference,USA,Homo sapiens,,6/24/2016,2016
+KX544840,Reference,USA,Homo sapiens,urine,6/24/2016,2016
+KX544839,Reference,USA,Homo sapiens,oronasopharynx,6/24/2016,2016
+KX544834,Reference,USA,Homo sapiens,urine,6/24/2016,2016
+KX544835,Reference,USA,Homo sapiens,blood,6/24/2016,2016
+KX544836,Reference,USA,Homo sapiens,blood,6/24/2016,2016
+KX544833,Reference,USA,Homo sapiens,urine,6/24/2016,2016
+KX544838,Reference,USA,Homo sapiens,urine,6/24/2016,2016
+KX544831,Reference,USA,Homo sapiens,blood,6/24/2016,2016
+KX544832,Reference,USA,Homo sapiens,urine,6/24/2016,2016
+KX544837,Reference,USA,Homo sapiens,blood,6/24/2016,2016
+KY002201,Reference,USA,Homo sapiens,urine,1984,1984
+KY002200,Reference,,,,,
+KY123653,Reference,Germany,Homo sapiens,blood,6/10/2011,2011
+KY123649,Reference,Germany,Homo sapiens,oronasopharynx,5/15/2012,2012
+KY123650,Reference,Germany,Homo sapiens,blood,8/22/2012,2012
+KY123651,Reference,Germany,Homo sapiens,blood,3/13/2015,2015
+KY123652,Reference,Germany,Homo sapiens,animal tissues,5/18/2015,2015
+KX689269,Reference,USA,Macaca mulatta,,7/11/2012,2012
+KX689267,Reference,USA,Macaca mulatta,,7/17/2012,2012
+KX689268,Reference,USA,Macaca mulatta,,7/17/2012,2012
+KX689264,Reference,USA,Macaca fascicularis,,2/8/2013,2013
+KX689266,Reference,USA,Macaca fascicularis,,2/8/2013,2013
+KX689263,Reference,USA,Macaca fascicularis,,2/12/2013,2013
+KX689265,Reference,USA,Macaca fascicularis,,2/12/2013,2013
+NC_033176,Reference,USA,Macaca fascicularis,,2/12/2013,2013
+MF783090,Reference,USA,Homo sapiens,,,
+MF783092,Reference,USA,Homo sapiens,,,
+MF783091,Reference,USA,Homo sapiens,,,
+MF783093,Reference,USA,Homo sapiens,,,
+KY490063,Reference,Czech Republic,,urine,9/15/2006,2006
+KY490064,Reference,Czech Republic,,urine,3/25/2009,2009
+KY490065,Reference,Czech Republic,,urine,5/28/2009,2009
+KY490067,Reference,Czech Republic,,urine,6/10/2009,2009
+KY490066,Reference,Czech Republic,,urine,11/25/2009,2009
+KY490085,Reference,Germany,Homo sapiens,blood,4/6/2010,2010
+KY490069,Reference,Czech Republic,,urine,5/17/2010,2010
+KY490087,Reference,Germany,Homo sapiens,blood,6/21/2010,2010
+KY490086,Reference,Germany,Homo sapiens,blood,7/19/2010,2010
+KY490078,Reference,Germany,Homo sapiens,blood,10/25/2010,2010
+KY490077,Reference,Germany,Homo sapiens,kidney,1/19/2011,2011
+KY490088,Reference,Germany,Homo sapiens,blood,4/6/2011,2011
+KY490073,Reference,Germany,Homo sapiens,blood,7/20/2012,2012
+KY490070,Reference,Czech Republic,,urine,11/8/2012,2012
+KY490072,Reference,Germany,Homo sapiens,urine,4/4/2013,2013
+KY490071,Reference,Germany,Homo sapiens,urine,4/8/2013,2013
+KY490084,Reference,Germany,Homo sapiens,lung,4/22/2013,2013
+KY490074,Reference,Germany,Homo sapiens,blood,5/22/2013,2013
+KY490076,Reference,Germany,Homo sapiens,blood,10/9/2013,2013
+KY490079,Reference,Germany,Homo sapiens,blood,5/8/2014,2014
+KY490075,Reference,Germany,Homo sapiens,eye,6/18/2014,2014
+KY490082,Reference,Germany,Homo sapiens,blood,7/31/2014,2014
+KY490080,Reference,Germany,Homo sapiens,animal tissues,10/8/2014,2014
+KY490081,Reference,Germany,Homo sapiens,blood,4/16/2015,2015
+KY490068,Reference,Czech Republic,,amniotic fluid,10/8/2015,2015
+KY490083,Reference,Germany,Homo sapiens,blood,1/18/2016,2016
+KY490062,Reference,Italy,Homo sapiens,blood,,
+KY490061,Reference,Italy,Homo sapiens,blood,,
+MF468146,Reference,,Macaca mulatta,,,
+MF468139,Reference,,Macaca mulatta,,,
+MF468145,Reference,,Macaca mulatta,,,
+MF468144,Reference,,Macaca mulatta,,,
+MF468141,Reference,,Macaca mulatta,,,
+MF468143,Reference,,Macaca mulatta,,,
+MF468142,Reference,,Macaca mulatta,,,
+MF468147,Reference,,Macaca mulatta,,,
+MF468140,Reference,,Macaca mulatta,,,
+MF084224,Reference,Greece,Homo sapiens,urine,2016,2016
+MF084223,Reference,United Kingdom,,urine,2016,2016
+NC_038260,Reference,USA,Cebus sp.,,,
+MN274568,Reference,USA,Homo sapiens,urine,1/5/2016,2016
+MK290742,Reference,Zambia,Homo sapiens,mammalian milk,2002,2002
+MK290743,Reference,Zambia,Homo sapiens,mammalian milk,2002,2002
+MK290744,Reference,Zambia,Homo sapiens,mammalian milk,2003,2003
+MK422176,Reference,Zambia,Homo sapiens,mammalian milk,2006,2006
+MN437483,Reference,,,,,
+MN920393,Reference,,Homo sapiens,,,
+MN900952,Reference,,Homo sapiens,,,
+MT044483,Reference,Germany,Homo sapiens,blood,1/10/2013,2013
+MT044478,Reference,Germany,Homo sapiens,blood,10/21/2013,2013
+MT044484,Reference,Germany,Homo sapiens,blood,5/13/2014,2014
+MT044479,Reference,Germany,Homo sapiens,blood,12/9/2016,2016
+MT044480,Reference,Australia,Homo sapiens,blood,1/23/2017,2017
+MT044477,Reference,United Kingdom,,blood,4/11/2017,2017
+MT044481,Reference,United Kingdom,,blood,4/16/2017,2017
+MT044482,Reference,United Kingdom,,blood,5/13/2017,2017
+MT044476,Reference,United Kingdom,,blood,5/26/2017,2017
+MT044485,Reference,Australia,Homo sapiens,blood,,
+MT894141,Reference,USA,Homo sapiens,urine,9/19/2019,2019
+MW197154,Reference,Italy,Homo sapiens,,1/23/2013,2013
+MW197156,Reference,Italy,Homo sapiens,,3/9/2018,2018
+MW197157,Reference,Italy,Homo sapiens,,5/18/2018,2018
+MT070138,Reference,Italy,Homo sapiens,urine,6/10/2015,2015
+MT070139,Reference,Italy,Homo sapiens,urine,9/9/2015,2015
+MT070140,Reference,Italy,Homo sapiens,urine,7/22/2016,2016
+MT070141,Reference,Italy,Homo sapiens,urine,1/11/2017,2017
+MT070142,Reference,Italy,Homo sapiens,urine,1/18/2017,2017
+MT157325,Reference,USA,Macaca mulatta,,1/1/1968,1968
+MT157331,Reference,USA,Macaca mulatta,,1/1/1993,1993
+MT157330,Reference,USA,Macaca mulatta,,1/1/1993,1993
+MT157326,Reference,USA,Macaca mulatta,,1/1/2008,2008
+MT157324,Reference,USA,Macaca fuscata,,12/10/2013,2013
+MT157323,Reference,USA,Macaca fascicularis,,9/9/2014,2014
+MT157322,Reference,USA,Papio,,12/10/2015,2015
+MT157321,Reference,USA,Papio,,12/10/2015,2015
+MT157328,Reference,USA,Macaca mulatta,,3/10/2016,2016
+MT157327,Reference,USA,Macaca mulatta,,1/1/2018,2018
+MT157329,Reference,USA,Macaca mulatta,,7/5/2019,2019
+MW439038,Reference,Germany,Homo sapiens,,7/24/2019,2019
+MW439039,Reference,Germany,Homo sapiens,,7/24/2019,2019
+MW528462,Reference,Germany,Homo sapiens,mammalian milk,2019,2019
+MW528461,Reference,Germany,Homo sapiens,mammalian milk,2019,2019
+MW528463,Reference,Germany,Homo sapiens,mammalian milk,2019,2019
+MW528464,Reference,Germany,Homo sapiens,mammalian milk,2019,2019
+MW528459,Reference,Germany,Homo sapiens,mammalian milk,2019,2019
+MW528460,Reference,Germany,Homo sapiens,mammalian milk,2019,2019
+MW528458,Reference,Germany,Homo sapiens,mammalian milk,2019,2019
+MW980585,Reference,France,Homo sapiens,urine,2018,2018
+NC_055235,Reference,,,,,
+MZ151943,Reference,Germany,Pan troglodytes,,1/16/2020,2020
+MT649473,Reference,Germany,Homo sapiens,blood,3/24/2010,2010
+MT649472,Reference,Germany,Homo sapiens,blood,6/10/2010,2010
+MT649471,Reference,Germany,Homo sapiens,blood,12/30/2010,2010
+MT649470,Reference,Germany,Homo sapiens,blood,3/5/2011,2011
+MT649469,Reference,Germany,Homo sapiens,blood,5/7/2011,2011
+MT649468,Reference,Germany,Homo sapiens,blood,6/26/2011,2011
+OK000910,Reference,USA,Homo sapiens,,2016,2016
+OK000912,Reference,France,Homo sapiens,urine,2016,2016
+OK000911,Reference,France,Homo sapiens,,2016,2016
+OK000909,Reference,Belgium,Homo sapiens,,2018,2018
+OV100762,Reference,Italy,Homo sapiens,,,
+OV100760,Reference,Italy,Homo sapiens,,,
+OV100763,Reference,Italy,Homo sapiens,,,
+MZ517252,Reference,USA,Macaca mulatta,urine,1968,1968
+MZ517253,Reference,USA,Macaca mulatta,urine,1968,1968
+MZ517254,Reference,USA,Macaca mulatta,,,
+ON109535,Reference,USA,Macaca fascicularis,,1/1/2015,2015
+NC_075417,Reference,Nigeria,Mandrillus leucophaeus,,3/18/1999,1999
+NC_075725,Reference,,,,,
+OQ466312,Reference,United Kingdom,,urine,2020,2020
+OU342912,Reference,Austria,Homo sapiens,,,
+OU342918,Reference,South Africa,Homo sapiens,,,
+OU342916,Reference,South Africa,Homo sapiens,,,
+OU342915,Reference,Czech Republic,,,,
+OU342911,Reference,Czech Republic,,,,
+OU342914,Reference,Czech Republic,,,,
+OU342900,Reference,Austria,Homo sapiens,,,
+OU342913,Reference,Czech Republic,,,,
+OR546126,Reference,United Kingdom,,,2014,2014
+OR546129,Reference,United Kingdom,,,2014,2014
+OR546127,Reference,United Kingdom,,,2017,2017
+OR546130,Reference,United Kingdom,,,2017,2017
+OR546128,Reference,United Kingdom,,,2018,2018
+PP803491,Reference,Italy,Homo sapiens,cervix,1996,1996
+ERR2882354,Raw reads,United Kingdom,Homo sapiens,Urine,,
+ERR3005804,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3013916,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3013917,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3013918,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3013919,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3013920,Raw reads,Italy,Homo sapiens,Blood,,
+ERR3013921,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3013922,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3013923,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3013924,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3013925,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3013926,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3013927,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3013928,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3013929,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3013930,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3013935,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3013936,Raw reads,Israel,Homo sapiens,Urine,,
+ERR3013937,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3014165,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3014174,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3014175,Raw reads,Italy,Homo sapiens,Amniotic fluid,,
+ERR3014176,Raw reads,Israel,Homo sapiens,Amniotic fluid,,
+ERR3014177,Raw reads,Israel,Homo sapiens,Kidney biopsy,,
+ERR3014178,Raw reads,Israel,Homo sapiens,Bronchoalveolar lavage,,
+ERR3014179,Raw reads,Israel,Homo sapiens,Lung biopsy,,
+ERR3014180,Raw reads,Israel,Homo sapiens,Amniotic fluid,,
+ERR3014415,Raw reads,Israel,Homo sapiens,Amniotic fluid,,
+ERR3014420,Raw reads,Israel,Homo sapiens,Amniotic fluid,,
+ERR3014421,Raw reads,Israel,Homo sapiens,Amniotic fluid,,
+ERR3014423,Raw reads,Israel,Homo sapiens,Amniotic fluid,,
+ERR3014424,Raw reads,Israel,Homo sapiens,Amniotic fluid,,
+ERR3014425,Raw reads,Israel,Homo sapiens,Amniotic fluid,,
+ERR3014426,Raw reads,Israel,Homo sapiens,Amniotic fluid,,
+ERR3014430,Raw reads,Israel,Homo sapiens,Amniotic fluid,,
+ERR3014431,Raw reads,Israel,Homo sapiens,Amniotic fluid,,
+ERR3014432,Raw reads,Israel,Homo sapiens,Amniotic fluid,,
+ERR3014433,Raw reads,Israel,Homo sapiens,Amniotic fluid,,
+ERR3014434,Raw reads,Israel,Homo sapiens,Amniotic fluid,,
+ERR3014435,Raw reads,Israel,Homo sapiens,Amniotic fluid,,
+ERR3014436,Raw reads,Czech Republic,Homo sapiens,Urine,,
+ERR3014437,Raw reads,Czech Republic,Homo sapiens,Urine,,
+ERR3014438,Raw reads,Czech Republic,Homo sapiens,Urine,,
+ERR3014439,Raw reads,Czech Republic,Homo sapiens,Urine,,
+ERR3014440,Raw reads,Czech Republic,Homo sapiens,Urine,,
+ERR3014441,Raw reads,Czech Republic,Homo sapiens,Urine,,
+ERR3014515,Raw reads,Czech Republic,Homo sapiens,Urine,,
+ERR3014516,Raw reads,Czech Republic,Homo sapiens,Cord blood,,
+ERR3014517,Raw reads,Czech Republic,Homo sapiens,Amniotic fluid,,
+ERR3014518,Raw reads,Czech Republic,Homo sapiens,Urine,,
+ERR3014519,Raw reads,Czech Republic,Homo sapiens,Urine,,
+ERR3014520,Raw reads,Czech Republic,Homo sapiens,Urine,,
+ERR3014521,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014522,Raw reads,Germany,Homo sapiens,Urine,,
+ERR3014523,Raw reads,Germany,Homo sapiens,Urine,,
+ERR3014524,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014525,Raw reads,Germany,Homo sapiens,Milk,,
+ERR3014526,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014527,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014528,Raw reads,Germany,Homo sapiens,Urine,,
+ERR3014529,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014530,Raw reads,Germany,Homo sapiens,Urine,,
+ERR3014531,Raw reads,Germany,Homo sapiens,Milk,,
+ERR3014532,Raw reads,Germany,Homo sapiens,Milk,,
+ERR3014533,Raw reads,Germany,Homo sapiens,Trachaeal secretion,,
+ERR3014534,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014535,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014536,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014537,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014538,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014539,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014540,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014541,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014542,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014543,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014544,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014545,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014546,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014547,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014548,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014549,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014550,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014551,Raw reads,Germany,Homo sapiens,Plasma,,
+ERR3014552,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014553,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014554,Raw reads,Germany,Homo sapiens,Biopsy,,
+ERR3014555,Raw reads,Germany,Homo sapiens,Plasma,,
+ERR3014556,Raw reads,Germany,Homo sapiens,Bronchoalveolar lavage,,
+ERR3014557,Raw reads,Germany,Homo sapiens,Vitreous body fluid,,
+ERR3014558,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014559,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014560,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014561,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014562,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014563,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014564,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014565,Raw reads,Germany,Homo sapiens,Biopsy,,
+ERR3014566,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014567,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014569,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014570,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014571,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014572,Raw reads,Germany,Homo sapiens,Nasal swab,,
+ERR3014573,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014574,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014575,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014576,Raw reads,Germany,Homo sapiens,Biopsy,,
+ERR3014577,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014578,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014579,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014589,Raw reads,Germany,Homo sapiens,Plasma,,
+ERR3014610,Raw reads,Germany,Homo sapiens,Bronchoalveolar lavage,,
+ERR3014626,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014627,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014628,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014629,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014630,Raw reads,Germany,Homo sapiens,Plasma,,
+ERR3014631,Raw reads,Germany,Homo sapiens,Plasma,,
+ERR3014632,Raw reads,Germany,Homo sapiens,Plasma,,
+ERR3014633,Raw reads,Germany,Homo sapiens,Plasma,,
+ERR3014634,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014635,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014636,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014637,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014638,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014639,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014681,Raw reads,Germany,Homo sapiens,Biopsy,,
+ERR3014682,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014683,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014684,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014685,Raw reads,Germany,Homo sapiens,Bronchoalveolar lavage,,
+ERR3014686,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014687,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014688,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014689,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014690,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014691,Raw reads,Germany,Homo sapiens,Blood,,
+ERR3014692,Raw reads,Italy,Homo sapiens,Plasma,,
+ERR3014693,Raw reads,Italy,Homo sapiens,Plasma,,
+ERR3014694,Raw reads,Italy,Homo sapiens,Plasma,,
+ERR3014695,Raw reads,Italy,Homo sapiens,Plasma,,
+ERR3014696,Raw reads,Italy,Homo sapiens,Plasma,,
+ERR3014697,Raw reads,Italy,Homo sapiens,Plasma,,
+ERR3014698,Raw reads,Italy,Homo sapiens,Plasma,,
+ERR3014699,Raw reads,Italy,Homo sapiens,Plasma,,
+ERR3014700,Raw reads,Italy,Homo sapiens,Plasma,,
+ERR3014701,Raw reads,Italy,Homo sapiens,Plasma,,
+ERR3014702,Raw reads,Italy,Homo sapiens,Plasma,,
+ERR3014703,Raw reads,Italy,Homo sapiens,Plasma,,
+ERR3014901,Raw reads,Israel,Homo sapiens,Urine,,
+ERR3163177,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163178,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163179,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163180,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163181,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163182,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163198,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163199,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163224,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163231,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163232,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163233,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163234,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163235,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163236,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163251,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163252,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163253,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163254,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163257,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163258,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163259,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163274,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163275,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163276,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163277,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163329,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR3163330,Raw reads,United Kingdom,Homo sapiens,Milk,,
+ERR4288696,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288700,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288701,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288702,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288703,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288704,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288705,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288706,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288707,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288708,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288709,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288710,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288711,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288713,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288714,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288716,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288717,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288718,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288719,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288720,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288721,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288722,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288723,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288724,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288725,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288726,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288697,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288698,Raw reads,Germany,Homo sapiens,plasma,,
+ERR4288699,Raw reads,Germany,Homo sapiens,plasma,,
+SRR9285893,Raw reads,USA,Homo sapiens,Human Foreskin fibroblast,2019-05,2019
+SRR9285894,Raw reads,USA,Homo sapiens,Human Foreskin fibroblast,2019-05,2019
+SRR9285895,Raw reads,USA,Homo sapiens,Human Foreskin fibroblast,2019-05,2019
+SRR9285896,Raw reads,USA,Homo sapiens,Human Foreskin fibroblast,2019-05,2019
+SRR9285897,Raw reads,USA,Homo sapiens,Human Foreskin fibroblast,2019-05,2019
+SRR9285898,Raw reads,USA,Homo sapiens,Human Foreskin fibroblast,2019-05,2019
+SRR9285899,Raw reads,USA,Homo sapiens,Human Foreskin fibroblast,2019-05,2019
+SRR9285900,Raw reads,USA,Homo sapiens,Human Foreskin fibroblast,2019-05,2019
+SRR9285901,Raw reads,USA,Homo sapiens,Human Foreskin fibroblast,2019-05,2019
+ERR3276890,Raw reads,,Homo sapiens,0,,
+ERR3276891,Raw reads,,Homo sapiens,0,,
+ERR3276892,Raw reads,,Homo sapiens,0,,
+ERR3276893,Raw reads,,Homo sapiens,0,,
+ERR3276894,Raw reads,,Homo sapiens,0,,
+ERR3276895,Raw reads,,Homo sapiens,0,,
+ERR3276896,Raw reads,,Homo sapiens,0,,
+ERR3276897,Raw reads,,Homo sapiens,0,,
+ERR3276898,Raw reads,,Homo sapiens,0,,
+ERR3276899,Raw reads,,Homo sapiens,0,,
+SRR11053567,Raw reads,,Homo sapiens,0,,
+SRR11053568,Raw reads,,Homo sapiens,0,,
+SRR11053569,Raw reads,,Homo sapiens,0,,
+SRR11053570,Raw reads,,Homo sapiens,0,,
+SRR11053571,Raw reads,,Homo sapiens,0,,
+SRR11053572,Raw reads,,Homo sapiens,0,,
+SRR11053573,Raw reads,,Homo sapiens,0,,
+SRR11053574,Raw reads,,Homo sapiens,0,,
+SRR11053575,Raw reads,,Homo sapiens,0,,
+SRR11053577,Raw reads,,Homo sapiens,0,,
+SRR11053578,Raw reads,,Homo sapiens,0,,
+SRR11053579,Raw reads,,Homo sapiens,0,,
+SRR11053582,Raw reads,,Homo sapiens,0,,
+SRR11053583,Raw reads,,Homo sapiens,0,,
+SRR11053584,Raw reads,,Homo sapiens,0,,
+SRR11053585,Raw reads,,Homo sapiens,0,,
+SRR11053595,Raw reads,,Homo sapiens,0,,
+SRR11053596,Raw reads,,Homo sapiens,0,,
+SRR11053597,Raw reads,,Homo sapiens,0,,
+SRR11053599,Raw reads,,Homo sapiens,0,,
+SRR11053600,Raw reads,,Homo sapiens,0,,
+SRR11053601,Raw reads,,Homo sapiens,0,,
+SRR11053602,Raw reads,,Homo sapiens,0,,
+SRR11053604,Raw reads,,Homo sapiens,0,,
+SRR11053605,Raw reads,,Homo sapiens,0,,
+SRR11053606,Raw reads,,Homo sapiens,0,,
+SRR11053607,Raw reads,,Homo sapiens,0,,
+SRR11053608,Raw reads,,Homo sapiens,0,,
+SRR9067737,Raw reads,,Homo sapiens,new born child urine,2013,2013
+SRR9067738,Raw reads,,Homo sapiens,new born child urine,2014,2014
+SRR9067739,Raw reads,,Homo sapiens,new born child urine,2014,2014
+SRR9067740,Raw reads,,Homo sapiens,new born child urine,2008,2008
+SRR9067741,Raw reads,,Homo sapiens,new born child urine,2013,2013
+SRR9067742,Raw reads,,Homo sapiens,new born child urine,2008,2008
+SRR9067743,Raw reads,,Homo sapiens,new born child urine,2009,2009
+ERR2282550,Raw reads,,0,0,,
+ERR2282552,Raw reads,,0,0,,
+ERR2282605,Raw reads,,0,0,,
+ERR2282629,Raw reads,,0,0,,
+ERR2091819,Raw reads,,Homo sapiens,Urine,,
+SRR315264,Raw reads,,0,0,,
+ERR011940,Raw reads,,0,0,,
+ERR011941,Raw reads,,0,0,,
+ERR011942,Raw reads,,0,0,,
+ERR011943,Raw reads,,0,0,,
+ERR011944,Raw reads,,0,0,,
+ERR2282551,Raw reads,,0,0,,
+ERR2282574,Raw reads,,0,0,,
+ERR2282606,Raw reads,,0,0,,
+ERR2282607,Raw reads,,0,0,,
+SRR7093665,Raw reads,,Homo sapiens,0,2018-02,2018
+SRR7093666,Raw reads,,Homo sapiens,0,2018-02,2018
+SRR23882357,Raw reads,,Homo sapiens,urine,2020,2020
+SRR23882358,Raw reads,,Homo sapiens,lung,2020,2020
+SRR23882359,Raw reads,,Homo sapiens,urine,2020,2020
+SRR23882360,Raw reads,,Homo sapiens,lung,2020,2020
+ERR10905091,Raw reads,,0,0,4/1/2020,2020
+ERR10905092,Raw reads,,0,0,4/1/2020,2020
+SRR30553691,Raw reads,,,Human foreskin fibroblasts,6/14/2022,2022
+SRR30553692,Raw reads,,,Human foreskin fibroblasts,6/14/2022,2022
+SRR30553693,Raw reads,,,Human foreskin fibroblasts,7/11/2023,2023
+SRR30553695,Raw reads,,,Human adult retinal pigment epithelia (RPE) cell line,5/3/2022,2022
+SRR30553696,Raw reads,,,Human adult retinal pigment epithelia (RPE) cell line,5/3/2022,2022
+SRR30553697,Raw reads,,,Homo sapiens foreskin fibroblasts,12/27/2021,2021
+SRR30553698,Raw reads,,,Homo sapiens foreskin fibroblasts,12/30/2021,2021
+SRR30553699,Raw reads,,,Homo sapiens foreskin fibroblasts,12/30/2021,2021
+SRR30553700,Raw reads,,,Homo sapiens foreskin fibroblasts,12/30/2021,2021
+SRR30553701,Raw reads,,,Homo sapiens foreskin fibroblasts,4/21/2022,2022
+SRR30553703,Raw reads,,,Homo sapiens foreskin fibroblasts,4/21/2022,2022
+SRR30553704,Raw reads,,,Homo sapiens foreskin fibroblasts,9/13/2021,2021
+SRR30553705,Raw reads,,,Homo sapiens foreskin fibroblasts,4/21/2022,2022
+SRR30553706,Raw reads,,,Human adult retinal pigment epithelia (RPE) cell line,6/1/2022,2022
+SRR30553707,Raw reads,,,Human adult retinal pigment epithelia (RPE) cell line,6/1/2022,2022
+SRR30553708,Raw reads,,,Human adult retinal pigment epithelia (RPE) cell line,6/1/2022,2022
+SRR30553709,Raw reads,,,Human foreskin fibroblasts,9/22/2021,2021
+SRR30553710,Raw reads,,,Human foreskin fibroblasts,9/22/2021,2021
+SRR30553711,Raw reads,,,Human foreskin fibroblasts,5/2/2022,2022
+SRR30553712,Raw reads,,,Human foreskin fibroblasts,5/2/2022,2022
+SRR30553714,Raw reads,,,Human foreskin fibroblasts,5/2/2022,2022
+SRR30553715,Raw reads,,,Human foreskin fibroblasts,5/2/2022,2022
+SRR30553716,Raw reads,,,Human foreskin fibroblasts,5/12/2022,2022
+SRR30553717,Raw reads,,,Human foreskin fibroblasts,2/15/2022,2022
+SRR30553718,Raw reads,,,Human foreskin fibroblasts,2/15/2022,2022
+SRR30553719,Raw reads,,,Human foreskin fibroblasts,4/22/2022,2022
+SRR30553720,Raw reads,,,Human foreskin fibroblasts,2/15/2022,2022
+SRR30553721,Raw reads,,,Human foreskin fibroblasts,2/15/2022,2022
+SRR30553722,Raw reads,,,Human foreskin fibroblasts,7/11/2023,2023
+SRR30553729,Raw reads,,,Human foreskin fibroblasts,7/8/2022,2022
+SRR30553730,Raw reads,,,Human foreskin fibroblasts,7/8/2022,2022
+SRR30553731,Raw reads,,,Human foreskin fibroblasts,7/14/2023,2023
+SRR30553738,Raw reads,,,Human foreskin fibroblasts,7/22/2022,2022
+SRR30553739,Raw reads,,,Human foreskin fibroblasts,7/22/2022,2022
+SRR30553740,Raw reads,,,Human foreskin fibroblasts,7/11/2023,2023
+SRR30553746,Raw reads,,,Human foreskin fibroblasts,7/1/2022,2022
+SRR30553747,Raw reads,,,Human foreskin fibroblasts,7/1/2022,2022
+ERR6041287,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6041288,Raw reads,,Homo sapiens,Plasma,,
+ERR6041289,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6041290,Raw reads,,Homo sapiens,Plasma,,
+ERR6041303,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6041346,Raw reads,,Homo sapiens,Plasma,,
+ERR6041348,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6041349,Raw reads,,Homo sapiens,Plasma,,
+ERR6041350,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6041351,Raw reads,,Homo sapiens,Plasma,,
+ERR6041352,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6041353,Raw reads,,Homo sapiens,Plasma,,
+ERR6041354,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6041449,Raw reads,,Homo sapiens,Plasma,,
+ERR6041577,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6041578,Raw reads,,Homo sapiens,Plasma,,
+ERR6041579,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6041580,Raw reads,,Homo sapiens,Plasma,,
+ERR6041581,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6041582,Raw reads,,Homo sapiens,Plasma,,
+ERR6041584,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6041589,Raw reads,,Homo sapiens,Plasma,,
+ERR6041602,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6041603,Raw reads,,Homo sapiens,Plasma,,
+ERR6041604,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6041685,Raw reads,,Homo sapiens,blood,,
+ERR6043493,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6043494,Raw reads,,Homo sapiens,blood,,
+ERR6043495,Raw reads,,Homo sapiens,endotracheal,,
+ERR6043496,Raw reads,,Homo sapiens,blood,,
+ERR6043497,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6043498,Raw reads,,Homo sapiens,blood,,
+ERR6043499,Raw reads,,Homo sapiens,airway aspirate,,
+ERR6043500,Raw reads,,Homo sapiens,blood,,
+ERR6043501,Raw reads,,Homo sapiens,endotracheal,,
+ERR6043502,Raw reads,,Homo sapiens,blood,,
+ERR6043504,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6043505,Raw reads,,Homo sapiens,blood,,
+ERR6043506,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6043615,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6043616,Raw reads,,Homo sapiens,Plasma,,
+ERR6043617,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6043618,Raw reads,,Homo sapiens,Plasma,,
+ERR6043619,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6043621,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6043622,Raw reads,,Homo sapiens,Plasma,,
+ERR6043623,Raw reads,,Homo sapiens,Plasma,,
+ERR6043624,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6043625,Raw reads,,Homo sapiens,Plasma,,
+ERR6043626,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6043627,Raw reads,,Homo sapiens,Plasma,,
+ERR6043628,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6043629,Raw reads,,Homo sapiens,Plasma,,
+ERR6043630,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6043631,Raw reads,,Homo sapiens,Plasma,,
+ERR6043811,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6043812,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6043813,Raw reads,,Homo sapiens,Plasma,,
+ERR6043814,Raw reads,,Homo sapiens,brochoalveolar lavage,,
+ERR6043829,Raw reads,,Homo sapiens,Plasma,,
+ERR6043830,Raw reads,,Homo sapiens,Plasma,,
+ERR7018437,Raw reads,,Homo sapiens,Blood,,
+ERR7018441,Raw reads,,Homo sapiens,Blood,,
+ERR7018443,Raw reads,,Homo sapiens,Blood,,
+ERR7018450,Raw reads,,Homo sapiens,Saliva,,
+ERR7018455,Raw reads,,Homo sapiens,Saliva,,
+ERR7018466,Raw reads,,Homo sapiens,Saliva,,
+ERR7018474,Raw reads,,Homo sapiens,Saliva,,
+ERR7018482,Raw reads,,Homo sapiens,Saliva,,
+ERR7018493,Raw reads,,Homo sapiens,Saliva,,
+ERR7018500,Raw reads,,Homo sapiens,Saliva,,
+ERR7019208,Raw reads,,Homo sapiens,Saliva,,
+ERR7020529,Raw reads,,Homo sapiens,Saliva,,
+ERR7021186,Raw reads,,Homo sapiens,Saliva,,
+ERR7021883,Raw reads,,Homo sapiens,Saliva,,
+ERR7022909,Raw reads,,Homo sapiens,Saliva,,
+ERR7024258,Raw reads,,Homo sapiens,Saliva,,
+ERR7025502,Raw reads,,Homo sapiens,Saliva,,
+ERR7026826,Raw reads,,Homo sapiens,Saliva,,
+ERR7028786,Raw reads,,Homo sapiens,Saliva,,
+ERR7029111,Raw reads,,Homo sapiens,Saliva,,
+ERR7030474,Raw reads,,Homo sapiens,Urine,,
+ERR7031191,Raw reads,,Homo sapiens,Urine,,
+ERR7032218,Raw reads,,Homo sapiens,Urine,,
+ERR7033612,Raw reads,,Homo sapiens,Urine,,
+ERR7034987,Raw reads,,Homo sapiens,Urine,,
+ERR7036363,Raw reads,,Homo sapiens,Urine,,
+ERR7038539,Raw reads,,Homo sapiens,Urine,,
+ERR7039799,Raw reads,,Homo sapiens,Urine,,
+ERR7039809,Raw reads,,Homo sapiens,Urine,,
+ERR7039821,Raw reads,,Homo sapiens,Urine,,
+ERR7039827,Raw reads,,Homo sapiens,Urine,,
+ERR7039833,Raw reads,,Homo sapiens,Urine,,
+ERR7039843,Raw reads,,Homo sapiens,Urine,,
+ERR7039855,Raw reads,,Homo sapiens,Urine,,
+ERR7039872,Raw reads,,Homo sapiens,Urine,,
+ERR7039891,Raw reads,,Homo sapiens,Urine,,
+SRR14136383,Raw reads,,Homo sapiens,Human Fibroblasts,2020,2020
+SRR14136384,Raw reads,,Homo sapiens,Human Fibroblasts,2020,2020
+SRR14136385,Raw reads,,Homo sapiens,Human Fibroblasts,2020,2020
+SRR14136386,Raw reads,,Homo sapiens,Human Fibroblasts,2020,2020
+SRR14136387,Raw reads,,Homo sapiens,Human Fibroblasts,2020,2020
+SRR14136388,Raw reads,,Homo sapiens,Human Fibroblasts,2020,2020
+ERR2357678,Raw reads,,0,0,,
+SRR1049387,Raw reads,,0,0,,
+SRR1049475,Raw reads,,0,0,,
+SRR1051418,Raw reads,,0,0,,
+SRR1051419,Raw reads,,0,0,,
+SRR1051420,Raw reads,,0,0,,
+ERR2023900,Raw reads,,0,0,,
+ERR2023902,Raw reads,,0,0,,
+ERR2023904,Raw reads,,0,0,,
+ERR2023906,Raw reads,,0,0,,
+ERR2023908,Raw reads,,0,0,,
+ERR2023910,Raw reads,,0,0,,
+ERR2023912,Raw reads,,0,0,,
+ERR2023914,Raw reads,,0,0,,
+ERR2023916,Raw reads,,0,0,,
+ERR2023918,Raw reads,,0,0,,
+ERR2023920,Raw reads,,0,0,,
+ERR2023922,Raw reads,,0,0,,
+ERR2023924,Raw reads,,0,0,,
+ERR2023927,Raw reads,,0,0,,
+ERR2023929,Raw reads,,0,0,,
+ERR2023931,Raw reads,,0,0,,
+ERR2023933,Raw reads,,0,0,,
+ERR2023935,Raw reads,,0,0,,
+ERR2023937,Raw reads,,0,0,,
+ERR2023939,Raw reads,,0,0,,
+ERR2023941,Raw reads,,0,0,,
+ERR2023943,Raw reads,,0,0,,
+ERR2023945,Raw reads,,0,0,,
+ERR2023947,Raw reads,,0,0,,
+ERR2023949,Raw reads,,0,0,,
+ERR2023951,Raw reads,,0,0,,
+ERR2023953,Raw reads,,0,0,,
+ERR2023955,Raw reads,,0,0,,
+ERR2023957,Raw reads,,0,0,,
+ERR2023959,Raw reads,,0,0,,
+ERR2023961,Raw reads,,0,0,,
+ERR2023963,Raw reads,,0,0,,
+ERR2023965,Raw reads,,0,0,,
+ERR2023967,Raw reads,,0,0,,
+ERR2023969,Raw reads,,0,0,,
+ERR2023973,Raw reads,,0,0,,
+ERR2023975,Raw reads,,0,0,,
+ERR2023977,Raw reads,,0,0,,
+ERR2023979,Raw reads,,0,0,,
+ERR2023981,Raw reads,,0,0,,
+ERR2023983,Raw reads,,0,0,,
+ERR2023985,Raw reads,,0,0,,
+ERR2023987,Raw reads,,0,0,,
+ERR2023989,Raw reads,,0,0,,
+ERR2023991,Raw reads,,0,0,,
+ERR2023992,Raw reads,,0,0,,
+ERR2023994,Raw reads,,0,0,,
+ERR2024773,Raw reads,,0,0,,
+ERR2024897,Raw reads,,0,0,,
+ERR2025587,Raw reads,,0,0,,
+ERR2025697,Raw reads,,0,0,,
+ERR1279024,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279025,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279026,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279027,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279028,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279029,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279030,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279031,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279032,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279033,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279034,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279035,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279036,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279037,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279038,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279039,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279040,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279041,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279042,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279043,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279044,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279045,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279046,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279047,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279048,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279049,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279050,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279051,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279052,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279053,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279054,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279055,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279056,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279057,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279058,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279059,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279060,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279061,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR1279062,Raw reads,,Homo sapiens,blood,1/1/2015,2015
+ERR4153856,Raw reads,,Homo sapiens,plasma,1/24/2019,2019
+ERR5052486,Raw reads,,Homo sapiens,Lab cell,,
+ERR5052619,Raw reads,,Homo sapiens,0,,
+ERR3988552,Raw reads,,Homo sapiens,Fibroblast,,
+ERR3988553,Raw reads,,Homo sapiens,Fibroblast,,
+SRR15047131,Raw reads,,Homo sapiens,Cell culture,,
+SRR15047136,Raw reads,,Homo sapiens,urine,,
+ERR3907503,Raw reads,,Homo sapiens,plasma,,
+ERR3907506,Raw reads,,Homo sapiens,plasma,,
+ERR3907507,Raw reads,,Homo sapiens,plasma,,
+ERR3908074,Raw reads,,Homo sapiens,plasma,,
+ERR3908075,Raw reads,,Homo sapiens,plasma,,
+ERR3908076,Raw reads,,Homo sapiens,plasma,,
+ERR3908077,Raw reads,,Homo sapiens,plasma,,
+ERR3908078,Raw reads,,Homo sapiens,plasma,,
+ERR3908079,Raw reads,,Homo sapiens,plasma,,
+ERR3908080,Raw reads,,Homo sapiens,plasma,,
+ERR3908081,Raw reads,,Homo sapiens,plasma,,
+ERR3908082,Raw reads,,Homo sapiens,plasma,,
+ERR3908083,Raw reads,,Homo sapiens,plasma,,
+ERR3908084,Raw reads,,Homo sapiens,plasma,,
+ERR3908120,Raw reads,,Homo sapiens,plasma,,
+ERR3908121,Raw reads,,Homo sapiens,plasma,,
+ERR3908132,Raw reads,,Homo sapiens,plasma,,
+ERR3908133,Raw reads,,Homo sapiens,plasma,,
+ERR3908134,Raw reads,,Homo sapiens,plasma,,
+ERR3908135,Raw reads,,Homo sapiens,plasma,,
+ERR3908136,Raw reads,,Homo sapiens,plasma,,
+ERR3908137,Raw reads,,Homo sapiens,plasma,,
+ERR3908138,Raw reads,,Homo sapiens,plasma,,
+ERR3908150,Raw reads,,Homo sapiens,plasma,,
+ERR3908151,Raw reads,,Homo sapiens,plasma,,
+ERR3908152,Raw reads,,Homo sapiens,plasma,,
+ERR3908153,Raw reads,,Homo sapiens,plasma,,
+ERR3908154,Raw reads,,Homo sapiens,plasma,,
+ERR3908155,Raw reads,,Homo sapiens,plasma,,
+ERR3908156,Raw reads,,Homo sapiens,plasma,,
+ERR3908157,Raw reads,,Homo sapiens,plasma,,
+ERR3908158,Raw reads,,Homo sapiens,plasma,,
+ERR3908159,Raw reads,,Homo sapiens,plasma,,
+ERR3908160,Raw reads,,Homo sapiens,plasma,,
+ERR3908161,Raw reads,,Homo sapiens,plasma,,
+ERR3908162,Raw reads,,Homo sapiens,plasma,,
+ERR3908163,Raw reads,,Homo sapiens,plasma,,
+ERR3908164,Raw reads,,Homo sapiens,plasma,,
+ERR3908165,Raw reads,,Homo sapiens,plasma,,
+ERR3908166,Raw reads,,Homo sapiens,plasma,,
+ERR3908167,Raw reads,,Homo sapiens,plasma,,
+ERR3908168,Raw reads,,Homo sapiens,plasma,,
+ERR3908169,Raw reads,,Homo sapiens,blood,,
+ERR3908170,Raw reads,,Homo sapiens,blood,,
+ERR3908171,Raw reads,,Homo sapiens,blood,,
+ERR3908172,Raw reads,,Homo sapiens,blood,,
+ERR3908173,Raw reads,,Homo sapiens,blood,,
+ERR3908174,Raw reads,,Homo sapiens,blood,,
+ERR3908175,Raw reads,,Homo sapiens,blood,,
+ERR3908176,Raw reads,,Homo sapiens,blood,,
+ERR3908177,Raw reads,,Homo sapiens,blood,,
+ERR3908178,Raw reads,,Homo sapiens,blood,,
+ERR3908179,Raw reads,,Homo sapiens,blood,,
+ERR3908180,Raw reads,,Homo sapiens,blood,,
+ERR3908181,Raw reads,,Homo sapiens,blood,,
+ERR3908182,Raw reads,,Homo sapiens,blood,,
+ERR3908183,Raw reads,,Homo sapiens,blood,,
+ERR3908184,Raw reads,,Homo sapiens,blood,,
+ERR3908185,Raw reads,,Homo sapiens,blood,,
+ERR3908186,Raw reads,,Homo sapiens,blood,,
+ERR3908187,Raw reads,,Homo sapiens,blood,,
+ERR3908188,Raw reads,,Homo sapiens,blood,,
+SRR13399506,Raw reads,,Homo sapiens,saliva,2016,2016
+SRR13399507,Raw reads,,Homo sapiens,new born child urine,2019,2019
+SRR10583112,Raw reads,,Homo sapiens,blood,2018,2018
+SRR10583113,Raw reads,,Homo sapiens,blood,2018,2018
+SRR10583114,Raw reads,,Homo sapiens,blood,2018,2018
+SRR10583115,Raw reads,,Homo sapiens,blood,2018,2018
+SRR10583116,Raw reads,,Homo sapiens,blood,2018,2018
+SRR10583117,Raw reads,,Homo sapiens,blood,2018,2018
+SRR10583118,Raw reads,,Homo sapiens,blood,2018,2018
+SRR10583119,Raw reads,,Homo sapiens,blood,2018,2018
+SRR10583120,Raw reads,,Homo sapiens,blood,2018,2018
+SRR10583121,Raw reads,,Homo sapiens,blood,2018,2018
+SRR10583122,Raw reads,,Homo sapiens,blood,2018,2018
+SRR10583123,Raw reads,,Homo sapiens,blood,2018,2018
+SRR11053566,Raw reads,,Homo sapiens,0,,
+SRR11053576,Raw reads,,Homo sapiens,0,,
+SRR11053580,Raw reads,,Homo sapiens,0,,
+SRR11053581,Raw reads,,Homo sapiens,0,,
+SRR11053586,Raw reads,,Homo sapiens,0,,
+SRR11053587,Raw reads,,Homo sapiens,0,,
+SRR11053588,Raw reads,,Homo sapiens,0,,
+SRR11053589,Raw reads,,Homo sapiens,0,,
+SRR11053590,Raw reads,,Homo sapiens,0,,
+SRR11053591,Raw reads,,Homo sapiens,0,,
+SRR11053592,Raw reads,,Homo sapiens,0,,
+SRR11053593,Raw reads,,Homo sapiens,0,,
+SRR11053594,Raw reads,,Homo sapiens,0,,
+SRR11053598,Raw reads,,Homo sapiens,0,,
+SRR11053603,Raw reads,,Homo sapiens,0,,
+SRR15047130,Raw reads,,Homo sapiens,Cell culture,,
+SRR15047132,Raw reads,,Homo sapiens,urine,,
+SRR15047133,Raw reads,,Homo sapiens,urine,,
+SRR15047134,Raw reads,,Homo sapiens,Cell culture,,
+SRR15047135,Raw reads,,Homo sapiens,Cell culture,,
+SRR15047137,Raw reads,,Homo sapiens,urine,,
+SRR13285296,Raw reads,,Homo sapiens,BAC DNA,2020-01,2020
+SRR13285297,Raw reads,,Homo sapiens,BAC DNA,2020-01,2020
+SRR13285299,Raw reads,,Homo sapiens,BAC DNA,2020-01,2020
+SRR13285298,Raw reads,,Homo sapiens,BAC DNA,2020-01,2020
+SRR13285300,Raw reads,,Homo sapiens,BAC DNA,2020-01,2020
+SRR13285301,Raw reads,,Homo sapiens,BAC DNA,2020-01,2020
+SRR13285302,Raw reads,,Homo sapiens,BAC DNA,2020-01,2020
+SRR13332047,Raw reads,,Macaca mulatta,culture,2019,2019
+SRR13332048,Raw reads,,Macaca mulatta,culture,2019,2019
+SRR13332049,Raw reads,,Macaca mulatta,culture,2019,2019
+SRR13333579,Raw reads,,Macaca mulatta,culture,2019,2019
+SRR10566655,Raw reads,,Homo sapiens,France,2017-05,2017
+SRR12546125,Raw reads,,Homo sapiens,culture,2019,2019
+SRR12546126,Raw reads,,Homo sapiens,culture,2019,2019
+SRR12546127,Raw reads,,Macaca mulatta,culture,2019,2019
+SRR12546128,Raw reads,,Homo sapiens,culture,2019,2019
+SRR17984671,Raw reads,,Homo sapiens,bacterial artificial chromosome,5/8/2021,2021
+ERR5194360,Raw reads,,0,0,,
+ERR5194361,Raw reads,,0,0,,
+ERR5194362,Raw reads,,0,0,,
+ERR5194363,Raw reads,,0,0,,
+ERR5194364,Raw reads,,0,0,,
+ERR5194365,Raw reads,,0,0,,
+ERR5194366,Raw reads,,0,0,,
+ERR5194367,Raw reads,,0,0,,
+ERR5194368,Raw reads,,0,0,,
+ERR5194369,Raw reads,,0,0,,
+ERR5194370,Raw reads,,0,0,,
+ERR5194371,Raw reads,,0,0,,
+ERR5194372,Raw reads,,0,0,,
+ERR5194359,Raw reads,,0,0,,
+SRR16693876,Raw reads,,Macaca mulatta,Lungs and gastrointestinal tract of a SIV-infected rhesus macaque that died of AIDS,2006,2006
+SRR16693877,Raw reads,,Macaca mulatta,Urine from a rhesus macaque,1968,1968
+SRR16693878,Raw reads,,Macaca mulatta,Urine from a rhesus macaque,1968,1968
+SRR17951476,Raw reads,,Homo sapiens,laboratory,5/8/2021,2021
+SRR13587442,Raw reads,,,,,
+SRR13587450,Raw reads,,,,,
+SRR13587451,Raw reads,,,,,
+SRR13587452,Raw reads,,,,,
+SRR13587453,Raw reads,,,,,
+SRR13587464,Raw reads,,,,,
+ERR14114011,Raw reads,,Homo sapiens,0,2000,2000
+SRR30131375,Raw reads,,Homo sapiens,Cell line,2022-04,2022
+SRR30131376,Raw reads,,Homo sapiens,Cell line,2022-04,2022
+SRR30131377,Raw reads,,Homo sapiens,Cell line,2022-04,2022
+SRR30131378,Raw reads,,Homo sapiens,Cell line,2022-04,2022
+SRR30131379,Raw reads,,Homo sapiens,Cell line,2022-04,2022
+SRR30131380,Raw reads,,Homo sapiens,Cell line,2022-04,2022
+SRR30131382,Raw reads,,Homo sapiens,Cell line,2022-04,2022
+SRR30131384,Raw reads,,Homo sapiens,Cell line,2023-04,2023
+SRR30131385,Raw reads,,Homo sapiens,Cell line,2023-04,2023
+SRR30131386,Raw reads,,Homo sapiens,Cell line,2023-04,2023
+SRR30131387,Raw reads,,Homo sapiens,Cell line,2023-04,2023
+SRR30131388,Raw reads,,Homo sapiens,Cell line,2023-04,2023
+SRR30131389,Raw reads,,Homo sapiens,Cell line,2023-04,2023
+SRR30131390,Raw reads,,Homo sapiens,Cell line,2023-04,2023
+SRR30131391,Raw reads,,Homo sapiens,Cell line,2023-04,2023
+SRR30131392,Raw reads,,Homo sapiens,Cell line,2022-04,2022
+SRR30131393,Raw reads,,Homo sapiens,Cell line,2022-04,2022

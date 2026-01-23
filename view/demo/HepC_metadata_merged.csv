@@ -1,0 +1,713 @@
+label,source,genotype,collection_year,location,host,tissue,Accession,Organism_Name,decade,tissue_clean
+character,character,character,date,character,character,character,character,character,character,character
+s0019,Reference,5,2003,USA,Homo sapiens,adenoid,BK000394,Human betaherpesvirus 5,2000s,other
+s0027,Reference,5,2009,Italy,Homo sapiens,amniotic fluid,GU179291,Human betaherpesvirus 5,2000s,body_fluid
+s0014,Reference,5,NA,China,Homo sapiens,NA,KJ426589,Human betaherpesvirus 5,Unknown,NA
+s0021,Reference,5,NA,Australia,Homo sapiens,amniotic fluid,KT634296,Human betaherpesvirus 5,Unknown,body_fluid
+s0003,Reference,5,2016,France,Homo sapiens,amniotic fluid,KU550089,Human betaherpesvirus 5,2010s,body_fluid
+s0010,Reference,5,NA,Israel,Homo sapiens,urine,KR534197,Human betaherpesvirus 5,Unknown,body_fluid
+s0018,Reference,5,NA,Israel,Homo sapiens,amniotic fluid,KR534210,Human betaherpesvirus 5,Unknown,body_fluid
+s0028,Reference,5,NA,USA,Homo sapiens,blood,KX544837,Human betaherpesvirus 5,Unknown,blood
+s0017,Reference,5,NA,Germany,Homo sapiens,animal tissues,KY123652,Human betaherpesvirus 5,Unknown,other
+s0022,Reference,Unknown,2017,USA,Macaca fascicularis,NA,NC_033176,Cynomolgus cytomegalovirus,2010s,NA
+s0015,Reference,5,2017,Czech Republic,Homo sapiens,amniotic fluid,KY490068,Human betaherpesvirus 5,2010s,body_fluid
+s0006,Reference,5,2019,Zambia,Homo sapiens,mammalian milk,MK422176,Human betaherpesvirus 5,2010s,body_fluid
+s0000,Reference,5,2020,Australia,Homo sapiens,blood,MT044480,Human betaherpesvirus 5,2020s,blood
+s0002,Reference,5,2020,United Kingdom,Homo sapiens,blood,MT044476,Human betaherpesvirus 5,2020s,blood
+s0005,Reference,5,2020,Australia,Homo sapiens,blood,MT044485,Human betaherpesvirus 5,2020s,blood
+s0011,Reference,5,2020,Italy,Homo sapiens,NA,MW197157,Human betaherpesvirus 5,2020s,NA
+s0026,Reference,5,2021,Germany,Homo sapiens,NA,MW439039,Human betaherpesvirus 5,2020s,NA
+s0009,Reference,5,NA,Belgium,Homo sapiens,NA,OK000909,Human betaherpesvirus 5,Unknown,NA
+s0024,Reference,5,NA,Italy,Homo sapiens,NA,OV100763,Human betaherpesvirus 5,Unknown,NA
+s0025,Reference,3,NA,USA,Macaca mulatta,NA,MZ517254,macacine betaherpesvirus 3,Unknown,NA
+s0013,Reference,5,2023,United Kingdom,Homo sapiens,urine,OQ466312,Human betaherpesvirus 5,2020s,body_fluid
+s0008,Reference,5,NA,Austria,Homo sapiens,NA,OU342912,Human betaherpesvirus 5,Unknown,NA
+s0004,Reference,5,NA,South Africa,Homo sapiens,NA,OU342918,Human betaherpesvirus 5,Unknown,NA
+s0007,Reference,5,NA,South Africa,Homo sapiens,NA,OU342916,Human betaherpesvirus 5,Unknown,NA
+s0023,Reference,5,NA,Czech Republic,Homo sapiens,NA,OU342915,Human betaherpesvirus 5,Unknown,NA
+s0020,Reference,5,NA,Czech Republic,Homo sapiens,NA,OU342911,Human betaherpesvirus 5,Unknown,NA
+s0016,Reference,5,NA,Austria,Homo sapiens,NA,OU342900,Human betaherpesvirus 5,Unknown,NA
+HepC_ERR2882354,Raw reads,5,NA,United Kingdom,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR3005804,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3013916,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3013917,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3013918,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3013919,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3013920,Raw reads,5,NA,Italy,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3013921,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3013922,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3013923,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3013924,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3013925,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3013926,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3013927,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3013928,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3013929,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3013930,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3013935,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3013936,Raw reads,5,NA,Israel,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR3013937,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014165,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014174,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014175,Raw reads,5,NA,Italy,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014176,Raw reads,5,NA,Israel,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014177,Raw reads,5,NA,Israel,Unknown,Kidney biopsy,NA,NA,Unknown,biopsy
+HepC_ERR3014178,Raw reads,5,NA,Israel,Unknown,Bronchoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR3014179,Raw reads,5,NA,Israel,Unknown,Lung biopsy,NA,NA,Unknown,respiratory
+HepC_ERR3014180,Raw reads,5,NA,Israel,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014415,Raw reads,5,NA,Israel,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014420,Raw reads,5,NA,Israel,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014421,Raw reads,5,NA,Israel,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014423,Raw reads,5,NA,Israel,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014424,Raw reads,5,NA,Israel,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014425,Raw reads,5,NA,Israel,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014426,Raw reads,5,NA,Israel,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014430,Raw reads,5,NA,Israel,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014431,Raw reads,5,NA,Israel,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014432,Raw reads,5,NA,Israel,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014433,Raw reads,5,NA,Israel,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014434,Raw reads,5,NA,Israel,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014435,Raw reads,5,NA,Israel,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014436,Raw reads,5,NA,Czech Republic,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR3014437,Raw reads,5,NA,Czech Republic,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR3014438,Raw reads,5,NA,Czech Republic,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR3014439,Raw reads,5,NA,Czech Republic,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR3014440,Raw reads,5,NA,Czech Republic,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR3014441,Raw reads,5,NA,Czech Republic,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR3014515,Raw reads,5,NA,Czech Republic,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR3014516,Raw reads,5,NA,Czech Republic,Unknown,Cord blood,NA,NA,Unknown,blood
+HepC_ERR3014517,Raw reads,5,NA,Czech Republic,Unknown,Amniotic fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014518,Raw reads,5,NA,Czech Republic,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR3014519,Raw reads,5,NA,Czech Republic,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR3014520,Raw reads,5,NA,Czech Republic,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR3014521,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014522,Raw reads,5,NA,Germany,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR3014523,Raw reads,5,NA,Germany,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR3014524,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014525,Raw reads,5,NA,Germany,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3014526,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014527,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014528,Raw reads,5,NA,Germany,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR3014529,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014530,Raw reads,5,NA,Germany,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR3014531,Raw reads,5,NA,Germany,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3014532,Raw reads,5,NA,Germany,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3014533,Raw reads,5,NA,Germany,Unknown,Trachaeal secretion,NA,NA,Unknown,respiratory
+HepC_ERR3014534,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014535,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014536,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014537,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014538,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014539,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014540,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014541,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014542,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014543,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014544,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014545,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014546,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014547,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014548,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014549,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014550,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014551,Raw reads,5,NA,Germany,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014552,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014553,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014554,Raw reads,5,NA,Germany,Unknown,Biopsy,NA,NA,Unknown,biopsy
+HepC_ERR3014555,Raw reads,5,NA,Germany,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014556,Raw reads,5,NA,Germany,Unknown,Bronchoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR3014557,Raw reads,5,NA,Germany,Unknown,Vitreous body fluid,NA,NA,Unknown,body_fluid
+HepC_ERR3014558,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014559,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014560,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014561,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014562,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014563,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014564,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014565,Raw reads,5,NA,Germany,Unknown,Biopsy,NA,NA,Unknown,biopsy
+HepC_ERR3014566,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014567,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014569,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014570,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014571,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014572,Raw reads,5,NA,Germany,Unknown,Nasal swab,NA,NA,Unknown,respiratory
+HepC_ERR3014573,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014574,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014575,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014576,Raw reads,5,NA,Germany,Unknown,Biopsy,NA,NA,Unknown,biopsy
+HepC_ERR3014577,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014578,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014579,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014589,Raw reads,5,NA,Germany,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014610,Raw reads,5,NA,Germany,Unknown,Bronchoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR3014626,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014627,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014628,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014629,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014630,Raw reads,5,NA,Germany,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014631,Raw reads,5,NA,Germany,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014632,Raw reads,5,NA,Germany,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014633,Raw reads,5,NA,Germany,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014634,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014635,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014636,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014637,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014638,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014639,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014681,Raw reads,5,NA,Germany,Unknown,Biopsy,NA,NA,Unknown,biopsy
+HepC_ERR3014682,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014683,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014684,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014685,Raw reads,5,NA,Germany,Unknown,Bronchoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR3014686,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014687,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014688,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014689,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014690,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014691,Raw reads,5,NA,Germany,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR3014692,Raw reads,5,NA,Italy,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014693,Raw reads,5,NA,Italy,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014694,Raw reads,5,NA,Italy,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014695,Raw reads,5,NA,Italy,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014696,Raw reads,5,NA,Italy,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014697,Raw reads,5,NA,Italy,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014698,Raw reads,5,NA,Italy,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014699,Raw reads,5,NA,Italy,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014700,Raw reads,5,NA,Italy,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014701,Raw reads,5,NA,Italy,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014702,Raw reads,5,NA,Italy,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014703,Raw reads,5,NA,Italy,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR3014901,Raw reads,5,NA,Israel,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR3163177,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163178,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163179,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163180,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163181,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163182,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163198,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163199,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163224,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163231,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163232,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163233,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163234,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163235,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163236,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163251,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163252,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163253,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163254,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163257,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163258,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163259,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163274,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163275,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163276,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163277,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163329,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR3163330,Raw reads,5,NA,United Kingdom,Unknown,Milk,NA,NA,Unknown,body_fluid
+HepC_ERR4288696,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288700,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288701,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288702,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288703,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288704,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288705,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288706,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288707,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288708,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288709,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288710,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288711,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288713,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288714,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288716,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288717,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288718,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288719,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288720,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288721,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288722,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288723,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288724,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288725,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288726,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288697,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288698,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR4288699,Raw reads,5,NA,Germany,Unknown,plasma,NA,NA,Unknown,blood
+HepC_SRR9285893,Raw reads,5,2019,USA,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR9285894,Raw reads,5,2019,USA,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR9285895,Raw reads,5,2019,USA,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR9285896,Raw reads,5,2019,USA,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR9285897,Raw reads,5,2019,USA,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR9285898,Raw reads,5,2019,USA,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR9285899,Raw reads,5,2019,USA,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR9285900,Raw reads,5,2019,USA,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR9285901,Raw reads,5,2019,USA,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_ERR3276890,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR3276891,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR3276892,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR3276893,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR3276894,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR3276895,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR3276896,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR3276897,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR3276898,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR3276899,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_SRR11053567,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053568,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053569,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053570,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053571,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053572,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053573,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053574,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053575,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053577,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053578,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053579,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053582,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053583,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053584,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053585,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053595,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053596,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053597,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053599,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053600,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053601,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053602,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053604,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053605,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053606,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053607,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053608,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR9067737,Raw reads,5,2013,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR9067738,Raw reads,5,2014,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR9067739,Raw reads,5,2014,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR9067740,Raw reads,5,2008,France,Homo sapiens,NA,NA,NA,2000s,NA
+HepC_SRR9067741,Raw reads,5,2013,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR9067742,Raw reads,5,2008,France,Homo sapiens,NA,NA,NA,2000s,NA
+HepC_SRR9067743,Raw reads,5,2009,France,Homo sapiens,NA,NA,NA,2000s,NA
+HepC_ERR2282550,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2282552,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2282605,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2282629,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2091819,Raw reads,5,NA,United Kingdom,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_SRR315264,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR011940,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR011941,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR011942,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR011943,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR011944,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2282551,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2282574,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2282606,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2282607,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_SRR7093665,Raw reads,5,2018,China,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR7093666,Raw reads,5,2018,China,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR23882357,Raw reads,5,2020,United Kingdom,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR23882358,Raw reads,5,2020,United Kingdom,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR23882359,Raw reads,5,2020,United Kingdom,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR23882360,Raw reads,5,2020,United Kingdom,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_ERR10905091,Raw reads,5,2020,United Kingdom,Unknown,NA,NA,NA,2020s,NA
+HepC_ERR10905092,Raw reads,5,2020,United Kingdom,Unknown,NA,NA,NA,2020s,NA
+HepC_SRR30553691,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553692,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553693,Raw reads,5,2023,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553695,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553696,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553697,Raw reads,5,2021,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553698,Raw reads,5,2021,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553699,Raw reads,5,2021,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553700,Raw reads,5,2021,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553701,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553703,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553704,Raw reads,5,2021,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553705,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553706,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553707,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553708,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553709,Raw reads,5,2021,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553710,Raw reads,5,2021,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553711,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553712,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553714,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553715,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553716,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553717,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553718,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553719,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553720,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553721,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553722,Raw reads,5,2023,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553729,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553730,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553731,Raw reads,5,2023,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553738,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553739,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553740,Raw reads,5,2023,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553746,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_SRR30553747,Raw reads,5,2022,Austria,not applicable,NA,NA,NA,2020s,NA
+HepC_ERR6041287,Raw reads,5,NA,South Africa,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6041288,Raw reads,5,NA,South Africa,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6041289,Raw reads,5,NA,South Africa,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6041290,Raw reads,5,NA,South Africa,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6041303,Raw reads,5,NA,South Africa,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6041346,Raw reads,5,NA,South Africa,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6041348,Raw reads,5,NA,South Africa,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6041349,Raw reads,5,NA,South Africa,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6041350,Raw reads,5,NA,South Africa,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6041351,Raw reads,5,NA,South Africa,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6041352,Raw reads,5,NA,South Africa,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6041353,Raw reads,5,NA,South Africa,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6041354,Raw reads,5,NA,South Africa,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6041449,Raw reads,5,NA,South Africa,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6041577,Raw reads,5,NA,South Africa,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6041578,Raw reads,5,NA,South Africa,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6041579,Raw reads,5,NA,South Africa,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6041580,Raw reads,5,NA,South Africa,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6041581,Raw reads,5,NA,South Africa,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6041582,Raw reads,5,NA,South Africa,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6041584,Raw reads,5,NA,South Africa,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6041589,Raw reads,5,NA,South Africa,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6041602,Raw reads,5,NA,South Africa,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6041603,Raw reads,5,NA,South Africa,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6041604,Raw reads,5,NA,Czech Republic,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6041685,Raw reads,5,NA,Czech Republic,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR6043493,Raw reads,5,NA,Czech Republic,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6043494,Raw reads,5,NA,Czech Republic,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR6043495,Raw reads,5,NA,Czech Republic,Unknown,endotracheal,NA,NA,Unknown,respiratory
+HepC_ERR6043496,Raw reads,5,NA,Czech Republic,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR6043497,Raw reads,5,NA,Czech Republic,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6043498,Raw reads,5,NA,Czech Republic,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR6043499,Raw reads,5,NA,Czech Republic,Unknown,airway aspirate,NA,NA,Unknown,respiratory
+HepC_ERR6043500,Raw reads,5,NA,Czech Republic,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR6043501,Raw reads,5,NA,Czech Republic,Unknown,endotracheal,NA,NA,Unknown,respiratory
+HepC_ERR6043502,Raw reads,5,NA,Czech Republic,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR6043504,Raw reads,5,NA,Czech Republic,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6043505,Raw reads,5,NA,Czech Republic,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR6043506,Raw reads,5,NA,Austria,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6043615,Raw reads,5,NA,Austria,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6043616,Raw reads,5,NA,Austria,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6043617,Raw reads,5,NA,Austria,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6043618,Raw reads,5,NA,Austria,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6043619,Raw reads,5,NA,Austria,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6043621,Raw reads,5,NA,Austria,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6043622,Raw reads,5,NA,Austria,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6043623,Raw reads,5,NA,Austria,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6043624,Raw reads,5,NA,Austria,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6043625,Raw reads,5,NA,Austria,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6043626,Raw reads,5,NA,Austria,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6043627,Raw reads,5,NA,Austria,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6043628,Raw reads,5,NA,Austria,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6043629,Raw reads,5,NA,Austria,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6043630,Raw reads,5,NA,Austria,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6043631,Raw reads,5,NA,Austria,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6043811,Raw reads,5,NA,Austria,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6043812,Raw reads,5,NA,Austria,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6043813,Raw reads,5,NA,Austria,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6043814,Raw reads,5,NA,Austria,Unknown,brochoalveolar lavage,NA,NA,Unknown,respiratory
+HepC_ERR6043829,Raw reads,5,NA,Austria,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR6043830,Raw reads,5,NA,Austria,Unknown,Plasma,NA,NA,Unknown,blood
+HepC_ERR7018437,Raw reads,5,NA,Italy,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR7018441,Raw reads,5,NA,Italy,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR7018443,Raw reads,5,NA,Italy,Unknown,Blood,NA,NA,Unknown,blood
+HepC_ERR7018450,Raw reads,5,NA,Italy,Unknown,Saliva,NA,NA,Unknown,body_fluid
+HepC_ERR7018455,Raw reads,5,NA,Italy,Unknown,Saliva,NA,NA,Unknown,body_fluid
+HepC_ERR7018466,Raw reads,5,NA,Italy,Unknown,Saliva,NA,NA,Unknown,body_fluid
+HepC_ERR7018474,Raw reads,5,NA,Italy,Unknown,Saliva,NA,NA,Unknown,body_fluid
+HepC_ERR7018482,Raw reads,5,NA,Italy,Unknown,Saliva,NA,NA,Unknown,body_fluid
+HepC_ERR7018493,Raw reads,5,NA,Italy,Unknown,Saliva,NA,NA,Unknown,body_fluid
+HepC_ERR7018500,Raw reads,5,NA,Italy,Unknown,Saliva,NA,NA,Unknown,body_fluid
+HepC_ERR7019208,Raw reads,5,NA,Italy,Unknown,Saliva,NA,NA,Unknown,body_fluid
+HepC_ERR7020529,Raw reads,5,NA,Italy,Unknown,Saliva,NA,NA,Unknown,body_fluid
+HepC_ERR7021186,Raw reads,5,NA,Italy,Unknown,Saliva,NA,NA,Unknown,body_fluid
+HepC_ERR7021883,Raw reads,5,NA,Italy,Unknown,Saliva,NA,NA,Unknown,body_fluid
+HepC_ERR7022909,Raw reads,5,NA,Italy,Unknown,Saliva,NA,NA,Unknown,body_fluid
+HepC_ERR7024258,Raw reads,5,NA,Italy,Unknown,Saliva,NA,NA,Unknown,body_fluid
+HepC_ERR7025502,Raw reads,5,NA,Italy,Unknown,Saliva,NA,NA,Unknown,body_fluid
+HepC_ERR7026826,Raw reads,5,NA,Italy,Unknown,Saliva,NA,NA,Unknown,body_fluid
+HepC_ERR7028786,Raw reads,5,NA,Italy,Unknown,Saliva,NA,NA,Unknown,body_fluid
+HepC_ERR7029111,Raw reads,5,NA,Italy,Unknown,Saliva,NA,NA,Unknown,body_fluid
+HepC_ERR7030474,Raw reads,5,NA,Italy,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR7031191,Raw reads,5,NA,Italy,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR7032218,Raw reads,5,NA,Italy,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR7033612,Raw reads,5,NA,Italy,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR7034987,Raw reads,5,NA,Italy,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR7036363,Raw reads,5,NA,Italy,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR7038539,Raw reads,5,NA,Italy,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR7039799,Raw reads,5,NA,Italy,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR7039809,Raw reads,5,NA,Italy,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR7039821,Raw reads,5,NA,Italy,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR7039827,Raw reads,5,NA,Italy,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR7039833,Raw reads,5,NA,Italy,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR7039843,Raw reads,5,NA,Italy,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR7039855,Raw reads,5,NA,Italy,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR7039872,Raw reads,5,NA,Italy,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_ERR7039891,Raw reads,5,NA,Italy,Unknown,Urine,NA,NA,Unknown,body_fluid
+HepC_SRR14136383,Raw reads,5,2020,USA,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR14136384,Raw reads,5,2020,USA,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR14136385,Raw reads,5,2020,USA,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR14136386,Raw reads,5,2020,USA,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR14136387,Raw reads,5,2020,USA,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR14136388,Raw reads,5,2020,USA,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_ERR2357678,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_SRR1049387,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_SRR1049475,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_SRR1051418,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_SRR1051419,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_SRR1051420,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023900,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023902,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023904,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023906,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023908,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023910,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023912,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023914,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023916,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023918,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023920,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023922,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023924,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023927,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023929,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023931,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023933,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023935,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023937,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023939,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023941,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023943,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023945,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023947,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023949,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023951,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023953,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023955,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023957,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023959,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023961,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023963,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023965,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023967,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023969,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023973,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023975,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023977,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023979,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023981,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023983,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023985,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023987,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023989,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023991,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023992,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2023994,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2024773,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2024897,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2025587,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR2025697,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR1279024,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279025,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279026,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279027,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279028,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279029,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279030,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279031,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279032,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279033,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279034,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279035,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279036,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279037,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279038,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279039,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279040,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279041,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279042,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279043,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279044,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279045,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279046,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279047,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279048,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279049,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279050,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279051,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279052,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279053,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279054,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279055,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279056,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279057,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279058,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279059,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279060,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279061,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR1279062,Raw reads,5,2015,United Kingdom,Unknown,NA,NA,NA,2010s,NA
+HepC_ERR4153856,Raw reads,5,2019,Bangladesh,Unknown,plasma,NA,NA,2010s,blood
+HepC_ERR5052486,Raw reads,5,NA,United Kingdom,Unknown,Lab cell,NA,NA,Unknown,cell_culture
+HepC_ERR5052619,Raw reads,5,NA,USA,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR3988552,Raw reads,5,NA,USA,Unknown,Fibroblast,NA,NA,Unknown,cell_culture
+HepC_ERR3988553,Raw reads,5,NA,USA,Unknown,Fibroblast,NA,NA,Unknown,cell_culture
+HepC_SRR15047131,Raw reads,5,NA,uncalculated,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR15047136,Raw reads,5,NA,uncalculated,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_ERR3907503,Raw reads,5,NA,Australia,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3907506,Raw reads,5,NA,Australia,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3907507,Raw reads,5,NA,Australia,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908074,Raw reads,5,NA,Australia,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908075,Raw reads,5,NA,Australia,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908076,Raw reads,5,NA,Australia,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908077,Raw reads,5,NA,Australia,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908078,Raw reads,5,NA,Australia,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908079,Raw reads,5,NA,Australia,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908080,Raw reads,5,NA,Australia,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908081,Raw reads,5,NA,Australia,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908082,Raw reads,5,NA,Australia,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908083,Raw reads,5,NA,Australia,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908084,Raw reads,5,NA,Australia,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908120,Raw reads,5,NA,Australia,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908121,Raw reads,5,NA,Australia,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908132,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908133,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908134,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908135,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908136,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908137,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908138,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908150,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908151,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908152,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908153,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908154,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908155,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908156,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908157,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908158,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908159,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908160,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908161,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908162,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908163,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908164,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908165,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908166,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908167,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908168,Raw reads,5,NA,United Kingdom,Unknown,plasma,NA,NA,Unknown,blood
+HepC_ERR3908169,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908170,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908171,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908172,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908173,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908174,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908175,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908176,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908177,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908178,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908179,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908180,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908181,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908182,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908183,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908184,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908185,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908186,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908187,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_ERR3908188,Raw reads,5,NA,Germany,Unknown,blood,NA,NA,Unknown,blood
+HepC_SRR13399506,Raw reads,5,2016,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR13399507,Raw reads,5,2019,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR10583112,Raw reads,5,2018,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR10583113,Raw reads,5,2018,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR10583114,Raw reads,5,2018,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR10583115,Raw reads,5,2018,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR10583116,Raw reads,5,2018,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR10583117,Raw reads,5,2018,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR10583118,Raw reads,5,2018,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR10583119,Raw reads,5,2018,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR10583120,Raw reads,5,2018,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR10583121,Raw reads,5,2018,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR10583122,Raw reads,5,2018,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR10583123,Raw reads,5,2018,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR11053566,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053576,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053580,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053581,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053586,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053587,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053588,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053589,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053590,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053591,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053592,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053593,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053594,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053598,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR11053603,Raw reads,Unknown,NA,Unknown,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR15047130,Raw reads,5,NA,uncalculated,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR15047132,Raw reads,5,NA,uncalculated,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR15047133,Raw reads,5,NA,uncalculated,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR15047134,Raw reads,5,NA,uncalculated,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR15047135,Raw reads,5,NA,uncalculated,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR15047137,Raw reads,5,NA,uncalculated,Homo sapiens,NA,NA,NA,Unknown,NA
+HepC_SRR13285296,Raw reads,5,2020,USA,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR13285297,Raw reads,5,2020,USA,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR13285299,Raw reads,5,2020,USA,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR13285298,Raw reads,5,2020,USA,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR13285300,Raw reads,5,2020,USA,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR13285301,Raw reads,5,2020,USA,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR13285302,Raw reads,5,2020,USA,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR13332047,Raw reads,3,2019,USA,Macaca mulatta,NA,NA,NA,2010s,NA
+HepC_SRR13332048,Raw reads,3,2019,USA,Macaca mulatta,NA,NA,NA,2010s,NA
+HepC_SRR13332049,Raw reads,3,2019,USA,Macaca mulatta,NA,NA,NA,2010s,NA
+HepC_SRR13333579,Raw reads,3,2019,USA,Macaca mulatta,NA,NA,NA,2010s,NA
+HepC_SRR10566655,Raw reads,5,2017,France,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR12546125,Raw reads,3,2019,USA,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR12546126,Raw reads,3,2019,USA,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR12546127,Raw reads,3,2019,USA,Macaca mulatta,NA,NA,NA,2010s,NA
+HepC_SRR12546128,Raw reads,3,2019,USA,Homo sapiens,NA,NA,NA,2010s,NA
+HepC_SRR17984671,Raw reads,5,2021,USA,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_ERR5194360,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR5194361,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR5194362,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR5194363,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR5194364,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR5194365,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR5194366,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR5194367,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR5194368,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR5194369,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR5194370,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR5194371,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR5194372,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_ERR5194359,Raw reads,5,NA,Unknown,Unknown,NA,NA,NA,Unknown,NA
+HepC_SRR16693876,Raw reads,3,2006,USA,Macaca mulatta,NA,NA,NA,2000s,NA
+HepC_SRR16693877,Raw reads,3,1968,USA,Macaca mulatta,NA,NA,NA,1990s,NA
+HepC_SRR16693878,Raw reads,3,1968,USA,Macaca mulatta,NA,NA,NA,1990s,NA
+HepC_SRR17951476,Raw reads,5,2021,USA,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR13587442,Raw reads,5,NA,uncalculated,not applicable,NA,NA,NA,Unknown,NA
+HepC_SRR13587450,Raw reads,5,NA,uncalculated,not applicable,NA,NA,NA,Unknown,NA
+HepC_SRR13587451,Raw reads,5,NA,uncalculated,not applicable,NA,NA,NA,Unknown,NA
+HepC_SRR13587452,Raw reads,5,NA,uncalculated,not applicable,NA,NA,NA,Unknown,NA
+HepC_SRR13587453,Raw reads,5,NA,uncalculated,not applicable,NA,NA,NA,Unknown,NA
+HepC_SRR13587464,Raw reads,5,NA,uncalculated,not applicable,NA,NA,NA,Unknown,NA
+HepC_ERR14114011,Raw reads,5,2000,Germany,Unknown,NA,NA,NA,2000s,NA
+HepC_SRR30131375,Raw reads,5,2022,South Korea,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR30131376,Raw reads,5,2022,South Korea,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR30131377,Raw reads,5,2022,South Korea,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR30131378,Raw reads,5,2022,South Korea,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR30131379,Raw reads,5,2022,South Korea,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR30131380,Raw reads,5,2022,South Korea,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR30131382,Raw reads,5,2022,South Korea,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR30131384,Raw reads,5,2023,South Korea,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR30131385,Raw reads,5,2023,South Korea,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR30131386,Raw reads,5,2023,South Korea,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR30131387,Raw reads,5,2023,South Korea,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR30131388,Raw reads,5,2023,South Korea,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR30131389,Raw reads,5,2023,South Korea,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR30131390,Raw reads,5,2023,South Korea,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR30131391,Raw reads,5,2023,South Korea,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR30131392,Raw reads,5,2022,South Korea,Homo sapiens,NA,NA,NA,2020s,NA
+HepC_SRR30131393,Raw reads,5,2022,South Korea,Homo sapiens,NA,NA,NA,2020s,NA

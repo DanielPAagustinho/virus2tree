@@ -1,0 +1,181 @@
+{
+  "name": "HepC",
+  "node_count": 2656,
+  "leaf_count": 1329,
+  "internal_count": 1327,
+  "meta_keys": {
+    "Source": {
+      "type": "character",
+      "std_type": "cate",
+      "name": "Source",
+      "NA_count": 2629,
+      "min": null,
+      "max": null,
+      "categories": [
+        "Reference"
+      ]
+    },
+    "Genotype": {
+      "type": "character",
+      "std_type": "cate",
+      "name": "Genotype",
+      "NA_count": 2629,
+      "min": null,
+      "max": null,
+      "categories": [
+        "5",
+        "3",
+        "Unknown"
+      ]
+    },
+    "Collection_year": {
+      "type": "date",
+      "std_type": "cate",
+      "name": "Collection_year",
+      "NA_count": 2644,
+      "min": null,
+      "max": null,
+      "categories": [
+        "2003",
+        "2020",
+        "2009",
+        "2023",
+        "2021",
+        "2017",
+        "2019",
+        "2016"
+      ]
+    },
+    "Location": {
+      "type": "character",
+      "std_type": "cate",
+      "name": "Location",
+      "NA_count": 2629,
+      "min": null,
+      "max": null,
+      "categories": [
+        "Austria",
+        "USA",
+        "Italy",
+        "Belgium",
+        "Australia",
+        "United Kingdom",
+        "South Africa",
+        "Germany",
+        "Czech Republic",
+        "Zambia",
+        "France",
+        "Israel",
+        "China"
+      ]
+    },
+    "Host": {
+      "type": "character",
+      "std_type": "cate",
+      "name": "Host",
+      "NA_count": 2629,
+      "min": null,
+      "max": null,
+      "categories": [
+        "Homo sapiens",
+        "Macaca mulatta",
+        "Macaca fascicularis"
+      ]
+    },
+    "Tissue": {
+      "type": "character",
+      "std_type": "cate",
+      "name": "Tissue",
+      "NA_count": 2642,
+      "min": null,
+      "max": null,
+      "categories": [
+        "adenoid",
+        "blood",
+        "amniotic fluid",
+        "urine",
+        "mammalian milk",
+        "animal tissues"
+      ]
+    },
+    "Accession": {
+      "type": "character",
+      "std_type": "cate",
+      "name": "Accession",
+      "NA_count": 2629,
+      "min": null,
+      "max": null,
+      "categories": [
+        "OU342912",
+        "BK000394",
+        "MW197157",
+        "OK000909",
+        "MZ517254",
+        "MT044480",
+        "MT044485",
+        "MT044476",
+        "GU179291",
+        "OU342916",
+        "OQ466312",
+        "MW439039",
+        "OU342911",
+        "OU342915",
+        "KY490068",
+        "KT634296",
+        "MK422176",
+        "OU342918",
+        "KX544837",
+        "NC_033176",
+        "KU550089",
+        "OV100763",
+        "KY123652",
+        "KR534197",
+        "OU342900",
+        "KJ426589",
+        "KR534210"
+      ]
+    },
+    "Organism_name": {
+      "type": "character",
+      "std_type": "cate",
+      "name": "Organism_name",
+      "NA_count": 2629,
+      "min": null,
+      "max": null,
+      "categories": [
+        "Human betaherpesvirus 5",
+        "macacine betaherpesvirus 3",
+        "Cynomolgus cytomegalovirus"
+      ]
+    },
+    "Decade": {
+      "type": "character",
+      "std_type": "cate",
+      "name": "Decade",
+      "NA_count": 2629,
+      "min": null,
+      "max": null,
+      "categories": [
+        "Unknown",
+        "2000s",
+        "2020s",
+        "2010s"
+      ]
+    },
+    "Tissue_clean": {
+      "type": "character",
+      "std_type": "cate",
+      "name": "Tissue_clean",
+      "NA_count": 2642,
+      "min": null,
+      "max": null,
+      "categories": [
+        "other",
+        "blood",
+        "body_fluid"
+      ]
+    }
+  },
+  "estimated_width": 57,
+  "estimated_height": 1329
+}
