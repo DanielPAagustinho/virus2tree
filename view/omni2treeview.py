@@ -23,9 +23,8 @@ def parse_newick_to_csv(nwk_file: str):
 
     tree = Phylo.read(nwk_file, 'newick')
     
-    # 先遍历一遍，给所有没有名字的节点分配唯一 ID
     internal_counter = 0
-    node_names = {}  # clade 对象 -> 名称 的映射
+    node_names = {}  
     
     for clade in tree.find_clades():
         if clade.name:
@@ -35,7 +34,7 @@ def parse_newick_to_csv(nwk_file: str):
             node_names[id(clade)] = f'Internal-{internal_counter}'
 
 
-    # tree root 可能没有名字，给它分配一个
+
     if tree.root.name is None:
         internal_counter += 1
         tree.root.name = f'Internal-{internal_counter}'
@@ -174,9 +173,6 @@ def load_code(code_file: str):
             internal_acc_set.add(internal_acc)
             code_dict[internal_acc] = acc
     return code_dict
-
-
-
 
 def parse_csv_to_tree(input_file: str,tree_name: str) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     nodes = {}
