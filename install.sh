@@ -64,6 +64,38 @@ for pair in "${BASENAMES[@]}"; do
   echo "[OK] $PREFIX/$dst -> $SCRIPTS_DIR/$src"
 done
 
+# Install bash completions
+COMP_SRC="$REPO_ROOT/share/bash-completion/completions/virus2tree"
+if [[ -f "$COMP_SRC" ]]; then
+  if [[ "${EUID:-$(id -u)}" -eq 0 ]]; then
+    COMP_SHARE="/usr/share/bash-completion/completions"
+  else
+    COMP_SHARE="$HOME/.local/share/bash-completion/completions"
+  fi
+  mkdir -p "$COMP_SHARE" 2>/dev/null || true
+  if [[ -d "$COMP_SHARE" && -w "$COMP_SHARE" ]]; then
+    cp -f "$COMP_SRC" "$COMP_SHARE/virus2tree" 2>/dev/null || true
+    if [[ -f "$COMP_SHARE/virus2tree" ]]; then
+      # Load completions for current session
+      source "$COMP_SHARE/virus2tree" 2>/dev/null || true
+      
+      # Only show hint if user install AND completions dir is not in standard paths
+      if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
+        # Check if ~/.local completions directory is recognized by bash-completion
+        comp_dir_found=false
+        if type -t _comp_load &>/dev/null || [[ -n "${BASH_COMPLETION_USER_DIR:-}" ]]; then
+          comp_dir_found=true
+        fi
+        
+        if [[ "$comp_dir_found" == false ]]; then
+          echo "[HINT] To enable completions permanently, add this to your ~/.bashrc:"
+          echo "       source ~/.local/share/bash-completion/completions/virus2tree"
+        fi
+      fi
+    fi
+  fi
+fi
+
 # Warn if the prefix is not in PATH
 case ":$PATH:" in
   *":$PREFIX:"*) echo "[OK] $PREFIX is in PATH.";;
@@ -71,4 +103,7 @@ case ":$PATH:" in
      echo "export PATH=\"$PREFIX:\$PATH\"";;
 esac
 
+echo "$PREFIX" > "$REPO_ROOT/.install_prefix"
+
 echo "[DONE] Installed executables: v2t-step1, v2t-step2, v2t-sra"
+echo "[INFO] To uninstall, run: ./uninstall.sh \"$PREFIX\""
