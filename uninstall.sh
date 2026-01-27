@@ -40,11 +40,24 @@ comp_paths=(
   "$HOME/.local/share/bash-completion/completions/virus2tree"
   "/usr/share/bash-completion/completions/virus2tree"
 )
-for comp in "${comp_paths[@]}"; do
-  if [[ -e "$comp" ]]; then
-    rm -f "$comp"
-    echo "[OK] Removed $comp"
+
+comp_symlinks=("v2t-step1" "v2t-step2" "v2t-sra")
+
+for base_path in "$HOME/.local/share/bash-completion/completions" "/usr/share/bash-completion/completions"; do
+  # Remover archivo principal
+  if [[ -e "$base_path/virus2tree" ]]; then
+    rm -f "$base_path/virus2tree"
+    echo "[OK] Removed $base_path/virus2tree"
     removed_any=true
   fi
+  
+  for link in "${comp_symlinks[@]}"; do
+    if [[ -L "$base_path/$link" ]]; then
+      rm -f "$base_path/$link"
+      echo "[OK] Removed completion symlink $base_path/$link"
+      removed_any=true
+    fi
+  done
 done
+
 echo "[DONE] Uninstall complete."

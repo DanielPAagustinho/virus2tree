@@ -66,32 +66,28 @@ done
 
 # Install bash completions
 COMP_SRC="$REPO_ROOT/share/bash-completion/completions/virus2tree"
+COMP_INSTALLED=false
+# install bash completions 
 if [[ -f "$COMP_SRC" ]]; then
   if [[ "${EUID:-$(id -u)}" -eq 0 ]]; then
     COMP_SHARE="/usr/share/bash-completion/completions"
   else
     COMP_SHARE="$HOME/.local/share/bash-completion/completions"
   fi
+  
   mkdir -p "$COMP_SHARE" 2>/dev/null || true
+  
   if [[ -d "$COMP_SHARE" && -w "$COMP_SHARE" ]]; then
-    cp -f "$COMP_SRC" "$COMP_SHARE/virus2tree" 2>/dev/null || true
-    if [[ -f "$COMP_SHARE/virus2tree" ]]; then
-      # Load completions for current session
-      source "$COMP_SHARE/virus2tree" 2>/dev/null || true
+    # Copiar el archivo principal
+    if cp -f "$COMP_SRC" "$COMP_SHARE/virus2tree" 2>/dev/null; then
+      echo "[OK] Bash completions installed to $COMP_SHARE/virus2tree"
+      COMP_INSTALLED=true
       
-      # Only show hint if user install AND completions dir is not in standard paths
-      if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
-        # Check if ~/.local completions directory is recognized by bash-completion
-        comp_dir_found=false
-        if type -t _comp_load &>/dev/null || [[ -n "${BASH_COMPLETION_USER_DIR:-}" ]]; then
-          comp_dir_found=true
-        fi
-        
-        if [[ "$comp_dir_found" == false ]]; then
-          echo "[HINT] To enable completions permanently, add this to your ~/.bashrc:"
-          echo "       source ~/.local/share/bash-completion/completions/virus2tree"
-        fi
-      fi
+      # Crear symlinks para que bash-completion lo encuentre por cada comando
+      for cmd in v2t-step1 v2t-step2 v2t-sra; do
+        ln -sf virus2tree "$COMP_SHARE/$cmd" 2>/dev/null || true
+      done
+      echo "[OK] Created completion symlinks: v2t-step1, v2t-step2, v2t-sra"
     fi
   fi
 fi
@@ -106,4 +102,8 @@ esac
 echo "$PREFIX" > "$REPO_ROOT/.install_prefix"
 
 echo "[DONE] Installed executables: v2t-step1, v2t-step2, v2t-sra"
+if [[ "$COMP_INSTALLED" == true ]]; then
+  echo "[INFO] To enable completions now, run:"
+  echo "  source ~/.bashrc"
+fi
 echo "[INFO] To uninstall, run: ./uninstall.sh \"$PREFIX\""
