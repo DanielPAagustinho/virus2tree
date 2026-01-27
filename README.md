@@ -20,7 +20,7 @@ conda install -c bioconda rasusa read2tree sra-tools entrez-direct -y
 
 **Notes:** 
 * OMA standalone and czid-dedup are not available via Conda. Please, follow the "Installation from source" instructions below.
-* The Conda version of read2tree does not include the minimap2 branch. If you need this branch, follow the "Installation from source" instructions.
+* The Conda version of read2tree does not include the metagenomics branch. If you need this branch, follow the "Installation from source" instructions.
 
 ### 2. Installation from source
 
@@ -77,8 +77,8 @@ conda install -c bioconda dendropy pysam -y
 ## Install required softwares
 conda install -c bioconda mafft iqtree minimap2 samtools -y
 
-## Clone minimap2 branch of read2tree
-git clone --branch minimap2 https://github.com/DessimozLab/read2tree.git 
+## Clone read2tree
+git clone https://github.com/DessimozLab/read2tree.git 
 cd read2tree 
 python setup.py install
 ## read2tree will be placed in the default bin folder of your Conda installation
