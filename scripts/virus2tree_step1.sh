@@ -505,9 +505,13 @@ generate_og_gene_tsv() {
     : > "$summary_og"
     printf "Species\tTotal_CDS\tMissing_protein_id\tNo_OG_match\tOG_matched\n" >> "$summary_og"
 
-    # Unir claves vistas (por si alguna especie solo aparece en uno de los mapas)
+    # Unir claves vistas sin duplicados (por si alguna especie solo aparece en uno de los mapas)
+    declare -A ALL_SPECIES
     for sp in "${!TOTAL_HEADERS_BY_SPECIES[@]}" "${!MISSING_PID_BY_SPECIES[@]}" "${!NO_OG_BY_SPECIES[@]}" "${!MATCHED_BY_SPECIES[@]}"; do
       [[ -z "$sp" ]] && continue
+      ALL_SPECIES["$sp"]=1
+    done
+    for sp in "${!ALL_SPECIES[@]}"; do
       t=${TOTAL_HEADERS_BY_SPECIES["$sp"]:-0}
       m=${MISSING_PID_BY_SPECIES["$sp"]:-0}
       n=${NO_OG_BY_SPECIES["$sp"]:-0}
@@ -562,7 +566,6 @@ select_marker_genes_by_fraction() {
           print og, sp, total, frac, kept
       }' "$og_counts"
     } > "$og_fraction"
-    echo "HERE1"
     # Copy to marker genes only selected OG
     local kept=0
     while read -r og; do
@@ -570,12 +573,9 @@ select_marker_genes_by_fraction() {
         if [[ -s "$oma_dir/${og}.fa" ]]; then
             cp "$oma_dir/${og}.fa" "$out_dir/"
             ((kept+=1))
-            echo "$kept"
         fi
     done < <(awk -F'\t' 'NR>1 && $5=="YES"{print $1}' "$og_fraction")
-    echo "HERE 2"
     if ! ls "$out_dir"/*.fa >/dev/null 2>&1; then
-        echo "HERE 3"
         log_error "No OG passed the fraction threshold (thr=$frac). 'marker_genes' is empty."
         exit 1
     fi
@@ -641,10 +641,16 @@ if [[ ! -f "$INPUT_FILE" ]] || [[ ! -s "$INPUT_FILE" ]]; then
     exit 1
 fi
 
+INPUT_FILE="$(realpath "$INPUT_FILE")"
+
 # Validate outgroup file if provided, yes -f tolerates sym links
 if [[ -n "$OUTGROUP_FILE" ]] && { [[ ! -f "$OUTGROUP_FILE" ]] || [[ ! -s "$OUTGROUP_FILE" ]]; }; then
     log_error "Error: The outgroup file '$OUTGROUP_FILE' is missing or empty."
     exit 1
+fi
+
+if [[ -n "$OUTGROUP_FILE" ]]; then
+  OUTGROUP_FILE="$(realpath "$OUTGROUP_FILE")"
 fi
 
 if ! [[ "$THREADS" =~ ^[1-9][0-9]*$ ]]; then
@@ -709,7 +715,6 @@ else
             exit 1
         fi
   fi
-  mkdir -p db
 fi
 
 if [[ -z "$TEMP_DIR" ]]; then
@@ -772,7 +777,7 @@ elif [[ "${#HEADER_COLS[@]}" -gt 3 ]]; then
 fi
 # Check specific column structure
 if [[ "${#HEADER_COLS[@]}" -eq 3 ]]; then
-  if [[ "${LOWER_HEADER[0]}" =~ ^(taxon|taxa|strain(s)?|species)$ ]] && [[ "${LOWER_HEADER[2]}" =~ ^accession(s)?$ ]]; then
+  if [[ "${LOWER_HEADER[0]}" =~ ^(taxon|taxa|label(s)?|strain(s)?|species)$ ]] && [[ "${LOWER_HEADER[2]}" =~ ^accession(s)?$ ]]; then
     log_info "Detected taxon and accession columns in the header. Now checking for the code column..." 
     # If has exactly 3 columns, check if the second column is CODE
     if [[ "${LOWER_HEADER[1]}" =~ ^code(s)?$ ]]; then
@@ -828,7 +833,7 @@ if [[ "${#HEADER_COLS[@]}" -eq 3 ]]; then
   fi
 elif [[ "${#HEADER_COLS[@]}" -eq 2 ]]; then
   # If has exactly 2 columns, check if they are valid (STRAIN/SPECIES and ACCESSIONS)
-  if [[ "${LOWER_HEADER[0]}" =~ ^(taxon|taxa|strain(s)?|species)$ ]] && [[ "${LOWER_HEADER[1]}" =~ ^accession(s)?$ ]]; then
+  if [[ "${LOWER_HEADER[0]}" =~ ^(taxon|taxa|label(s)?|strain(s)?|species)$ ]] && [[ "${LOWER_HEADER[1]}" =~ ^accession(s)?$ ]]; then
     log_info "Detected only taxon and accession columns in the header. No code column found. Unique codes for each taxon in the format 'sXXXX' will be automatically generated."
     # Validate duplicates in column 1
     set +e
@@ -862,6 +867,11 @@ elif [[ "${#HEADER_COLS[@]}" -eq 2 ]]; then
     exit 1
   fi
 fi
+
+if [[ "$RES_DOWN" != true ]]; then
+  mkdir -p db
+fi
+
 if [[ "$RES_DOWN_VOID" == false ]]; then
   log_info "========== Step 1.3: Retrieving coding sequences from NCBI =========="
 
