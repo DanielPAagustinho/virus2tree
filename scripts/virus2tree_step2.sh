@@ -97,8 +97,8 @@ $(usage)
     -T, --threads <int>      Threads to use [default: 4]
     --temp_dir <dir>         Specify temp directory (otherwise mktemp -d is used)
     --root_dir <dir>         Specify root directory containing step 1 result; all the outputs will be saved here [default: current directory]
-    --out_dir <dir>          Specify relative path of read2tree step 1 output directory with respect to the root directory or absolute path [default: root_directory/read2tree_output]
-    --stats_file <file>      Specify the path to the read statistics file [default: root_directory/stats/reads_statistics.tsv]
+    --out_dir <dir>          Specify read2tree step 1 output directory (absolute or relative to --root_dir). Must exist from step 1 [default: root_dir/read2tree_output]
+    --stats_file <file>      Specify read statistics output file (absolute or relative to --root_dir) [default: root_directory/stats/reads_statistics.tsv]
     --dedup                  Run czid-dedup
     --dedup_l <int>          Provide '-l <int>' to czid-dedup (requires --dedup)
     --downsample             Run rasusa
@@ -363,14 +363,13 @@ if [[ -z "$OUT_DIR" ]]; then
   log_info "No --out_dir specified; assuming $OUT_DIR"
 else
   [[ "$OUT_DIR" = /* ]] || OUT_DIR="$ROOT_DIR/$OUT_DIR"
+  if [[ -d "$OUT_DIR" ]]; then
+    OUT_DIR="$(realpath "$OUT_DIR")"
+  else
+    log_error "read2tree output directory not found: $OUT_DIR. Please run step 1 first."
+    exit 1
+  fi
 fi
-
-if [[ ! -d "$OUT_DIR" ]]; then
-  log_error "read2tree output directory not found: $OUT_DIR. Please run step 1 first."
-  exit 1
-fi
-log_info "Using read2tree directory: $OUT_DIR"
-
 if [[ -z "$TEMP_DIR" ]]; then
   TEMP_DIR="$(mktemp -d)"
   log_info "Created temp directory at $TEMP_DIR"
@@ -636,7 +635,8 @@ log_info "Executing read2tree command: ${READ2TREE_CMD[*]}"
 "${READ2TREE_CMD[@]}"
 
 log_info "read2tree step 2 map completed successfully."
-rm -f "${STATS_FILE}.lock"
+#Lock files are meant to persist.
+# rm -f "${STATS_FILE}.lock"
 
 
 # Optionally do step 3combine
