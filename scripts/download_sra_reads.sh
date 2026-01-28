@@ -251,7 +251,10 @@ for line in "${lines[@]}"; do
     clean_field="${field//[[:space:]]/}"  # Delete any spaces or tab
     accessions+=("$clean_field")
   done
-
+  if (( ${#accessions[@]} == 0 )); then
+    log_warn "No SRA IDs found for species '$local_name' in input. Check the CSV line."
+    continue
+  fi
   species_dir="$(sanitize_name "$local_name")"
   species_outdir="${OUTPUT_DIR}/${species_dir}"
   mkdir -p "$species_outdir"
@@ -514,5 +517,4 @@ log_info "Total RUNs failed: $(( ${#global_fail_runs[@]} ))"
 log_info "Processing complete. Outputs are in '$OUTPUT_DIR'."
 ###
 
-log_info "Summaries saved to '$SUMMARY_FILE'. Processing complete. Outputs are in '$OUTPUT_DIR'."
-
+log_info "Summaries saved to '$SUMMARY_FILE'."

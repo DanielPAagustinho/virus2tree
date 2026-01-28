@@ -74,6 +74,11 @@ check_dependencies() {
   log_error "Missing requirement: bc command"
   exit 1
   fi
+  if ! command -v flock &>/dev/null; then
+  log_error "Missing requirement: flock"
+  exit 1
+  fi
+
 
 }
 
@@ -119,12 +124,14 @@ EOF
 
 append_stats() {
   local stats_block="$1"
-  local lock_file="${STATS_FILE}.lock"
   (
-    # Acquire an exclusive lock on the lock file
+    # Acquire an exclusive lock on them very same stats file (200 is the file descriptor)
     flock -x 200
-    echo -e "$stats_block" >> "$STATS_FILE"
-  ) 200>"$lock_file"
+    if [[ ! -s "$STATS_FILE" ]]; then
+      printf "%s\t%s\t%s\t%s\n" "FASTQ File" "Num Reads" "Avg Length" "Total Bases" >> "$STATS_FILE"
+    fi
+    printf "%s\n" "$stats_block" >> "$STATS_FILE"
+  ) 200>>"$STATS_FILE"
 }
 
 #function to analyze each fastq
@@ -153,7 +160,7 @@ analyze_fastq() {
       fi
 
       # Print results in tabular format
-      printf "%s\t%'d\t%'d\t%'d" "$fastq_file" "$total_reads" "$avg_length" "$total_bases"
+      printf "%s\t%'d\t%'d\t%'d" "$(basename "$fastq_file")" "$total_reads" "$avg_length" "$total_bases"
   }
 
 ############################################
@@ -372,13 +379,17 @@ else
 fi
 if [[ -z "$TEMP_DIR" ]]; then
   TEMP_DIR="$(mktemp -d)"
+  # TEMP_DIR_CREATED=true
   log_info "Created temp directory at $TEMP_DIR"
 else
   # Validate if it is a directory
-  if [[ ! -d "$TEMP_DIR" ]]; then
-    mkdir -p "$TEMP_DIR"
+  if mkdir "$TEMP_DIR" 2>/dev/null; then
+    # TEMP_DIR_CREATED=true
+    log_info "Using temp directory: $TEMP_DIR"
+  else
+    log_error "Temp directory already exists: $TEMP_DIR. Refuse to continue."
+    exit 1
   fi
-  log_info "Using temp directory: $TEMP_DIR"
 fi
 
 # Set default stats file if not provided (using an absolute path)
@@ -393,13 +404,6 @@ else
   STATS_FILE="$(realpath "$STATS_FILE")"
 fi
 
-
-# Create the stats file header if it does not exist or is empty
-if [[ ! -s "$STATS_FILE" ]]; then
-  {
-    printf "%s\t%s\t%s\t%s\n" "FASTQ File" "Num Reads" "Avg Length" "Total Bases"
-  } > "$STATS_FILE"
-fi
 
 if [[ "$DEBUG" == false ]]; then
   trap '[[ -n "$TEMP_DIR" && -d "$TEMP_DIR" ]] && rm -rf "$TEMP_DIR"' EXIT
@@ -635,7 +639,7 @@ log_info "Executing read2tree command: ${READ2TREE_CMD[*]}"
 "${READ2TREE_CMD[@]}"
 
 log_info "read2tree step 2 map completed successfully."
-#Lock files are meant to persist.
+# No longer needed to remove the lock file, since we are using the same stats file for all samples.
 # rm -f "${STATS_FILE}.lock"
 
 

@@ -141,7 +141,7 @@ Minimal example (adjust paths to your data):
 # Step 1: Create reference OMA database for r2t with NCBI accessions from RSV
 v2t-step1 -i rsv_accessions.csv -g rsv_outgroups.txt -T 25 --root_dir virus2tree_rsv &> rsv_long_step1.log
 
-# Step 2: Map long nanopore RSV reads to the reference
+# Step 2: Map long nanopore RSV reads to the reference using GNU Parallel
 parallel -j 4 v2t-step2 -r {1} --root_dir virus2tree_rsv -T 20 ::: \
   $(ls reads/*fastq* | sort) &>> "rsv_long_step2.log" &
 
