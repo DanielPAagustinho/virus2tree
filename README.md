@@ -108,12 +108,7 @@ source ~/.bashrc
 To verify that all tools are correctly installed and available in your Conda environment or `PATH`, run the following command:
 
 ```bash
-oma -h
-rasusa --help
-czid-dedup --help
-read2tree --help
-fasterq-dump --help
-esearch -h
+command -v oma && command -v rasusa && command -v czid-dedup && command -v read2tree && command -v fasterq-dump && command -v esearch
 ```
 
 ## Installation
@@ -193,7 +188,7 @@ If this file is not specified, OMA Standalone will use midpoint rooting, which i
 The accession file must be a comma-separated values (CSV) text file, with the first line as the header. Each line represents a taxon/species/strain with associated accessions. The format varies depending on whether a five-letter code is included.
 
 #### **Columns:**
-1. **First column (required):** Taxon/species/strain name. Header: taxon (or taxa),species or strain(s).
+1. **First column (required):** Taxon/species/label/strain name. Header: taxon (or taxa), species, label(s) or strain(s).
 2. **Second column (optional):** Five-letter code. Must be exactly 5 alphanumeric characters. Header: code(s). If not provided, a random five-letter code for each taxon will be generated and saved in the file five_letter_taxon.tsv
 3. **Third and onward (required):** One or more accession numbers (comma-separated) to obtain coding sequences. Accepts NCBI Nucleotide database accessions and assembly identifiers (GCF_/GCA_). Header: accession(s).
 
