@@ -1,0 +1,1394 @@
+sample_id,source,genotype,collection_year,location,host,tissue,Organism_Name,decade,genotype_major,tissue_clean
+character,character,character,numeric,character,character,character,character,character,character,character
+s0164,Reference,Unknown,2018,Unknown,Unknown,NA,Hepatitis C virus (isolate H77),2010s,Unknown,NA
+s0475,Reference,7,2016,Canada,Homo sapiens,blood,Hepatitis C virus genotype 7,2010s,GT7,blood
+s0583,Reference,2,2007,Unknown,Unknown,NA,Hepatitis C virus genotype 2,2000s,GT2,NA
+s0167,Reference,6,2007,Unknown,Unknown,NA,Hepatitis C virus genotype 6,2000s,GT6,NA
+s0337,Reference,1,1997,Unknown,Unknown,NA,Hepatitis C virus genotype 1,1990s,GT1,NA
+s0349,Reference,Unknown,2024,Cambodia,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0482,Reference,Unknown,2024,Cambodia,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0108,Reference,Unknown,2024,Cambodia,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0269,Reference,Unknown,2024,Cambodia,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0550,Reference,1,2024,Cambodia,Homo sapiens,blood,Hepacivirus hominis,2020s,GT1,blood
+s0439,Reference,1,2024,Cambodia,Homo sapiens,blood,Hepacivirus hominis,2020s,GT1,blood
+s0225,Reference,3,2024,Cambodia,Homo sapiens,blood,Hepacivirus hominis,2020s,GT3,blood
+s0008,Reference,3,2024,Cambodia,Homo sapiens,blood,Hepacivirus hominis,2020s,GT3,blood
+s0267,Reference,2,2024,Cambodia,Homo sapiens,blood,Hepacivirus hominis,2020s,GT2,blood
+s0113,Reference,2,2024,Cambodia,Homo sapiens,blood,Hepacivirus hominis,2020s,GT2,blood
+s0231,Reference,3,2024,Cambodia,Homo sapiens,blood,Hepacivirus hominis,2020s,GT3,blood
+s0142,Reference,3,2024,Cambodia,Homo sapiens,blood,Hepacivirus hominis,2020s,GT3,blood
+s0270,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0109,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0483,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0350,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0547,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0441,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0524,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0325,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0233,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0140,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0402,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0592,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0034,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0184,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0143,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0232,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0431,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0557,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0032,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0199,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0467,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0357,Reference,Unknown,2024,India,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0393,Reference,Unknown,2023,China: Yunnan,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0146,Reference,Unknown,2020,Russia: St. Petersburg,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0129,Reference,Unknown,2020,China: Guangdong,Homo sapiens,blood,Hepacivirus hominis,2020s,Unknown,blood
+s0395,Reference,Unknown,2020,Unknown,Unknown,NA,Hepacivirus hominis,2020s,Unknown,NA
+s0200,Reference,Unknown,2019,China,Homo sapiens,NA,Hepacivirus hominis,2010s,Unknown,NA
+s0605,Reference,Unknown,2019,China,Homo sapiens,NA,Hepacivirus hominis,2010s,Unknown,NA
+s0070,Reference,Unknown,2019,China,Homo sapiens,NA,Hepacivirus hominis,2010s,Unknown,NA
+s0155,Reference,Unknown,2019,China,Homo sapiens,NA,Hepacivirus hominis,2010s,Unknown,NA
+s0120,Reference,Unknown,2019,China,Homo sapiens,NA,Hepacivirus hominis,2010s,Unknown,NA
+s0258,Reference,Unknown,2019,China,Homo sapiens,NA,Hepacivirus hominis,2010s,Unknown,NA
+s0030,Reference,Unknown,2019,China,Homo sapiens,NA,Hepacivirus hominis,2010s,Unknown,NA
+s0197,Reference,Unknown,2019,China,Homo sapiens,NA,Hepacivirus hominis,2010s,Unknown,NA
+s0432,Reference,Unknown,2019,China,Homo sapiens,NA,Hepacivirus hominis,2010s,Unknown,NA
+s0391,Reference,Unknown,2019,Belgium,Homo sapiens,NA,Hepacivirus hominis,2010s,Unknown,NA
+s0539,Reference,Unknown,2017,Egypt,Unknown,NA,Hepacivirus hominis,2010s,Unknown,NA
+s0560,Reference,Unknown,2016,Russia,Homo sapiens,blood,Hepacivirus hominis,2010s,Unknown,blood
+s0279,Reference,1b,2009,Unknown,Unknown,NA,Hepatitis C virus subtype 1b,2000s,GT1,NA
+s0464,Reference,1a,2009,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0552,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0444,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0476,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0347,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0149,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0066,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0598,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0385,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0121,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0260,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0330,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0513,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0386,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0597,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0367,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0474,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0080,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0301,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0555,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0429,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0193,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0026,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0300,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0081,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0593,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0405,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0192,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0042,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0318,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0514,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0139,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0230,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0044,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0191,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0107,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0263,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0356,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0484,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0220,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0004,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0551,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0443,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0486,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0355,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0151,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0071,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0601,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0394,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0119,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0257,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0328,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0508,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0388,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0603,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0379,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0609,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0061,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0161,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0506,Reference,1a,2009,"USA: Massachusetts, Boston area",Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0334,Reference,1a,2009,Unknown,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0254,Reference,1a,2009,Unknown,Homo sapiens,NA,hepatitis C virus genotype 1a,2000s,GT1,NA
+s0127,Reference,1a,2009,Unknown,Homo sapiens,NA,hepatitis C virus genotype 1a,2000s,GT1,NA
+s0158,Reference,1a,2009,Unknown,Homo sapiens,NA,hepatitis C virus genotype 1a,2000s,GT1,NA
+s0063,Reference,1a,2009,Unknown,Homo sapiens,NA,hepatitis C virus genotype 1a,2000s,GT1,NA
+s0491,Reference,1a,2009,Unknown,Homo sapiens,NA,hepatitis C virus genotype 1a,2000s,GT1,NA
+s0341,Reference,1a,2009,Unknown,Homo sapiens,NA,hepatitis C virus genotype 1a,2000s,GT1,NA
+s0275,Reference,1a,2009,Unknown,Homo sapiens,NA,hepatitis C virus genotype 1a,2000s,GT1,NA
+s0095,Reference,1a,2009,Unknown,Homo sapiens,NA,hepatitis C virus genotype 1a,2000s,GT1,NA
+s0451,Reference,1a,2009,Unknown,Homo sapiens,NA,hepatitis C virus genotype 1a,2000s,GT1,NA
+s0545,Reference,1a,2009,Unknown,Homo sapiens,NA,hepatitis C virus genotype 1a,2000s,GT1,NA
+s0015,Reference,1a,2009,Unknown,Homo sapiens,NA,hepatitis C virus genotype 1a,2000s,GT1,NA
+s0218,Reference,1a,2009,Unknown,Homo sapiens,NA,hepatitis C virus genotype 1a,2000s,GT1,NA
+s0097,Reference,1a,2009,Unknown,Homo sapiens,NA,hepatitis C virus genotype 1a,2000s,GT1,NA
+s0272,Reference,1a,2009,Unknown,Homo sapiens,NA,hepatitis C virus genotype 1a,2000s,GT1,NA
+s0051,Reference,1a,2009,Unknown,Homo sapiens,NA,hepatitis C virus genotype 1a,2000s,GT1,NA
+s0177,Reference,1a,2009,Unknown,Homo sapiens,NA,hepatitis C virus genotype 1a,2000s,GT1,NA
+s0414,Reference,1a,2009,Unknown,Homo sapiens,NA,hepatitis C virus genotype 1a,2000s,GT1,NA
+s0584,Reference,1a,2009,Unknown,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0240,Reference,1a,2009,Unknown,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0062,Reference,1b,2009,Unknown,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0549,Reference,1b,2008,USA: Massachusetts,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0469,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0363,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0227,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0009,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0266,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0028,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0453,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0222,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0039,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0190,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0519,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0399,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0586,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0567,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0338,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0477,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0348,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0262,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0027,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0228,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0083,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0236,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0145,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0520,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0130,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0157,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0503,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0336,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0253,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0128,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0159,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0059,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0489,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0096,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0452,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0544,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0016,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0217,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0093,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0273,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0048,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0173,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0407,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0576,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0245,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0136,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0529,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0309,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0575,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0409,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0285,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0084,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0457,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0370,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0022,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0205,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0426,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0574,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0371,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0455,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0411,Reference,1b,2008,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0580,Reference,1b,2008,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0125,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0250,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0611,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0381,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0166,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0065,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0251,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0124,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0540,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0449,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0209,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0003,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0346,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0498,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0278,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0001,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0210,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0134,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0242,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0317,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0533,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0169,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0046,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0579,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0413,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0534,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0314,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0206,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0024,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0568,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0422,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0087,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0286,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0368,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0454,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0420,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0569,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0332,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0500,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0246,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0613,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0311,Reference,1b,2008,USA: Massachusetts,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0163,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0064,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0249,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0123,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0536,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0447,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0213,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0013,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0424,Reference,1b,2008,USA: Massachusetts,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0493,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0103,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0281,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0006,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0310,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0204,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0023,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0571,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0086,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0215,Reference,1b,2008,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0445,Reference,1b,2008,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0537,Reference,1b,2008,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0344,Reference,1b,2008,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0495,Reference,1b,2008,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0582,Reference,1b,2008,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0054,Reference,1b,2008,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0174,Reference,1b,2008,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0526,Reference,1b,2008,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0307,Reference,1b,2008,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0126,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0156,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0057,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0488,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0339,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0276,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0099,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0450,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0543,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0018,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0219,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0098,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0277,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0056,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0176,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0416,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0581,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0239,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0132,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0525,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0306,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0585,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0415,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0289,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0091,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0460,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0377,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0020,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0201,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0419,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0565,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0372,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0463,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0305,Reference,1b,2008,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0284,Reference,1b,2008,USA: Colorado,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0138,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0165,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0382,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0248,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0122,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0502,Reference,1b,2008,USA: Massachusetts,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0410,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0530,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0160,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0060,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0179,Reference,1b,2008,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0053,Reference,1b,2008,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0459,Reference,1b,2008,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0375,Reference,1b,2008,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0291,Reference,1b,2008,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0340,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0490,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0094,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0274,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0089,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0292,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0403,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0589,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0037,Reference,1b,2008,USA: New York,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0181,Reference,1b,2008,USA: New York,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0602,Reference,1a,2008,USA: New York,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0387,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0153,Reference,1a,2008,Germany,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0554,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0303,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0082,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0553,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0365,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0478,Reference,1b,2008,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0268,Reference,1a,2008,Germany: Baden-Wurttemberg,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0546,Reference,1a,2008,Germany: Baden-Wurttemberg,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0440,Reference,1a,2008,Germany: Baden-Wurttemberg,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0005,Reference,Unknown,2008,Japan: Hiroshima,Unknown,NA,Hepacivirus hominis,2000s,Unknown,NA
+s0512,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0384,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0183,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0033,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0608,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0380,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0504,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0333,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0573,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0425,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0282,Reference,1b,2008,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0141,Reference,1a,2008,Germany,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0522,Reference,1a,2008,Germany,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0390,Reference,1b,2008,Germany,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0036,Reference,1a,2008,USA: New York,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0180,Reference,1a,2008,USA: New York,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0404,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0590,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0324,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0599,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0442,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0548,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0012,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0223,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0480,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0352,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0265,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0112,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0226,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0076,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0510,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0255,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0116,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0396,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0606,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0068,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0150,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0114,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0187,Reference,1b,2008,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0110,Reference,1b,2008,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0195,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0438,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0561,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0294,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0074,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0471,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0364,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0563,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0435,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0235,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0148,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0517,Reference,1a,2008,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0321,Reference,1a,2008,Germany,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0115,Reference,1b,2008,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0256,Reference,1b,2008,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0398,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0511,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0320,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0607,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0366,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0473,Reference,1b,2008,USA: Massachusetts,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0014,Reference,1a,2008,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0302,Reference,1b,2008,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0479,Reference,1a,2008,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0428,Reference,1b,2008,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0194,Reference,1b,2008,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0304,Reference,1b,2008,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0017,Reference,1a,2008,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0541,Reference,1b,2008,Japan:Hiroshima,Unknown,NA,Hepatitis C virus subtype 1b,2000s,GT1,NA
+s0434,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0000,Reference,1b,2007,USA: New York,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0298,Reference,1a,2007,USA: New York,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0359,Reference,1a,2007,USA: New York,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0487,Reference,1a,2007,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0105,Reference,1a,2007,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0515,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0596,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0067,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0229,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0595,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0406,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0288,Reference,1a,2007,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0570,Reference,1a,2007,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0421,Reference,1a,2007,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0208,Reference,1a,2007,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0100,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0211,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0002,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0241,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0133,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0532,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0316,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0045,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0168,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0412,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0578,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0315,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0535,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0025,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0207,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0423,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0499,Reference,1a,2007,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0287,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0088,Reference,1b,2007,USA: Tennessee,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0542,Reference,1a,2007,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0448,Reference,1a,2007,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0497,Reference,1a,2007,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0345,Reference,1a,2007,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0577,Reference,1a,2007,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0408,Reference,1a,2007,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0171,Reference,1a,2007,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0047,Reference,1a,2007,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0312,Reference,1a,2007,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0531,Reference,1a,2007,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0135,Reference,1a,2007,USA: Tennessee,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0244,Reference,1a,2007,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0050,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0170,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0369,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0456,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0085,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0212,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0492,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0343,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0280,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0102,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0214,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0007,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0243,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0137,Reference,1b,2007,USA: Massachusetts,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0528,Reference,1b,2007,USA: Massachusetts,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0313,Reference,1b,2007,USA: Massachusetts,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0049,Reference,1b,2007,USA: Massachusetts,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0247,Reference,1a,2007,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0331,Reference,1a,2007,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0501,Reference,1a,2007,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0383,Reference,1a,2007,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0612,Reference,1a,2007,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0101,Reference,1a,2007,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0283,Reference,1a,2007,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0342,Reference,1a,2007,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0496,Reference,1a,2007,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0216,Reference,1a,2007,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0010,Reference,1a,2007,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0538,Reference,1a,2007,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0446,Reference,1a,2007,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0494,Reference,1a,2007,USA: Massachusetts,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0427,Reference,1b,2007,USA: Massachusetts,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0507,Reference,1b,2007,USA: Massachusetts,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0335,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0175,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0055,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0308,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0527,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0131,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0238,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0052,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0178,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0374,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0458,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0092,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0290,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0564,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0418,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0202,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0021,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0293,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0090,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0509,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0327,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0259,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0117,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0389,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0604,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0069,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0154,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0118,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0182,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0360,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0466,Reference,1a,2007,USA: New York,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0079,Reference,1a,2007,USA: New York,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0297,Reference,1a,2007,USA: New York,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0556,Reference,1a,2007,USA: New York,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0354,Reference,1b,2007,USA: New York,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0264,Reference,1b,2007,USA: New York,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0106,Reference,1b,2007,USA: New York,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0221,Reference,1b,2007,USA: New York,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0078,Reference,1a,2007,USA: New York,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0152,Reference,1a,2007,USA: New York,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0072,Reference,1a,2007,USA: New York,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0600,Reference,1a,2007,USA: New York,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0392,Reference,1a,2007,USA: New York,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0035,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0185,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0401,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0591,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0326,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0523,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0031,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0198,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0433,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0558,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0299,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0077,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0468,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0358,Reference,1b,2007,USA,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0485,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0353,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0587,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0400,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0186,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0041,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0323,Reference,1a,2007,USA,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0518,Reference,1a,2007,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0147,Reference,1a,2007,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0234,Reference,1a,2007,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0040,Reference,1a,2007,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0189,Reference,1a,2007,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0362,Reference,1a,2007,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0470,Reference,1a,2007,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0075,Reference,1a,2007,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0295,Reference,1a,2007,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0559,Reference,1a,2007,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0437,Reference,1a,2007,Switzerland,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0271,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0111,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0224,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0011,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0237,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0144,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0521,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0319,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0038,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0188,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0397,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0588,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0322,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0516,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0029,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0196,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0436,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0562,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0296,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0073,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0472,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0361,Reference,1b,2007,Switzerland,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0481,Reference,1a,2007,Germany,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0351,Reference,1a,2007,Germany,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0594,Reference,1a,2007,Germany,Homo sapiens,blood,hepatitis C virus genotype 1a,2000s,GT1,blood
+s0329,Reference,1b,2007,Germany,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0261,Reference,1b,2007,Germany,Homo sapiens,blood,Hepatitis C virus subtype 1b,2000s,GT1,blood
+s0104,Reference,1b,2007,Japan:Hiroshima,Unknown,NA,Hepatitis C virus subtype 1b,2000s,GT1,NA
+s0462,Reference,6a,2006,Hong Kong,Unknown,blood,Hepatitis C virus subtype 6a,2000s,GT6,blood
+s0373,Reference,6a,2006,Hong Kong,Unknown,blood,Hepatitis C virus subtype 6a,2000s,GT6,blood
+s0019,Reference,6a,2006,Hong Kong,Unknown,blood,Hepatitis C virus subtype 6a,2000s,GT6,blood
+s0203,Reference,6a,2006,Hong Kong,Unknown,blood,Hepatitis C virus subtype 6a,2000s,GT6,blood
+s0417,Reference,6a,2006,Hong Kong,Unknown,blood,Hepatitis C virus subtype 6a,2000s,GT6,blood
+s0566,Reference,6a,2006,Hong Kong,Unknown,blood,Hepatitis C virus subtype 6a,2000s,GT6,blood
+s0376,Reference,6a,2006,Hong Kong,Unknown,blood,Hepatitis C virus subtype 6a,2000s,GT6,blood
+s0461,Reference,6a,2006,Hong Kong,Unknown,blood,Hepatitis C virus subtype 6a,2000s,GT6,blood
+s0378,Reference,6a,2006,Hong Kong,Unknown,blood,Hepatitis C virus subtype 6a,2000s,GT6,blood
+s0610,Reference,6a,2006,Hong Kong,Unknown,blood,Hepatitis C virus subtype 6a,2000s,GT6,blood
+s0058,Reference,6a,2006,Hong Kong,Unknown,blood,Hepatitis C virus subtype 6a,2000s,GT6,blood
+s0162,Reference,6a,2006,Hong Kong,Unknown,blood,Hepatitis C virus subtype 6a,2000s,GT6,blood
+s0505,Reference,6a,2006,Hong Kong,Unknown,blood,Hepatitis C virus subtype 6a,2000s,GT6,blood
+s0465,Reference,Unknown,2005,Hong Kong,Unknown,NA,Hepatitis C virus (isolate 6a33),2000s,Unknown,NA
+s0572,Reference,Unknown,2000,Unknown,Unknown,NA,Hepatitis C virus (isolate JPUT971017),2000s,Unknown,NA
+s0043,Reference,1b,1999,Germany,Unknown,NA,Hepatitis C virus subtype 1b,1990s,GT1,NA
+s0172,Reference,1b,1999,Germany,Unknown,NA,Hepatitis C virus subtype 1b,1990s,GT1,NA
+s0430,Reference,Unknown,1998,Unknown,Unknown,NA,Hepacivirus hominis,1990s,Unknown,NA
+ERR909798,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909799,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909800,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909801,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909802,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909803,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909804,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909805,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909806,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909807,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909808,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909809,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909810,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909811,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909812,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909813,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909814,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909815,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909816,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909817,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909818,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909819,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909820,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909821,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909822,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909823,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909824,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909825,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909826,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909827,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909828,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909829,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909830,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909831,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909832,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909833,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909834,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909835,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909836,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909837,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909838,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909839,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909840,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909841,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909842,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909843,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909844,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909845,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909846,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909847,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909848,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909849,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909850,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909851,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909852,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909853,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909854,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909855,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909856,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909857,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909858,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909859,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909860,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909861,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909862,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909863,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909864,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909865,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909866,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909867,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909868,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909869,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909870,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909871,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909872,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR909873,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+SRR2069963,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2069975,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070026,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070029,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070032,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070033,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070036,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070037,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070040,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070041,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070044,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070046,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070048,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070051,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070053,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070055,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070058,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070059,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070062,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070064,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070070,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070072,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070078,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070079,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070081,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070083,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070084,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070087,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070088,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070089,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070090,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070091,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070098,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070100,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070102,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070105,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070106,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070109,Raw reads,1a,2005,USA,Homo sapiens,blood,NA,2000s,GT1,blood
+SRR2070469,Raw reads,2b,2005,USA,Homo sapiens,blood,NA,2000s,GT2,blood
+SRR2070472,Raw reads,2b,2005,USA,Homo sapiens,blood,NA,2000s,GT2,blood
+SRR2070473,Raw reads,2b,2005,USA,Homo sapiens,blood,NA,2000s,GT2,blood
+SRR2070476,Raw reads,2b,2005,USA,Homo sapiens,blood,NA,2000s,GT2,blood
+SRR2070477,Raw reads,2b,2005,USA,Homo sapiens,blood,NA,2000s,GT2,blood
+SRR2070479,Raw reads,2b,2005,USA,Homo sapiens,blood,NA,2000s,GT2,blood
+SRR2070481,Raw reads,2b,2005,USA,Homo sapiens,blood,NA,2000s,GT2,blood
+SRR2070483,Raw reads,2b,2005,USA,Homo sapiens,blood,NA,2000s,GT2,blood
+SRR2070485,Raw reads,2b,2005,USA,Homo sapiens,blood,NA,2000s,GT2,blood
+SRR2070487,Raw reads,2b,2005,USA,Homo sapiens,blood,NA,2000s,GT2,blood
+SRR393956,Raw reads,2m,NA,Unknown,Unknown,missing,NA,Unknown,GT2,missing
+SRR393957,Raw reads,4l,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+ERR149019,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR149020,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR149021,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR149022,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR149023,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR149024,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR149025,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR149026,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR149027,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR149028,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR149029,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR149030,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR149031,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR149032,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR149033,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR149034,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR149035,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+SRR6804919,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804920,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804921,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804922,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804923,Raw reads,3a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804924,Raw reads,3a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804925,Raw reads,3a,2016,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804926,Raw reads,3a,2016,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804927,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804928,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804929,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804930,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804931,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804932,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804933,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804934,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804935,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804936,Raw reads,3a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804937,Raw reads,3a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804938,Raw reads,3a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804939,Raw reads,3a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804940,Raw reads,1a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804941,Raw reads,3a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804942,Raw reads,1a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804943,Raw reads,1a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804944,Raw reads,3a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804945,Raw reads,3a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804946,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804947,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804948,Raw reads,4a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT4,hcv-infected patient
+SRR6804949,Raw reads,4a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT4,hcv-infected patient
+SRR6804950,Raw reads,4a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT4,hcv-infected patient
+SRR6804951,Raw reads,4a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT4,hcv-infected patient
+SRR6804952,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804953,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804954,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804955,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804956,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804957,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804958,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804959,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804960,Raw reads,1a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804961,Raw reads,1a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804962,Raw reads,1a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804963,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804964,Raw reads,1a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804965,Raw reads,1a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804966,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804967,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804968,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804969,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804970,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804971,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804972,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804973,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804974,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804975,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804976,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804977,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804978,Raw reads,3a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804979,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804980,Raw reads,3a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804981,Raw reads,3a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804982,Raw reads,3a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804983,Raw reads,3a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804984,Raw reads,3a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804985,Raw reads,3a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6804986,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804987,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804988,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804989,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804990,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804991,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804992,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804993,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804994,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804995,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804996,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804997,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804998,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6804999,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805000,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805001,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805002,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805003,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805004,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805005,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805006,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805007,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805008,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805009,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805010,Raw reads,1a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805011,Raw reads,1a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805012,Raw reads,1a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805013,Raw reads,1a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805014,Raw reads,1a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805015,Raw reads,1a,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805016,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805017,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805018,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805019,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805020,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805021,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805022,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805023,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805024,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6805025,Raw reads,1b,2014,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+ERR118961,Raw reads,2,NA,Unknown,Unknown,NA,NA,Unknown,GT2,NA
+ERR118962,Raw reads,3,NA,Unknown,Unknown,NA,NA,Unknown,GT3,NA
+ERR118963,Raw reads,4,NA,Unknown,Unknown,NA,NA,Unknown,GT4,NA
+SRR527817,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+SRR527818,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+SRR527819,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+SRR527820,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+SRR527812,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+SRR527813,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+SRR527814,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+SRR527815,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+SRR527816,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR237533,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR237534,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR237535,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR237536,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR245509,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR245510,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR245511,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR245512,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR245516,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR245517,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR245518,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251693,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251694,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251695,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251696,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251697,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251698,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251699,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251700,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251701,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251702,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251703,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251704,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251705,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251706,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251707,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251708,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251709,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251710,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR251711,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR245513,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR245514,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR245515,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+SRR5122782,Raw reads,4d,2005,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122783,Raw reads,4d,2002,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122784,Raw reads,4d,2006,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122785,Raw reads,4d,2004,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122786,Raw reads,4d,2003,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122787,Raw reads,4d,2009,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122788,Raw reads,4d,2002,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122789,Raw reads,4d,2001,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122790,Raw reads,4d,2001,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122791,Raw reads,4d,2013,Netherlands,Homo sapiens,serum,NA,2010s,GT4,serum
+SRR5122792,Raw reads,4d,2009,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122793,Raw reads,4d,2007,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122794,Raw reads,4d,2012,Netherlands,Homo sapiens,serum,NA,2010s,GT4,serum
+SRR5122795,Raw reads,4d,2006,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122796,Raw reads,4d,2002,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122797,Raw reads,4d,2005,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122798,Raw reads,4d,2005,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122799,Raw reads,4d,2002,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122800,Raw reads,4d,2002,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122801,Raw reads,4d,2009,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122802,Raw reads,4d,2007,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122803,Raw reads,4d,2002,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122804,Raw reads,4d,2008,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122805,Raw reads,4d,2010,Netherlands,Homo sapiens,serum,NA,2010s,GT4,serum
+SRR5122806,Raw reads,4d,2009,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122807,Raw reads,4d,2007,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122808,Raw reads,4d,2002,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122809,Raw reads,4d,2003,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122810,Raw reads,4d,2003,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122811,Raw reads,4d,2012,Netherlands,Homo sapiens,serum,NA,2010s,GT4,serum
+SRR5122812,Raw reads,4d,2002,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122813,Raw reads,4d,2013,Netherlands,Homo sapiens,serum,NA,2010s,GT4,serum
+SRR5122814,Raw reads,4d,2003,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122815,Raw reads,4d,2013,Netherlands,Homo sapiens,serum,NA,2010s,GT4,serum
+SRR5122816,Raw reads,4d,2013,Netherlands,Homo sapiens,serum,NA,2010s,GT4,serum
+SRR5122817,Raw reads,4d,2009,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122818,Raw reads,4d,2012,Netherlands,Homo sapiens,serum,NA,2010s,GT4,serum
+SRR5122819,Raw reads,4d,2002,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122820,Raw reads,4d,2008,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122821,Raw reads,4d,2006,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122822,Raw reads,4d,2004,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122823,Raw reads,4d,2006,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122824,Raw reads,4d,2005,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122825,Raw reads,4d,2002,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122826,Raw reads,4d,2013,Netherlands,Homo sapiens,serum,NA,2010s,GT4,serum
+SRR5122827,Raw reads,4d,2010,Netherlands,Homo sapiens,serum,NA,2010s,GT4,serum
+SRR5122828,Raw reads,4d,2008,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122829,Raw reads,4d,2008,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122830,Raw reads,4d,2003,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR5122831,Raw reads,4d,2002,Netherlands,Homo sapiens,serum,NA,2000s,GT4,serum
+SRR6906343,Raw reads,3a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6906344,Raw reads,3a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT3,hcv-infected patient
+SRR6906345,Raw reads,1b,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR6906346,Raw reads,1a,2015,Spain,Homo sapiens,HCV-infected patient,NA,2010s,GT1,hcv-infected patient
+SRR291634,Raw reads,Unknown,NA,Unknown,Unknown,missing,NA,Unknown,Unknown,missing
+SRR521147,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+SRR3198360,Raw reads,Unknown,2005,USA,Homo sapiens,blood,NA,2000s,Unknown,blood
+SRR3198400,Raw reads,Unknown,2005,USA,Homo sapiens,blood,NA,2000s,Unknown,blood
+SRR3198404,Raw reads,Unknown,2005,USA,Homo sapiens,blood,NA,2000s,Unknown,blood
+SRR3198408,Raw reads,Unknown,2005,USA,Homo sapiens,blood,NA,2000s,Unknown,blood
+ERR227828,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR227829,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+SRR5371608,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371609,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371610,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371611,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371622,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371623,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371624,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371625,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371626,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371627,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371628,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371629,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371630,Raw reads,Unknown,2014,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371631,Raw reads,Unknown,2014,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371632,Raw reads,Unknown,2014,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371633,Raw reads,Unknown,2014,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371634,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371635,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371636,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371637,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371638,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371639,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371640,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371641,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371642,Raw reads,Unknown,2014,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371643,Raw reads,Unknown,2014,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371644,Raw reads,Unknown,2014,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371645,Raw reads,Unknown,2014,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371646,Raw reads,Unknown,2014,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371647,Raw reads,Unknown,2014,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371648,Raw reads,Unknown,2014,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371649,Raw reads,Unknown,2014,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371650,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371651,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371652,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371653,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371654,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371655,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371656,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371657,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371658,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371659,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371660,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371661,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371662,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371663,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371664,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371665,Raw reads,Unknown,2013,Netherlands,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371666,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371667,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371668,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371669,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371670,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371671,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371672,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371673,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371674,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371675,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371676,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371677,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371678,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371679,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371680,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371681,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371682,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371683,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371684,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371685,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371686,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371687,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371688,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371689,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371690,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371691,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371692,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR5371693,Raw reads,Unknown,2015,United Kingdom,Homo sapiens,clinical sample,NA,2010s,Unknown,clinical sample
+SRR107708,Raw reads,4r,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+SRR107711,Raw reads,4o,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+SRR107714,Raw reads,4o,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+SRR107715,Raw reads,4o,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+SRR107716,Raw reads,4r,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+SRR032797,Raw reads,2m,NA,Unknown,Unknown,missing,NA,Unknown,GT2,missing
+SRR032798,Raw reads,4l,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+ERR962491,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR962492,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR962493,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR962494,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR962495,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR962496,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR962497,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR962498,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR962499,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR962500,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR962501,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR962502,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+SRR017764,Raw reads,4m,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+SRR017765,Raw reads,4n,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+SRR017766,Raw reads,4g,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+SRR017767,Raw reads,4m,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+SRR017768,Raw reads,4n,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+SRR017769,Raw reads,4n,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+SRR017770,Raw reads,2m,NA,Unknown,Unknown,missing,NA,Unknown,GT2,missing
+SRR017771,Raw reads,2m,NA,Unknown,Unknown,missing,NA,Unknown,GT2,missing
+SRR017772,Raw reads,4o,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+SRR017773,Raw reads,4o,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+SRR017774,Raw reads,1e,NA,Unknown,Unknown,missing,NA,Unknown,GT1,missing
+SRR017775,Raw reads,4r,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+SRR017776,Raw reads,4r,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+SRR017777,Raw reads,4o,NA,Unknown,Unknown,missing,NA,Unknown,GT4,missing
+SRR1170557,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170560,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170561,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170562,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170563,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170564,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170565,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170566,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170567,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170568,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170576,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170578,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170579,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170671,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170672,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170673,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170674,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170675,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170676,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170677,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170678,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR1170679,Raw reads,Unknown,2011,USA,Homo sapiens,Human serum,NA,2010s,Unknown,human serum
+SRR9915316,Raw reads,6,2019,Denmark,Homo sapiens,blood,NA,2010s,GT6,blood
+SRR1762352,Raw reads,1b/3,NA,uncalculated,Homo sapiens,plasma,NA,Unknown,Unknown,blood
+SRR1762353,Raw reads,Unknown,NA,uncalculated,Homo sapiens,NA,NA,Unknown,Unknown,NA
+SRR1762354,Raw reads,Unknown,NA,uncalculated,Homo sapiens,NA,NA,Unknown,Unknown,NA
+SRR1762355,Raw reads,Unknown,NA,uncalculated,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731587,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731588,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731589,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731590,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731591,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731592,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731593,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731594,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731595,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731596,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731597,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731598,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731599,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731600,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731601,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731602,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731603,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731604,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731605,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731606,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731607,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731608,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+ERR731609,Raw reads,Unknown,NA,Unknown,Unknown,NA,NA,Unknown,Unknown,NA
+SRR8735659,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735660,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735661,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735662,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735663,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735664,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735665,Raw reads,2b,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735666,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735667,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735668,Raw reads,3k,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735669,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735670,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735671,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735672,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735673,Raw reads,4r,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT4,blood plasma
+SRR8735674,Raw reads,4r,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT4,blood plasma
+SRR8735675,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735676,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735677,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735678,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735679,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735680,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735681,Raw reads,3b,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735682,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735683,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735684,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735685,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735686,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735687,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735688,Raw reads,1l,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735689,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735690,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735691,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735692,Raw reads,6r,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT6,blood plasma
+SRR8735693,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735694,Raw reads,1b,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735695,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735696,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735697,Raw reads,1d,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735698,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735699,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735700,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735701,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735702,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735703,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735704,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735705,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735706,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735707,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735708,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735709,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735710,Raw reads,1,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735711,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735712,Raw reads,1b,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735713,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735714,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735715,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735716,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735717,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735718,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735719,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735720,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735721,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735722,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735723,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735724,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735725,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735726,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735727,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735728,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735729,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735730,Raw reads,1b,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735731,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735732,Raw reads,1b,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735733,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735734,Raw reads,4d,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT4,blood plasma
+SRR8735735,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735736,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735737,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735738,Raw reads,1b,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735739,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735740,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735741,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735742,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735743,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735744,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735745,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735746,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735747,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735748,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735749,Raw reads,1c,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735750,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735751,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735752,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735753,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735754,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735755,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735756,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735757,Raw reads,1b,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735758,Raw reads,2a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735759,Raw reads,2b,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735760,Raw reads,2b,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735761,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735762,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735763,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735764,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735765,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735766,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735767,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735768,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735769,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735770,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735771,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735772,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735773,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735774,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735775,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735776,Raw reads,1b,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735777,Raw reads,4c,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT4,blood plasma
+SRR8735778,Raw reads,4o,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT4,blood plasma
+SRR8735779,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735780,Raw reads,4a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT4,blood plasma
+SRR8735781,Raw reads,6f,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT6,blood plasma
+SRR8735782,Raw reads,1b,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735783,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735784,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735785,Raw reads,3,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735786,Raw reads,3,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735787,Raw reads,3,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735788,Raw reads,3,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735789,Raw reads,3,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735790,Raw reads,3,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735791,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735792,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735793,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735794,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735795,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735796,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735797,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735798,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735799,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735800,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735801,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735802,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735803,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735804,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735805,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735806,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735807,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735808,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735809,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735810,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735811,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735812,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735813,Raw reads,3,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735814,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735815,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735816,Raw reads,3,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735817,Raw reads,3,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735818,Raw reads,3,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735819,Raw reads,3,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735820,Raw reads,3,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735821,Raw reads,3,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735822,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735823,Raw reads,1b,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735824,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735825,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735826,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735827,Raw reads,3,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735828,Raw reads,4r,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT4,blood plasma
+SRR8735829,Raw reads,2c,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735830,Raw reads,3i,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735831,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735832,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735833,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735834,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735835,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735836,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735837,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735838,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735839,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735840,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735841,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735842,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735843,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735844,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735845,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735846,Raw reads,3b,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735847,Raw reads,4r,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT4,blood plasma
+SRR8735848,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735849,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735850,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735851,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735852,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735853,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735854,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735855,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735856,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735857,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735858,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735859,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735860,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735861,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735862,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735863,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735864,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735865,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735866,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735867,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735868,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735869,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735870,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735871,Raw reads,3b,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735872,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735873,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735874,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735875,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735876,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735877,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735878,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735879,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735880,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735881,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735882,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735883,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735884,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735885,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735886,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735887,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735888,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735889,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735890,Raw reads,1b,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735891,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735892,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735893,Raw reads,1a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT1,blood plasma
+SRR8735894,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735895,Raw reads,3a,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT3,blood plasma
+SRR8735896,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735897,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735898,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR8735899,Raw reads,2,NA,United Kingdom,Homo sapiens,Blood plasma,NA,Unknown,GT2,blood plasma
+SRR17967556,Raw reads,3,2018,India,Homo sapiens,sera,NA,2010s,GT3,sera
+SRR17967557,Raw reads,3,2018,India,Homo sapiens,sera,NA,2010s,GT3,sera
+SRR17967558,Raw reads,3,2017,India,Homo sapiens,sera,NA,2010s,GT3,sera
+SRR17967559,Raw reads,1,2017,India,Homo sapiens,sera,NA,2010s,GT1,sera
+SRR17967560,Raw reads,1,2017,India,Homo sapiens,sera,NA,2010s,GT1,sera
+SRR17967561,Raw reads,3,2017,India,Homo sapiens,sera,NA,2010s,GT3,sera
+SRR17967562,Raw reads,3,2017,India,Homo sapiens,sera,NA,2010s,GT3,sera
+SRR17967563,Raw reads,3,2018,India,Homo sapiens,sera,NA,2010s,GT3,sera
+SRR17967564,Raw reads,3,2018,India,Homo sapiens,sera,NA,2010s,GT3,sera
+SRR17967565,Raw reads,3,2017,India,Homo sapiens,sera,NA,2010s,GT3,sera
+SRR17967566,Raw reads,1,2018,India,Homo sapiens,sera,NA,2010s,GT1,sera
+SRR17967567,Raw reads,3,2018,India,Homo sapiens,sera,NA,2010s,GT3,sera
+SRR17967568,Raw reads,1,2018,India,Homo sapiens,sera,NA,2010s,GT1,sera
+SRR17967569,Raw reads,3,2018,India,Homo sapiens,sera,NA,2010s,GT3,sera
+SRR17967570,Raw reads,3,2018,India,Homo sapiens,sera,NA,2010s,GT3,sera
+SRR17967571,Raw reads,3,2018,India,Homo sapiens,sera,NA,2010s,GT3,sera
+SRR17967572,Raw reads,3,2018,India,Homo sapiens,sera,NA,2010s,GT3,sera
+SRR17967573,Raw reads,3,2018,India,Homo sapiens,sera,NA,2010s,GT3,sera
+SRR17967574,Raw reads,3,2018,India,Homo sapiens,sera,NA,2010s,GT3,sera
+SRR17967575,Raw reads,3,2018,India,Homo sapiens,sera,NA,2010s,GT3,sera
+SRR17967576,Raw reads,3,2017,India,Homo sapiens,sera,NA,2010s,GT3,sera
+SRR17967577,Raw reads,3,2017,India,Homo sapiens,sera,NA,2010s,GT3,sera
