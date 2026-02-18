@@ -1,5 +1,5 @@
 
-# Welcome to virus2tree!!
+# Welcome to Omni2tree!!
 
 This new version of read2tree enables the creation of a reference database via OMA Standalone using as input coding sequences from NCBI assemblies. The final tree combines the presence of assemblies (that is, the reference) and the read samples. It also supports read deduplication with czid-dedup and downsampling with rasusa, among other functionalities.
 
@@ -113,7 +113,7 @@ command -v oma && command -v rasusa && command -v czid-dedup && command -v read2
 
 ## Installation
 
-You can set up virus2tree cloning the repo and running the installer:
+You can set up Omni2tree cloning the repo and running the installer:
 
 ```bash
 git clone https://github.com/DanielPAagustinho/virus2tree.git
