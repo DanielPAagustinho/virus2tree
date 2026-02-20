@@ -359,9 +359,10 @@ if [[ -n "$ROOT_DIR" ]]; then
     mkdir -p "$ROOT_DIR"
   fi
   cd "$ROOT_DIR"
-  log_info "Using root directory: $(pwd)"
+  ROOT_DIR="$(pwd -P)"
+  log_info "Using root directory: $ROOT_DIR"
 else
-  ROOT_DIR="$(pwd)"
+  ROOT_DIR="$(pwd -P)"
   log_info "No --root_dir provided. Using current directory as root: $ROOT_DIR"
 fi
 
