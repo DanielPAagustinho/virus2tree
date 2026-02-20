@@ -145,7 +145,7 @@ def load_meta(meta_file: str):
                         logging.error(f"Value '{value}' for column '{key}' in sample_id '{sample_id}' is not a valid Date format. exiting...")
                         exit(1)
             # character type does not need validation
-    
+    # print(meta_dict)
     return meta_dict
 
 def load_code(code_file: str):
@@ -396,21 +396,29 @@ if __name__ == "__main__":
     # print(meta_dict["header"])
 
     logging.info(f"> Generating merged CSV with metadata to {output_base}.meta.csv")
+    all_meta_sample_ids = set(meta_dict.keys()) - set(["header", "col_type", "rows"])
     for row in tree_csv["rows_final"]:
         node_name = row[3]
         # first try check meta dict, then code dict
         if node_name in meta_dict:
             meta_row = meta_dict[node_name]
+            all_meta_sample_ids.discard(node_name)
         elif node_name in code_dict and code_dict[node_name] in meta_dict:
             meta_row = meta_dict[code_dict[node_name]]
+            all_meta_sample_ids.discard(code_dict[node_name])
         else:
+            # print warnings
+            if not node_name.startswith("Internal-"):
+                logging.warning(f"No metadata found for node '{node_name}'. Filling with NA. If this is not intentional, please check your metadata file and code file for consistency with the tree node names(second field after splitted by '_').")
             # fill with NA
             meta_row = {key: 'NA' for key in meta_dict["header"]}
-        # remve sample_id column
+        # remove sample_id column
         meta_values = [meta_row[key] for key in meta_dict["header"][1:]]
         # print(row)
         final_row = row + meta_values
         writer.writerow(final_row)
+    if len(all_meta_sample_ids) > 0:
+        logging.warning(f"There are {len(all_meta_sample_ids)} sample IDs in metadata that are not found in the tree nodes. These samples will be ignored. Sample IDs: {', '.join(all_meta_sample_ids)}, please check for consistency between your metadata file and tree node names.")
     out_fh.close()
 
     logging.info("> Generating tree and HTML output...")
